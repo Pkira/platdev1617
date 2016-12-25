@@ -2,6 +2,9 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group name="DAS"/>
+        <group name="DAS">
+            <file>file:/D:/PD1617/platdev1617/PD1617TP/PD1617TP-ejb/src/java/pd1617tp/Auction.java</file>
+            <file>file:/D:/PD1617/platdev1617/PD1617TP/PD1617TP-ejb/src/java/pd1617tp/User.java</file>
+        </group>
     </open-files>
 </project-private>

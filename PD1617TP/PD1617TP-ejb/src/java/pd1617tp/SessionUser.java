@@ -6,18 +6,18 @@ import javax.ejb.Stateful;
 
 
 @Stateful
-public class User implements IUser {
+public class SessionUser implements ISessionUser {
 
     String Username;
     
     @EJB
-    private IAuction Auction;
+    private IAuctionSystem AServer;
     
     
     @Override
     public boolean Login(String Username, String Password) {
         
-        return Auction.LoginUser(Username, Password);
+        return AServer.LoginUser(Username, Password);
     }
 
     @Override

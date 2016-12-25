@@ -5,17 +5,13 @@
  */
 package pd1617tp;
 
-import java.util.ArrayList;
-import javax.ejb.Remote;
+import javax.ejb.LocalBean;
 
 /**
  *
  * @author Pedro Salgado
  */
-@Remote
-public interface IUser {
-    
-    boolean Login(String name, String password);
-    boolean LogOff();
-    
+@LocalBean
+public interface IAuctionSystem {
+     boolean LoginUser(String Username, String Password);
 }
