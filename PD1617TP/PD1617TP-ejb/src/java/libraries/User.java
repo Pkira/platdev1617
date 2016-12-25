@@ -1,5 +1,7 @@
 package libraries;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,23 +9,26 @@ import java.util.List;
 
 public class User {
 
-    int id;
-    String name, address, password;
+    int Id;
+    String Username;
+    String Password;
+    String Address;
     ArrayList<String> MsgList;
     double balance;
     boolean state;
     List<Item> SellList;
     List<Item> BuyList;
     List<Item> FollowList;
+    
+    boolean Advised;
+    boolean Logged;
+    long LastAction;
 
-    public User() {
-    }
-
-    public User(int id, String name, String address, String password) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.password = password;
+    
+    public User(String Username, String Password, String Address) {
+        this.Username = Username;
+        this.Password = Password;
+        this.Address = Address;
         this.balance = 0;
         this.state = true;
         this.SellList = null;
@@ -31,17 +36,56 @@ public class User {
         this.FollowList = null;
         this.MsgList = null;
     }
+    
+    public boolean Login(String Username, String Password)
+    { 
+        //persistence check if login match
+        // fornow user and pass are the same
+        if(Username == Password)
+        {
+            this.Logged = true; 
+            this.setLastAction();
+            return true;
+        }
+        
+        //invalid login
+        return false;
+        
+    }
+    
+    public boolean Regist(String Username, String Password)
+    { 
+        //persistence add in database
+        this.Logged = false; 
+        return true;
+        
+    }
 
+    public boolean isLogged()
+    { 
+        return Logged; 
+    }
+    
+    public void LogOff()
+    { 
+        Logged = false; 
+    }
+    
+    public void setLastAction()
+    {
+        this.LastAction = LocalDateTime.now().toInstant(ZoneOffset.UTC).getEpochSecond();
+    }
+    
     public String getName() {
-        return name;
+        return Username;
     }
 
     public String getAddress() {
-        return address;
+        return Address;
     }
 
     public String getPassword() {
-        return password;
+        return Password;
     }
 
     public ArrayList<String> getMsgList() {
@@ -65,7 +109,7 @@ public class User {
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        this.Address = address;
     }
 
     public void setMsgList(ArrayList<String> MsgList) {
@@ -92,6 +136,20 @@ public class User {
         this.FollowList = FollowList;
     }
     
+    @Override
+    public int hashCode(){
+        return Username.hashCode(); //necessariamente
+                                //qual e como? obviamente -> Name.hashCode()
+    }
     
+    @Override
+    public boolean equals(Object x){
+        if(x == null)
+            return false;
+        if(getClass() != x.getClass()) //instanceof seria solução fraca
+            return false;              //(quebraria o contrato da equals)
+        User j = (User) x;
+        return Username.compareToIgnoreCase(j.Username) == 0;
+    }
     
 }

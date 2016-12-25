@@ -15,14 +15,24 @@ public class SessionUser implements ISessionUser {
     
     
     @Override
-    public boolean Login(String Username, String Password) {
+    public ResultMessage Login(String Username, String Password) {  
         
-        return AServer.LoginUser(Username, Password);
+        ResultMessage result = AServer.LoginUser(Username, Password);
+        
+        if(result == ResultMessage.LoginSucess)
+            this.Username = Username;
+        
+        return result;
     }
 
     @Override
     public boolean LogOff() {
-        return false;
+        return AServer.LogOffUser(Username);
+    }
+
+    @Override
+    public ResultMessage Register(String Username, String Password) {
+        return AServer.RegisterUser(Username, Password);
     }
 
 }

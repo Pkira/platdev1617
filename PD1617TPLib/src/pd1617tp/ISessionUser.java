@@ -15,7 +15,8 @@ import javax.ejb.Remote;
 @Remote
 public interface ISessionUser {
     
-    boolean Login(String name, String password);
+    ResultMessage Login(String name, String password);
+    ResultMessage Register(String name, String password);
     boolean LogOff();
     
 }
