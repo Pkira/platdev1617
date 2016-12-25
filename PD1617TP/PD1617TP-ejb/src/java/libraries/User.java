@@ -25,6 +25,8 @@ public class User {
     long LastAction;
 
     
+    public User(){}
+            
     public User(String Username, String Password, String Address) {
         this.Username = Username;
         this.Password = Password;
@@ -41,7 +43,7 @@ public class User {
     { 
         //persistence check if login match
         // fornow user and pass are the same
-        if(Username == Password)
+        if(Username.equals(Password))
         {
             this.Logged = true; 
             this.setLastAction();

@@ -14,6 +14,7 @@ public class AuctionSystem implements IAuctionSystem {
     @Override
     public ResultMessage LoginUser(String Username, String Password) {
         
+        
         //validate input
         if(Username == null || Password == null)
             return ResultMessage.LoginInvalid;
@@ -29,6 +30,7 @@ public class AuctionSystem implements IAuctionSystem {
                 return ResultMessage.LoginAllreadyLogged;
         }
         
+        user = new User();       
         boolean trylogin = user.Login(Username,Password);
         
         if(trylogin)
