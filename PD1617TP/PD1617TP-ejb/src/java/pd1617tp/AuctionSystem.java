@@ -1,8 +1,17 @@
 
 package pd1617tp;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
+import libraries.FactoryDB;
 import libraries.User;
 
 
@@ -10,11 +19,11 @@ import libraries.User;
 public class AuctionSystem implements IAuctionSystem {
 
     private HashMap<String,User> Users = new HashMap<>();
+    private FactoryDB Factory = new FactoryDB();
       
     @Override
     public ResultMessage LoginUser(String Username, String Password) {
-        
-        
+                
         //validate input
         if(Username == null || Password == null)
             return ResultMessage.LoginInvalid;
@@ -30,20 +39,19 @@ public class AuctionSystem implements IAuctionSystem {
                 return ResultMessage.LoginAllreadyLogged;
         }
         
-        user = new User();       
-        boolean trylogin = user.Login(Username,Password);
+        user = Factory.UserLogin(Username,Password);
         
-        if(trylogin)
+        if(user != null)
         {
-            Users.put(Username, user);
+            user.setLogged(true);
+            Users.put(Username,user);
             return ResultMessage.LoginSucess;
         }         
         else
         {
-            return ResultMessage.LoginInvalid;
+            return ResultMessage.LoginUserNotFound;
         }
-            
-        
+
     }
     
     @Override
@@ -60,10 +68,17 @@ public class AuctionSystem implements IAuctionSystem {
         if(user == null)
         {
             user = new User(Username, Password,"");
-            user.Regist(Username, Password);   
-            Users.put(Username, user); 
+            boolean result = Factory.UserRegister(user);
             
-            return ResultMessage.RegisterSucess;
+            if(result){
+                Users.put(Username, user); 
+                return ResultMessage.RegisterSucess;
+            }
+            else
+            {
+                return ResultMessage.RegisterInvalid;
+            }
+            
         }
         else
         {
@@ -132,5 +147,31 @@ public class AuctionSystem implements IAuctionSystem {
         }
         
         return ResultMessage.LoadBalanceInvalid;   
+    }
+    
+    
+    @PostConstruct
+    public void loadstate(){
+        try (ObjectInputStream ois =
+                new ObjectInputStream(
+                    new BufferedInputStream(
+                        new FileInputStream("/tmp/Users")))){
+            Users = (HashMap<String,User>) ois.readObject();       
+        }
+        catch (Exception ex){
+        }
+    }
+    
+    @PreDestroy
+    public void saveState() {
+        try (ObjectOutputStream oos =
+                new ObjectOutputStream(
+                    new BufferedOutputStream(
+                        new FileOutputStream("/tmp/Users")))){
+            oos.writeObject(Users);       
+        }
+        catch(Exception ex){
+        }
+        
     }
 }

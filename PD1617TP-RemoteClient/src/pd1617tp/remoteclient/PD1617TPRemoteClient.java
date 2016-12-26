@@ -70,12 +70,22 @@ public class PD1617TPRemoteClient {
             
             switch(option){
                 case 1:
-                    Task.login();
-                    MenuUser();
-                    break;
+                    if(Task.login())
+                    {
+                        MenuUser();
+                        break;
+                    }
+                    else
+                        continue;
+                    
                 case 2:
-                    Task.regist();
-                    break;
+                    if(Task.regist())
+                    {
+                        MenuUser();
+                        break;
+                    }
+                    else
+                        continue;
                 case 0:
                     continueMenu = false;
                     break;

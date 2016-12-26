@@ -15,23 +15,28 @@ import static pd1617tp.remoteclient.PD1617TPRemoteClient.sc;
  */
 public class Task {
     
-    public static void regist() {
+    public static boolean regist() {
         
         String username;
         String password;
         
-        System.out.print("\n Username: ");
+        System.out.print("Username: ");
         username = sc.nextLine();
         
-        System.out.print("\n Password: ");
+        System.out.print("Password: ");
         password = sc.nextLine();
         
         ResultMessage result = User.Register(username, password);
 
-        System.out.println("[DONE] " + result.Message());
+        System.out.println("\n[DONE] " + result.Message() + "\n");
+        
+        if(ResultMessage.RegisterSucess == result)
+            return true;
+        else
+            return false;
     }
     
-    public static void login(){
+    public static boolean login(){
        
         String username;
         String password;
@@ -44,14 +49,25 @@ public class Task {
         
         ResultMessage result = User.Login(username, password);
 
-        System.out.println("[DONE] " + result.Message());
+        System.out.println("\n[DONE] " + result.Message() + "\n");
+        
+         if(ResultMessage.LoginSucess == result)
+            return true;
+        else
+            return false;
     }
     
-    public static void logoff(){
+    public static boolean logoff(){
         if(User.LogOff())
-            System.out.println("[DONE] LogOff success");
+        {
+            System.out.println("\n[DONE] LogOff success\n");
+            return true;
+        }
         else
-            System.out.println("[DONE] LogOff error");
+        {
+            System.out.println("\n[DONE] LogOff error\n");
+            return false;
+        }
     }
     
     public static void SeeData(){
@@ -62,7 +78,7 @@ public class Task {
         
         String Address;
         
-        System.out.print("\n Please insert the new Address: ");
+        System.out.println("Please insert the new Address: ");
         Address = sc.nextLine();        
         
         System.out.println(User.UpdatePerfil(Address));
@@ -76,7 +92,7 @@ public class Task {
         
         double increment;
         
-        System.out.print("\n Please insert the quantity you want load; ");
+        System.out.print("Please insert the quantity you want load: ");
         increment = sc.nextLong();
         
         System.out.println(User.LoadBalance(increment));

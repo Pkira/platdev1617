@@ -57,4 +57,14 @@ public class SessionUser implements ISessionUser {
         return AServer.LoadBalance(Username, increment);
     }
 
+    @Override
+    public boolean CreateUsersBatch() {
+        
+        //admin        
+        AServer.RegisterUser("admin", "admin");
+        
+        
+        return true;
+    }
+
 }

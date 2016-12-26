@@ -4,7 +4,8 @@ package pd1617tp;
 
 public enum ResultMessage {
     LoginSucess("Logged with sucess"),
-    LoginInvalid("Invalid login, invalid username or password"),
+    LoginInvalid("Invalid username or password"),
+    LoginUserNotFound("User not found or invalid username/password"),
     LoginAllreadyLogged("User already logged"),
     RegisterAllreadyExist("Username already exist"),
     RegisterSucess("User registed successfully in the system"),

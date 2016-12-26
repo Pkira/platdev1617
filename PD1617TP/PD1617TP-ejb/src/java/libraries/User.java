@@ -10,12 +10,14 @@ import java.util.List;
 public class User {
 
     int Id;
+    
     String Username;
     String Password;
-    String Address;
-    ArrayList<String> MsgList;
+    String Address;   
     double balance;
     boolean state;
+    
+    ArrayList<Message> MsgList;
     List<Item> SellList;
     List<Item> BuyList;
     List<Item> FollowList;
@@ -33,34 +35,13 @@ public class User {
         this.Address = Address;
         this.balance = 0;
         this.state = true;
-        this.SellList = null;
-        this.BuyList = null;
-        this.FollowList = null;
-        this.MsgList = null;
-    }
-    
-    public boolean Login(String Username, String Password)
-    { 
-        //persistence check if login match
-        // fornow user and pass are the same
-        if(Username.equals(Password))
-        {
-            this.Logged = true; 
-            this.setLastAction();
-            return true;
-        }
-        
-        //invalid login
-        return false;
-        
-    }
-    
-    public boolean Regist(String Username, String Password)
-    { 
-        //persistence add in database
-        this.Logged = false; 
-        return true;
-        
+        this.SellList = new ArrayList<Item>();
+        this.BuyList = new ArrayList<Item>();
+        this.FollowList = new ArrayList<Item>();
+        this.MsgList = new ArrayList<Message>();
+        this.Logged = false;
+        this.Advised = false;
+        this.LastAction = 0;
     }
 
     public boolean isLogged()
@@ -94,7 +75,7 @@ public class User {
         return balance;
     }
     
-    public ArrayList<String> getMsgList() {
+    public ArrayList<Message> getMsgList() {
         return MsgList;
     }
 
@@ -118,7 +99,7 @@ public class User {
         this.Address = address;
     }
 
-    public void setMsgList(ArrayList<String> MsgList) {
+    public void setMsgList(ArrayList<Message> MsgList) {
         this.MsgList = MsgList;
     }
 
@@ -140,6 +121,10 @@ public class User {
 
     public void setFollowList(List<Item> FollowList) {
         this.FollowList = FollowList;
+    }
+    
+     public void setLogged(boolean Logged) {
+        this.Logged = Logged;
     }
     
     @Override
