@@ -34,5 +34,27 @@ public class SessionUser implements ISessionUser {
     public ResultMessage Register(String Username, String Password) {
         return AServer.RegisterUser(Username, Password);
     }
+    
+    @Override
+    public String SeePerfil(){
+        String msg = AServer.SeePerfil(Username);
+        return msg;
+    }
+    
+    @Override
+    public ResultMessage UpdatePerfil(String Address)
+    {
+        return AServer.UpdatePerfil(Username, Address);
+    }
+    
+    @Override
+    public String CheckBalance(){
+        String msg = AServer.CheckBalance(Username);
+        return msg;
+    }
+    
+    public ResultMessage LoadBalance(double increment){
+        return AServer.LoadBalance(Username, increment);
+    }
 
 }

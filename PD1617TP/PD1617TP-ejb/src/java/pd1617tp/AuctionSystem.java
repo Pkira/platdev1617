@@ -91,5 +91,46 @@ public class AuctionSystem implements IAuctionSystem {
         return false;
         
     }
+    
+    @Override
+    public String SeePerfil(String Username)
+    {
+        User user =Users.get(Username);
+        
+        String msg = "Username:  " + user.getName() + "\nAddress:  " + user.getAddress() + "\nBalance:  " + user.getBalance() + "\n";
+        
+        return msg;    
+    }
 
+    @Override
+    public ResultMessage UpdatePerfil(String Username, String Address)
+    {
+        User user =Users.get(Username);
+        
+        if(Address != null){
+            user.setAddress(Address);
+            return ResultMessage.UpdatePerfilValid;
+        }
+        
+        return ResultMessage.UpdatePerfilInvalid;    
+    }
+    
+    @Override
+    public String CheckBalance(String Username){
+        
+        User user =Users.get(Username);
+        return "Your current balance is  " + user.getBalance() + " €\n";
+    }
+    
+    @Override
+    public ResultMessage LoadBalance(String Username, double increment){
+        User user =Users.get(Username);
+        
+        if(increment > 0){
+            user.setBalance(increment);
+            return ResultMessage.LoadBalanceValid;
+        }
+        
+        return ResultMessage.LoadBalanceInvalid;   
+    }
 }

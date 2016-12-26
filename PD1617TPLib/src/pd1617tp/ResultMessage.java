@@ -8,7 +8,11 @@ public enum ResultMessage {
     LoginAllreadyLogged("User already logged"),
     RegisterAllreadyExist("Username already exist"),
     RegisterSucess("User registed successfully in the system"),
-    RegisterInvalid("Invalid username or password specified");
+    RegisterInvalid("Invalid username or password specified"),
+    UpdatePerfilValid("Update Successfull"),
+    UpdatePerfilInvalid("Update invalid"),
+    LoadBalanceValid("Your load balance was successfully made"),
+    LoadBalanceInvalid("Load balance invalid");
     
     private String Message;
     

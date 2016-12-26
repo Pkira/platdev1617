@@ -90,6 +90,10 @@ public class User {
         return Password;
     }
 
+    public double getBalance() {
+        return balance;
+    }
+    
     public ArrayList<String> getMsgList() {
         return MsgList;
     }
@@ -119,7 +123,7 @@ public class User {
     }
 
     public void setBalance(double balance) {
-        this.balance = balance;
+        this.balance = this.balance + balance;
     }
 
     public void setState(boolean state) {
