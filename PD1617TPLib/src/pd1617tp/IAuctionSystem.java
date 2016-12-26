@@ -2,6 +2,7 @@
 package pd1617tp;
 
 import javax.ejb.LocalBean;
+import libraries.NewsLetter;
 
 
 @LocalBean
@@ -15,4 +16,5 @@ public interface IAuctionSystem {
      ResultMessage UpdatePerfil(String Username, String Address);
      String CheckBalance(String Username);
      ResultMessage LoadBalance(String Username, double increment);
+     NewsLetter GetNewsletter();
 }

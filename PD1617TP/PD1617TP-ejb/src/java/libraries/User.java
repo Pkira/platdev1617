@@ -1,5 +1,6 @@
 package libraries;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class User {
+public class User implements Serializable{
 
     int Id;
     

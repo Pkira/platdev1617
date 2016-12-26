@@ -5,6 +5,9 @@
  */
 package pd1617tp.remoteclient;
 
+import java.util.ArrayList;
+import libraries.NewsLetter;
+import libraries.NewsLetterItem;
 import pd1617tp.ResultMessage;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.User;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.sc;
@@ -98,4 +101,27 @@ public class Task {
         System.out.println(User.LoadBalance(increment));
     }
     
+    public static void ShowNewsLetter(){
+       
+        NewsLetter newsletter = User.GetNewsletter();
+        
+        if(newsletter != null)
+        {
+            ArrayList<NewsLetterItem> news = newsletter.getNewsList();
+            if(!news.isEmpty())
+            {
+                System.out.println("\n[Newsletter]\n");
+                for(NewsLetterItem item : news)
+                {
+                    System.out.println(item.getMsg());
+                }
+                 
+            }
+            else
+                System.out.println("\n[Newsletter] is empty\n");
+        }
+        else
+            System.out.println("[ERROR] Error getting newsletter");
+ 
+    }
 }

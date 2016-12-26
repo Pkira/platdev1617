@@ -3,6 +3,7 @@ package pd1617tp;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import libraries.NewsLetter;
 
 
 @Stateful
@@ -65,6 +66,11 @@ public class SessionUser implements ISessionUser {
         
         
         return true;
+    }
+
+    @Override
+    public NewsLetter GetNewsletter() {
+        return AServer.GetNewsletter();
     }
 
 }

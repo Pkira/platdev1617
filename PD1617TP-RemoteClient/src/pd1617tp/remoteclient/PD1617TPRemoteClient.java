@@ -79,13 +79,13 @@ public class PD1617TPRemoteClient {
                         continue;
                     
                 case 2:
-                    if(Task.regist())
-                    {
-                        MenuUser();
-                        break;
-                    }
-                    else
-                        continue;
+                    Task.regist();
+                    break;
+                    
+                case 3:
+                    Task.ShowNewsLetter();
+                    break;
+                    
                 case 0:
                     continueMenu = false;
                     break;
@@ -112,6 +112,9 @@ public class PD1617TPRemoteClient {
             switch(option){
                 case 1:
                     MenuUserPerfil();
+                    break;
+                case 5:
+                    Task.ShowNewsLetter();
                     break;
                 case 7:
                     Task.logoff();

@@ -17,7 +17,7 @@ public class Menu {
         System.out.println("=====================================\n");
         System.out.println("  1 - LogIn");
         System.out.println("  2 - Regist new user"); // O registo só pode ser feito após a autorização do admin
-        System.out.println("  3 - Newletter  (yet not implemented)");         // Esta opção passaria a ser "See Newletter"
+        System.out.println("  3 - Show Newletter");         // Esta opção passaria a ser "See Newletter"
         System.out.println("  4 - Last 3 itens sell (yet not implemented)");
         System.out.println("=====================================");
         System.out.println("    Exit (Press '0')  ");
@@ -32,7 +32,7 @@ public class Menu {
         System.out.println("  2 - Messages");
         System.out.println("  3 - Item");
         System.out.println("  4 - Auction");
-        System.out.println("  5 - See Newletter");
+        System.out.println("  5 - Show Newletter");
         System.out.println("  6 - Suspend Accout");
         System.out.println("  7 - Log off");
         System.out.println("=====================================");

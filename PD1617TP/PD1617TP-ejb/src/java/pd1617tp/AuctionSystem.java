@@ -7,17 +7,21 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import libraries.FactoryDB;
+import libraries.NewsLetter;
+import libraries.NewsLetterItem;
 import libraries.User;
 
 
 @Singleton
 public class AuctionSystem implements IAuctionSystem {
 
+    private NewsLetter Newsletter = new NewsLetter();
     private HashMap<String,User> Users = new HashMap<>();
     private FactoryDB Factory = new FactoryDB();
       
@@ -44,7 +48,11 @@ public class AuctionSystem implements IAuctionSystem {
         if(user != null)
         {
             user.setLogged(true);
+            user.setLastAction();
             Users.put(Username,user);
+            
+            Newsletter.addNewsToList(new NewsLetterItem("User " + Username + " successfully logged"));
+            
             return ResultMessage.LoginSucess;
         }         
         else
@@ -72,6 +80,9 @@ public class AuctionSystem implements IAuctionSystem {
             
             if(result){
                 Users.put(Username, user); 
+                
+                Newsletter.addNewsToList(new NewsLetterItem("User " + Username + " successfully registed"));
+                
                 return ResultMessage.RegisterSucess;
             }
             else
@@ -173,5 +184,10 @@ public class AuctionSystem implements IAuctionSystem {
         catch(Exception ex){
         }
         
+    }
+
+    @Override
+    public NewsLetter GetNewsletter() {
+        return this.Newsletter;
     }
 }
