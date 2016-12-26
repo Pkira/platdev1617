@@ -79,13 +79,8 @@ public class PD1617TPRemoteClient {
                         continue;
                     
                 case 2:
-                    if(Task.regist())
-                    {
-                        MenuUser();
-                        break;
-                    }
-                    else
-                        continue;
+                    Task.regist();
+                    continue;
                 case 0:
                     continueMenu = false;
                     break;
@@ -176,6 +171,5 @@ public class PD1617TPRemoteClient {
             }
         }
     }
-    
-    
+        
 }
