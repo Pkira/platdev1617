@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import libraries.Messages;
 import libraries.NewsLetter;
 import libraries.NewsLetterItem;
-import pd1617tp.ResultMessage;
+import libraries.ResultMessage;
+import static pd1617tp.remoteclient.PD1617TPRemoteClient.Newsletter;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.User;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.sc;
 
@@ -106,7 +107,7 @@ public class Task {
     
     public static void ShowNewsLetter(){
        
-        NewsLetter newsletter = User.GetNewsletter();
+        NewsLetter newsletter = Newsletter.GetNewsLetter();
         
         if(newsletter != null)
         {
