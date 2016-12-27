@@ -1,20 +1,20 @@
 
 package pd1617tp;
 
+import libraries.ResultMessage;
 import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.jms.Message;
-import libraries.NewsLetter;
 
 
 @Stateful
-public class SessionUser implements ISessionUser {
+public class UserBean implements IUser {
 
     String Username;
     
     @EJB
-    private IAuctionSystem AServer;
+    private ISystem AServer;
     
     
     @Override
@@ -68,11 +68,6 @@ public class SessionUser implements ISessionUser {
         
         
         return true;
-    }
-
-    @Override
-    public NewsLetter GetNewsletter() {
-        return AServer.GetNewsletter();
     }
     
     @Override

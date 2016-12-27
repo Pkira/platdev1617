@@ -1,6 +1,7 @@
 
 package pd1617tp;
 
+import libraries.ResultMessage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
@@ -24,7 +25,7 @@ import libraries.Messages;
 
 
 @Singleton
-public class AuctionSystem implements IAuctionSystem {
+public class SystemBean implements ISystem {
 
     private NewsLetter Newsletter = new NewsLetter();
     private HashMap<String,User> Users = new HashMap<>();

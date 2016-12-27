@@ -7,13 +7,15 @@ import java.util.Properties;
 import java.util.Scanner;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import pd1617tp.ISessionUser;
-import pd1617tp.ResultMessage;
+import libraries.ResultMessage;
+import pd1617tp.INewsLetter;
+import pd1617tp.IUser;
 
 
 public class PD1617TPRemoteClient {
 
-    static ISessionUser User;
+    public static IUser User;
+    public static INewsLetter Newsletter;
     
     static Scanner sc = new Scanner(System.in);
   
@@ -37,12 +39,17 @@ public class PD1617TPRemoteClient {
         }
         System.out.println("[Info] InitialContext sucefull created.");
 
-        String rsfull_class_name = "java:global/PD1617TP/PD1617TP-ejb/SessionUser!pd1617tp.ISessionUser";
+        String SessionUserBean = "java:global/PD1617TP/PD1617TP-ejb/UserBean!pd1617tp.IUser";
+         String NewsLetterBean = "java:global/PD1617TP/PD1617TP-ejb/NewsLetterBean!pd1617tp.INewsLetter";
 
         try {
             System.out.println("[Info] Starting lookup");
-            Object x = ctx.lookup(rsfull_class_name);
-            User =(ISessionUser)x;
+            
+            Object lookupSessionUser = ctx.lookup(SessionUserBean);
+            User =(IUser)lookupSessionUser;
+            
+            Object lookupNewsLetter = ctx.lookup(NewsLetterBean);
+            Newsletter =(INewsLetter)lookupNewsLetter;
         }
         catch (NamingException e) {
             

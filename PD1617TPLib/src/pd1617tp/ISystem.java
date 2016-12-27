@@ -1,6 +1,7 @@
 
 package pd1617tp;
 
+import libraries.ResultMessage;
 import java.util.ArrayList;
 import javax.ejb.LocalBean;
 import javax.jms.Message;
@@ -9,7 +10,7 @@ import libraries.NewsLetter;
 
 @LocalBean
 
-public interface IAuctionSystem {
+public interface ISystem {
     
      ResultMessage LoginUser(String Username, String Password);   
      ResultMessage RegisterUser(String Username, String Password);
