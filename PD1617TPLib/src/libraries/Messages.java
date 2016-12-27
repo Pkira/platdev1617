@@ -2,13 +2,14 @@
 
 package libraries;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
 
-public class Messages {
+public class Messages implements Serializable{
 
     int id;
     String Message, Subject, Addressed, Sender;
