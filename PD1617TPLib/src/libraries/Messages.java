@@ -2,26 +2,28 @@
 
 package libraries;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
 
-public class Message {
+public class Messages {
 
     int id;
     String Message, Subject, Addressed, Sender;
     Date Date;
 
-    public Message() {
+    public Messages() {
     }
         
-    public Message(int id, String Message, String Subject, String Addressed, String Sender, Date Date) {
+    public Messages(int id, String Message, String Subject, String Addressed, String Sender) {
         this.id = id;
         this.Message = Message;
         this.Subject = Subject;
         this.Addressed = Addressed;
         this.Sender = Sender;
-        this.Date = Date;
+        this.Date = new Date();
     }
 
     public int getId() {

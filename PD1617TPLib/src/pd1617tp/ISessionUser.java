@@ -1,17 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package pd1617tp;
 
 import java.util.ArrayList;
 import javax.ejb.Remote;
+import javax.jms.Message;
+import libraries.NewsLetter;
 
-/**
- *
- * @author Pedro Salgado
- */
+
 @Remote
 public interface ISessionUser {
     
@@ -23,4 +18,7 @@ public interface ISessionUser {
     ResultMessage UpdatePerfil(String Address);
     String CheckBalance();
     ResultMessage LoadBalance(double increment);
+    NewsLetter GetNewsletter();
+    ArrayList CheckMessage();
+    ResultMessage SendMessage(String Addressed, String Subject, String Message);
 }

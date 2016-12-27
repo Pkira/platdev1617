@@ -1,8 +1,11 @@
 
 package pd1617tp;
 
+import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import javax.jms.Message;
+import libraries.NewsLetter;
 
 
 @Stateful
@@ -67,4 +70,18 @@ public class SessionUser implements ISessionUser {
         return true;
     }
 
+    @Override
+    public NewsLetter GetNewsletter() {
+        return AServer.GetNewsletter();
+    }
+    
+    @Override
+    public ArrayList CheckMessage(){
+        return AServer.CheckMessage(Username);
+    }
+
+    @Override
+    public ResultMessage SendMessage(String Addressed, String Subject, String Message){
+        return AServer.SendMessage(Username, Addressed, Subject, Message);
+    }
 }

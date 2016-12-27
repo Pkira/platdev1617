@@ -80,7 +80,12 @@ public class PD1617TPRemoteClient {
                     
                 case 2:
                     Task.regist();
-                    continue;
+                    break;
+                    
+                case 3:
+                    Task.ShowNewsLetter();
+                    break;
+                    
                 case 0:
                     continueMenu = false;
                     break;
@@ -107,6 +112,12 @@ public class PD1617TPRemoteClient {
             switch(option){
                 case 1:
                     MenuUserPerfil();
+                    break;
+                case 2:
+                    MenuUserMessage();
+                    break;
+                case 5:
+                    Task.ShowNewsLetter();
                     break;
                 case 7:
                     Task.logoff();
@@ -148,6 +159,33 @@ public class PD1617TPRemoteClient {
             default:
                 System.out.println("[ERROR] Menu error");
                 break;
+            }
+        }    
+    }
+    
+    public static void MenuUserMessage(){
+        
+        int option;        
+        boolean continueMenu = true;
+        
+        while(continueMenu){
+            
+            Menu.printMenuUserMessages();
+            option = getOption(5);
+        
+            switch(option){
+                case 1:
+                    Task.CheckMessage();
+                    break;
+                case 2:
+                    Task.SendMessage();
+                    break;
+                case 3:
+                    continueMenu = false;
+                    break;
+                default:
+                    System.out.println("[ERROR] Menu error");
+                    break;
             }
         }    
     }

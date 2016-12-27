@@ -10,10 +10,13 @@ public enum ResultMessage {
     RegisterAllreadyExist("Username already exist"),
     RegisterSucess("User registed successfully in the system"),
     RegisterInvalid("Invalid username or password specified"),
-    UpdatePerfilValid("Update Successfull"),
-    UpdatePerfilInvalid("Update invalid"),
-    LoadBalanceValid("Your load balance was successfully made"),
-    LoadBalanceInvalid("Load balance invalid");
+    UpdatePerfilValid("[INFO] Update Successfull"),
+    UpdatePerfilInvalid("[INFO] Update invalid"),
+    LoadBalanceValid("[INFO] Your load balance was successfully made"),
+    LoadBalanceInvalid("[INFO] Load balance invalid"),
+    SendMessageSuccess("[INFO] Your message was sent with success"),
+    SendMessageUnsuccess("[Error] Something wrong happen to your message!"),
+    SendMessageNoUser("[INFO] The user you pretend send the message does not exist");
     
     private String Message;
     

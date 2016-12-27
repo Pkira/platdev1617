@@ -1,7 +1,10 @@
 
 package pd1617tp;
 
+import java.util.ArrayList;
 import javax.ejb.LocalBean;
+import javax.jms.Message;
+import libraries.NewsLetter;
 
 
 @LocalBean
@@ -15,4 +18,7 @@ public interface IAuctionSystem {
      ResultMessage UpdatePerfil(String Username, String Address);
      String CheckBalance(String Username);
      ResultMessage LoadBalance(String Username, double increment);
+     NewsLetter GetNewsletter();
+     ArrayList CheckMessage(String Username);
+     ResultMessage SendMessage(String Username, String Addressed, String Subject, String Message);
 }

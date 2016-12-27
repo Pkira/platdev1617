@@ -1,5 +1,6 @@
 package libraries;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class User {
+public class User implements Serializable{
 
     int Id;
     
@@ -17,7 +18,7 @@ public class User {
     double balance;
     boolean state;
     
-    ArrayList<Message> MsgList;
+    ArrayList<Messages> MsgList;
     List<Item> SellList;
     List<Item> BuyList;
     List<Item> FollowList;
@@ -38,7 +39,7 @@ public class User {
         this.SellList = new ArrayList<Item>();
         this.BuyList = new ArrayList<Item>();
         this.FollowList = new ArrayList<Item>();
-        this.MsgList = new ArrayList<Message>();
+        this.MsgList = new ArrayList<Messages>();
         this.Logged = false;
         this.Advised = false;
         this.LastAction = 0;
@@ -75,7 +76,7 @@ public class User {
         return balance;
     }
     
-    public ArrayList<Message> getMsgList() {
+    public ArrayList<Messages> getMsgList() {
         return MsgList;
     }
 
@@ -99,8 +100,8 @@ public class User {
         this.Address = address;
     }
 
-    public void setMsgList(ArrayList<Message> MsgList) {
-        this.MsgList = MsgList;
+    public void setMsgList(Messages MSG) {
+        this.MsgList.add(MSG);
     }
 
     public void setBalance(double balance) {

@@ -7,19 +7,29 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.Message;
 import libraries.FactoryDB;
+import libraries.NewsLetter;
+import libraries.NewsLetterItem;
 import libraries.User;
+import libraries.Messages;
 
 
 @Singleton
 public class AuctionSystem implements IAuctionSystem {
 
+    private NewsLetter Newsletter = new NewsLetter();
     private HashMap<String,User> Users = new HashMap<>();
     private FactoryDB Factory = new FactoryDB();
+    private int MessageID = 1;
       
     @Override
     public ResultMessage LoginUser(String Username, String Password) {
@@ -44,7 +54,11 @@ public class AuctionSystem implements IAuctionSystem {
         if(user != null)
         {
             user.setLogged(true);
+            user.setLastAction();
             Users.put(Username,user);
+            
+            Newsletter.addNewsToList(new NewsLetterItem("User " + Username + " successfully logged"));
+            
             return ResultMessage.LoginSucess;
         }         
         else
@@ -72,6 +86,9 @@ public class AuctionSystem implements IAuctionSystem {
             
             if(result){
                 Users.put(Username, user); 
+                
+                Newsletter.addNewsToList(new NewsLetterItem("User " + Username + " successfully registed"));
+                
                 return ResultMessage.RegisterSucess;
             }
             else
@@ -173,5 +190,35 @@ public class AuctionSystem implements IAuctionSystem {
         catch(Exception ex){
         }
         
+    }
+
+    @Override
+    public NewsLetter GetNewsletter() {
+        return this.Newsletter;
+    }
+    
+    @Override
+    public ArrayList CheckMessage(String Username){
+        
+        User user = Users.get(Username);
+        
+        return user.getMsgList();
+    }
+    
+    @Override
+    public ResultMessage SendMessage(String Username, String Addressed, String Subject, String Message){
+        
+        User SenderUser = Users.get(Username);
+        User AddressedUser = Users.get(Addressed);        
+        
+        if(AddressedUser != null){
+            Messages msg = new Messages(MessageID, Message, Subject, Addressed, Username);
+            MessageID++;
+            AddressedUser.setMsgList(msg);
+            
+            return ResultMessage.SendMessageSuccess;
+        }
+        else
+            return ResultMessage.SendMessageNoUser;            
     }
 }
