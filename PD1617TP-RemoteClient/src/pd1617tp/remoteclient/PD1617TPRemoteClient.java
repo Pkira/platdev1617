@@ -70,40 +70,58 @@ public class PD1617TPRemoteClient {
         
         lookup();
         
-        while(continueMenu){
-         
-            Menu.printMenuVisitor();
-            option = getOption(3);
-            
-            switch(option){
-                case 1:
-                    if(Task.login())
-                    {
-                        MenuUser();
+        try
+        {
+        
+            while(continueMenu){
+
+                Menu.printMenuVisitor();
+                option = getOption(3);
+
+                switch(option){
+                    case 1:
+                        if(Task.login())
+                        {
+                            MenuUser();
+                            break;
+                        }
+                        else
+                            continue;
+
+                    case 2:
+                        Task.regist();
                         break;
-                    }
-                    else
-                        continue;
-                    
-                case 2:
-                    Task.regist();
-                    break;
-                    
-                case 3:
-                    Task.ShowNewsLetter();
-                    break;
-                    
-                case 0:
-                    continueMenu = false;
-                    break;
-                default:
-                    System.out.println("[ERROR] Menu error");
-                    break;
+
+                    case 3:
+                        Task.ShowNewsLetter();
+                        break;
+
+                    case 0:
+                        continueMenu = false;
+                        break;
+                    default:
+                        System.out.println("[ERROR] Menu error");
+                        break;
+                }
             }
+
+        }
+        catch (Exception ex) {
+            
+            System.out.println("[Error] Global exception generated while running application client. ErrorMessage:" + ex.getMessage());           
+        }
+
+        try
+        {
+            System.out.println("[INFO] Trying to log off client before exit...");
+            Task.logoff();
+            System.out.println("[DONE] Client successfully loged off");
+        }
+        catch (Exception ex2) {
+            System.out.println("[Error] Unable to log off user, possible internal error in server. ErrorMessage:" + ex2.getMessage());
         }        
            
-           Task.logoff();
-           System.out.println("\n[DONE] Log Off");
+        return;
     }
      
     public static void MenuUser(){
