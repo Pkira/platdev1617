@@ -131,31 +131,33 @@ public class Task {
     
     public static void CheckMessage(){
         
-        if(User.CheckMessage() == null || User.CheckMessage().size() <= 0)
+        ArrayList<Messages> msg = User.CheckMessage();
+        
+        if(msg == null || msg.isEmpty())
             System.out.println("\n[INFO] No messages available to read");
         else
         {
-            System.out.println("\nYou have " + User.CheckMessage().size() + " messages in your message box");
+            System.out.println("\nYou have " + msg.size() + " messages in your message box\n");
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            if(User.CheckMessage().size() <= 3)
-                for(int i = 0; i <= User.CheckMessage().size(); i++)
+            if(msg.size() <= 3)
+                for(int i = 0; i < msg.size(); i++)
                 {
-                    Messages msg = (Messages) User.CheckMessage().get(i);
-                    System.out.println("Message Send by : " + msg.getSender());
-                    System.out.println("Message Subject: " + msg.getSubject());
-                    System.out.println("Message : " + msg.getMessage());
-                    System.out.println("Date : " + dateFormat.format(msg.getDate()) + "\n");        
+                    Messages aux = (Messages) msg.get(i);
+                    System.out.println("Message Send by : " + aux.getSender());
+                    System.out.println("Message Subject: " + aux.getSubject());
+                    System.out.println("Message : " + aux.getMessage());
+                    System.out.println("Date : " + dateFormat.format(aux.getDate()) + "\n");        
                 }
             else
             {
-                System.out.println("Here are your last 3 messages");
-                for(int i = User.CheckMessage().size() - 3; i <= User.CheckMessage().size(); i++)
+                System.out.println("Here are your last 3 messages\n");
+                for(int i = msg.size() - 3; i < msg.size(); i++)
                 {
-                    Messages msg = (Messages) User.CheckMessage().get(i);
-                    System.out.println("Message Send by : " + msg.getSender());
-                    System.out.println("Message Subject: " + msg.getSubject());
-                    System.out.println("Message : " + msg.getMessage());
-                    System.out.println("Date : " + dateFormat.format(msg.getDate()) + "\n");
+                    Messages aux = (Messages) msg.get(i);
+                    System.out.println("Message Send by : " + aux.getSender());
+                    System.out.println("Message Subject: " + aux.getSubject());
+                    System.out.println("Message : " + aux.getMessage());
+                    System.out.println("Date : " + dateFormat.format(aux.getDate()) + "\n");
                 }
             }
         }
