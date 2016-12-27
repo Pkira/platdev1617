@@ -14,8 +14,8 @@ public interface IUser {
     ResultMessage Register(String name, String password);
     boolean CreateUsersBatch();
     boolean LogOff();
-    String SeePerfil();
-    ResultMessage UpdatePerfil(String Address);
+    String SeeProfile();
+    ResultMessage UpdateProfile(String Address);
     String CheckBalance();
     ResultMessage LoadBalance(double increment);
     ArrayList CheckMessage();

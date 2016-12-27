@@ -126,7 +126,7 @@ public class SystemBean implements ISystem {
     }
     
     @Override
-    public String SeePerfil(String Username)
+    public String SeeProfile(String Username)
     {
         User user =Users.get(Username);
         
@@ -136,16 +136,16 @@ public class SystemBean implements ISystem {
     }
 
     @Override
-    public ResultMessage UpdatePerfil(String Username, String Address)
+    public ResultMessage UpdateProfile(String Username, String Address)
     {
         User user =Users.get(Username);
         
         if(Address != null){
             user.setAddress(Address);
-            return ResultMessage.UpdatePerfilValid;
+            return ResultMessage.UpdateProfileValid;
         }
         
-        return ResultMessage.UpdatePerfilInvalid;    
+        return ResultMessage.UpdateProfileInvalid;    
     }
     
     @Override

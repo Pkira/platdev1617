@@ -78,7 +78,7 @@ public class Task {
     }
     
     public static void SeeData(){
-        System.out.println(User.SeePerfil());
+        System.out.println(User.SeeProfile());
     }
     
     public static void UpdateData(){
@@ -88,7 +88,7 @@ public class Task {
         System.out.println("Please insert the new Address: ");
         Address = sc.nextLine();        
         
-        System.out.println(User.UpdatePerfil(Address));
+        System.out.println(User.UpdateProfile(Address));
     }
     
     public static void CheckBalance(){

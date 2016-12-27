@@ -39,15 +39,15 @@ public class UserBean implements IUser {
     }
     
     @Override
-    public String SeePerfil(){
-        String msg = AServer.SeePerfil(Username);
+    public String SeeProfile(){
+        String msg = AServer.SeeProfile(Username);
         return msg;
     }
     
     @Override
-    public ResultMessage UpdatePerfil(String Address)
+    public ResultMessage UpdateProfile(String Address)
     {
-        return AServer.UpdatePerfil(Username, Address);
+        return AServer.UpdateProfile(Username, Address);
     }
     
     @Override

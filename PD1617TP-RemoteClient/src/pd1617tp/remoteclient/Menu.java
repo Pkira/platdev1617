@@ -28,7 +28,7 @@ public class Menu {
         System.out.println("=====================================");
         System.out.println("    Auction System Remote Client  ");
         System.out.println("=====================================");
-        System.out.println("  1 - Perfil");
+        System.out.println("  1 - Profile");
         System.out.println("  2 - Messages");
         System.out.println("  3 - Item");
         System.out.println("  4 - Auction");
@@ -38,7 +38,7 @@ public class Menu {
         System.out.println("=====================================");
     }
     
-    public static void printMenuUserPerfil(){
+    public static void printMenuUserProfile(){
         System.out.println("=====================================");
         System.out.println("    Auction System Remote Client  ");
         System.out.println("=====================================");

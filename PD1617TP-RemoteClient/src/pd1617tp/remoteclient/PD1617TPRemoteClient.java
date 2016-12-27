@@ -136,7 +136,7 @@ public class PD1617TPRemoteClient {
             
             switch(option){
                 case 1:
-                    MenuUserPerfil();
+                    MenuUserProfile();
                     break;
                 case 2:
                     MenuUserMessage();
@@ -155,14 +155,14 @@ public class PD1617TPRemoteClient {
         }
     }
     
-    public static void MenuUserPerfil(){
+    public static void MenuUserProfile(){
         
         int option;        
         boolean continueMenu = true;
         
         while(continueMenu){
             
-            Menu.printMenuUserPerfil();
+            Menu.printMenuUserProfile();
             option = getOption(5);
         
             switch(option){
