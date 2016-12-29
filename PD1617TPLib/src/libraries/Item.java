@@ -1,6 +1,8 @@
 package libraries;
 
-public class Item {
+import java.io.Serializable;
+
+public class Item implements Serializable{
 
     long ID;
     double StartPrice;

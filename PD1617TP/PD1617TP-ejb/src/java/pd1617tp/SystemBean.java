@@ -249,7 +249,6 @@ public class SystemBean implements ISystem {
     public ArrayList SearchItem(String Item, String Category){
         
         ArrayList<Item> Aux = new ArrayList<>();
-        Aux = null;
         Item help = new Item();
         if(!Itens.isEmpty())  
             for(long i = 1; i <= Itens.size(); i++)

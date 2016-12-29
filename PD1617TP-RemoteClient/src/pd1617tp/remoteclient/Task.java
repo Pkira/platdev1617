@@ -234,10 +234,10 @@ public class Task {
         System.out.print("\nItem Category: ");   // é possível que se tenha de escolher opções
         Category = sc.nextLine();
         
-        ArrayList<Item> Aux = null;
+        ArrayList<Item> Aux = new ArrayList<Item>();
         Aux = Item.SearchItem(IItem, Category);
         
-        if(Aux != null){
+        if(!Aux.isEmpty()){
             System.out.print("\nInfo of the Itens found: \n");
             for(int i = 0; i < Aux.size(); i++){
                 System.out.print("\n Name: " + Aux.get(i).getName() + "\n");
