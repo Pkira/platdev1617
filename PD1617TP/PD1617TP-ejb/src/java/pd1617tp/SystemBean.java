@@ -18,6 +18,7 @@ import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import libraries.FactoryDB;
+import libraries.Item;
 import libraries.NewsLetter;
 import libraries.NewsLetterItem;
 import libraries.User;
@@ -30,7 +31,8 @@ public class SystemBean implements ISystem {
     private NewsLetter Newsletter = new NewsLetter();
     private HashMap<String,User> Users = new HashMap<>();
     private FactoryDB Factory = new FactoryDB();
-    private int MessageID = 1;
+    private ArrayList<Item> Itens = new ArrayList<Item>();
+    private int MessageID = 1, ItemID = 1;
       
     @Override
     public ResultMessage LoginUser(String Username, String Password) {
@@ -70,8 +72,7 @@ public class SystemBean implements ISystem {
     }
     
     @Override
-    public ResultMessage RegisterUser(String Username, String Password)
-    {
+    public ResultMessage RegisterUser(String Username, String Password){
         //validate input
         if(Username == null || Password == null)
             return ResultMessage.RegisterInvalid;
@@ -222,4 +223,44 @@ public class SystemBean implements ISystem {
         else
             return ResultMessage.SendMessageNoUser;            
     }
+
+    @Override   // AINDA COM MUITAS CORRECÇÕES A FAZER
+    public ResultMessage CreateItem(String Username, String Item, String Category, String Desc, double Price, double BuyNow, String Budget) {
+        
+        Item item = new Item(ItemID, Price, BuyNow, Item, Desc, Category, Username);
+        
+        if(item != null)
+        {
+            Itens.add(item);
+            ItemID++;
+            return ResultMessage.CreateItemSuccess;
+        }  
+        
+        return ResultMessage.CreateItemUnsuccess;
+    }
+
+    @Override
+    public String SearchItem(String Item, String Category){
+        
+        String result = "Doesn't existe this itens";
+        
+        if(!Itens.isEmpty()){  
+            for(int i = 0; i < Itens.size(); i++)
+                if(Itens.get(i).getName().contains(Item))
+                    if(Itens.get(i).getCategory().contains(Category)){
+                        if(result.contains("Doesn't existe this itens"))
+                            result = "";
+                        result = result + "\nItem:\n Name: " + Itens.get(i).getName() + "\n";
+                        result = result + " Category: " + Itens.get(i).getCategory() + "\n";
+                        result = result + " Description: " + Itens.get(i).getDesc() + "\n";
+                        result = result + " Start Price: " + Itens.get(i).getStartPrice() + "\n";
+                        result = result + " Buy Now Price: " + Itens.get(i).getBuyNowPrice() + "\n";
+                        result = result + " Owner: " + Itens.get(i).getOwner() + "\n\n";
+                    }
+            return result;
+        }
+        
+        return "Doesn't existe itens";
+    }
+
 }

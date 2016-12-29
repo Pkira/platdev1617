@@ -10,9 +10,7 @@ import javax.jms.Message;
 @Remote
 public interface IUser {
     
-    ResultMessage Login(String name, String password);
-    ResultMessage Register(String name, String password);
-    boolean CreateUsersBatch();
+    void setUsername(String Username);
     boolean LogOff();
     String SeeProfile();
     ResultMessage UpdateProfile(String Address);
@@ -20,4 +18,6 @@ public interface IUser {
     ResultMessage LoadBalance(double increment);
     ArrayList CheckMessage();
     ResultMessage SendMessage(String Addressed, String Subject, String Message);
+    ResultMessage CreateItem(String Item, String Category, String Desc, double Price, double BuyNow, String Budget);
+    String SearchItem(String Item, String Category);
 }

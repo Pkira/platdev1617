@@ -15,27 +15,15 @@ public class UserBean implements IUser {
     
     @EJB
     private ISystem AServer;
-    
-    
-    @Override
-    public ResultMessage Login(String Username, String Password) {  
-        
-        ResultMessage result = AServer.LoginUser(Username, Password);
-        
-        if(result == ResultMessage.LoginSucess)
-            this.Username = Username;
-        
-        return result;
-    }
 
+    @Override
+    public void setUsername(String Username) {
+        this.Username = Username;
+    }
+    
     @Override
     public boolean LogOff() {
         return AServer.LogOffUser(Username);
-    }
-
-    @Override
-    public ResultMessage Register(String Username, String Password) {
-        return AServer.RegisterUser(Username, Password);
     }
     
     @Override
@@ -59,16 +47,6 @@ public class UserBean implements IUser {
     public ResultMessage LoadBalance(double increment){
         return AServer.LoadBalance(Username, increment);
     }
-
-    @Override
-    public boolean CreateUsersBatch() {
-        
-        //admin        
-        AServer.RegisterUser("admin", "admin");
-        
-        
-        return true;
-    }
     
     @Override
     public ArrayList CheckMessage(){
@@ -79,4 +57,15 @@ public class UserBean implements IUser {
     public ResultMessage SendMessage(String Addressed, String Subject, String Message){
         return AServer.SendMessage(Username, Addressed, Subject, Message);
     }
+    
+    @Override
+    public ResultMessage CreateItem(String Item, String Category, String Desc, double Price, double BuyNow, String Budget){
+       return AServer.CreateItem(Username, Item, Category, Desc, Price, BuyNow, Budget);
+   }
+    
+    @Override
+    public String SearchItem(String Item, String Category){
+        return AServer.SearchItem(Item, Category);
+    }
+    
 }

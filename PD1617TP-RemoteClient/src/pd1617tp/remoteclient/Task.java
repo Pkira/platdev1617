@@ -14,6 +14,7 @@ import libraries.NewsLetterItem;
 import libraries.ResultMessage;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.Newsletter;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.User;
+import static pd1617tp.remoteclient.PD1617TPRemoteClient.Visitor;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.sc;
 
 /**
@@ -33,7 +34,7 @@ public class Task {
         System.out.print("Password: ");
         password = sc.nextLine();
         
-        ResultMessage result = User.Register(username, password);
+        ResultMessage result = Visitor.Register(username, password);
 
         System.out.println("\n[DONE] " + result.Message() + "\n");
         
@@ -54,12 +55,15 @@ public class Task {
         System.out.print("\n Password: ");
         password = sc.nextLine();
         
-        ResultMessage result = User.Login(username, password);
+        ResultMessage result = Visitor.Login(username, password);
 
         System.out.println("\n[DONE] " + result.Message() + "\n");
         
          if(ResultMessage.LoginSucess == result)
+         {
+            User.setUsername(username);
             return true;
+         }
         else
             return false;
     }
@@ -98,9 +102,12 @@ public class Task {
     public static void LoadBalance(){
         
         double increment;
+        String balance;
         
         System.out.print("Please insert the quantity you want load: ");
-        increment = sc.nextLong();
+        balance = sc.nextLine();
+        
+        increment = Double.parseDouble(balance);
         
         System.out.println(User.LoadBalance(increment));
     }
@@ -177,6 +184,55 @@ public class Task {
         message = sc.nextLine();
         
         System.out.println(User.SendMessage(addressed, subject, message));
+                
+    }
+    
+    public static void CreateItem(){
+        
+        String Item, Price, BuyNow, budget, Category, Desc;
+        double price, buynow;
+        
+        System.out.println("\nPlease complete all possible fields\n");
+
+        System.out.print("Name: ");
+        Item = sc.nextLine();
+        
+        System.out.print("\nCategory: ");   // é possível que se tenha de escolher opções
+        Category = sc.nextLine();
+        
+        System.out.print("\nDescription: ");
+        Desc = sc.nextLine();
+        
+        System.out.print("\nStart Price: ");
+        Price = sc.nextLine();
+        
+        System.out.print("\nBuy Now Price: ");
+        BuyNow = sc.nextLine();
+        
+        System.out.print("\nAuction Budget: ");
+        budget = sc.nextLine();
+        
+        price = Double.parseDouble(Price);
+        buynow = Double.parseDouble(BuyNow);
+        
+        System.out.println(User.CreateItem(Item, Category, Desc, price, buynow, budget));
+                
+    }
+    
+    public static void SearchItem(){
+        
+        String Item, Category;
+        double price, buynow;
+        
+        System.out.println("\nSearch:\n");
+
+        System.out.print("Item Name: ");
+        Item = sc.nextLine();
+        
+        System.out.print("\nItem Category: ");   // é possível que se tenha de escolher opções
+        Category = sc.nextLine();
+        
+        System.out.print(User.SearchItem(Item, Category));
                 
     }
 }

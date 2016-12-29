@@ -4,10 +4,15 @@ import java.util.Date;
 
 public class Item {
 
-    int ID, StartPrice, BuyNowPrice;
-    String Name, Desc, Category;
+    int ID;
+    double StartPrice;
+    double BuyNowPrice;
+    String Name;
+    String Desc;
+    String Category;
+    String Owner;
     boolean State;
-    Date budget;
+    long AuctionDuration;
 
     public Item() {
     }
@@ -16,15 +21,26 @@ public class Item {
         this.ID = ID;
     }
 
+    public Item(int ID, double StartPrice, double BuyNowPrice, String Name, String Desc, String Category, String Owner){
+        this.ID = ID;
+        this.StartPrice = StartPrice;
+        this.BuyNowPrice = BuyNowPrice;
+        this.Name = Name;
+        this.Desc = Desc;
+        this.Category = Category;
+        this.State = false;
+        this.Owner = Owner;
+    }
+
     public int getID() {
         return ID;
     }
 
-    public int getStartPrice() {
+    public double getStartPrice() {
         return StartPrice;
     }
 
-    public int getBuyNowPrice() {
+    public double getBuyNowPrice() {
         return BuyNowPrice;
     }
 
@@ -44,15 +60,19 @@ public class Item {
         return State;
     }
 
-    public Date getBudget() {
-        return budget;
+    public String getOwner() {
+        return Owner;
     }
 
-    public void setStartPrice(int StartPrice) {
+    public void setOwner(String Owner) {
+        this.Owner = Owner;
+    }
+    
+    public void setStartPrice(double StartPrice) {
         this.StartPrice = StartPrice;
     }
 
-    public void setBuyNowPrice(int BuyNowPrice) {
+    public void setBuyNowPrice(double BuyNowPrice) {
         this.BuyNowPrice = BuyNowPrice;
     }
 

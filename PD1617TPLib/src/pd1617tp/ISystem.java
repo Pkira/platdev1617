@@ -22,4 +22,6 @@ public interface ISystem {
      NewsLetter GetNewsletter();
      ArrayList CheckMessage(String Username);
      ResultMessage SendMessage(String Username, String Addressed, String Subject, String Message);
+     ResultMessage CreateItem(String Username, String Item, String Category, String Desc, double Price, double BuyNow, String Budget);
+     String SearchItem(String Item, String Category);
 }
