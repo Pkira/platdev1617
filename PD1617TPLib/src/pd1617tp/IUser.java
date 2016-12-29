@@ -18,6 +18,5 @@ public interface IUser {
     ResultMessage LoadBalance(double increment);
     ArrayList CheckMessage();
     ResultMessage SendMessage(String Addressed, String Subject, String Message);
-    ResultMessage CreateItem(String Item, String Category, String Desc, double Price, double BuyNow, String Budget);
-    String SearchItem(String Item, String Category);
+    String getUsername();
 }

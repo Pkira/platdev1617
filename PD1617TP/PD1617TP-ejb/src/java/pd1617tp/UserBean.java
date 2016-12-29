@@ -17,6 +17,11 @@ public class UserBean implements IUser {
     private ISystem AServer;
 
     @Override
+    public String getUsername(){
+        return Username;
+    }
+    
+    @Override
     public ResultMessage Login(String Username, String Password) {  
         
         ResultMessage result = AServer.LoginUser(Username, Password);
@@ -62,16 +67,6 @@ public class UserBean implements IUser {
     @Override
     public ResultMessage SendMessage(String Addressed, String Subject, String Message){
         return AServer.SendMessage(Username, Addressed, Subject, Message);
-    }
-    
-    @Override
-    public ResultMessage CreateItem(String Item, String Category, String Desc, double Price, double BuyNow, String Budget){
-       return AServer.CreateItem(Username, Item, Category, Desc, Price, BuyNow, Budget);
-   }
-    
-    @Override
-    public String SearchItem(String Item, String Category){
-        return AServer.SearchItem(Item, Category);
     }
     
 }

@@ -15,6 +15,7 @@ import libraries.ResultMessage;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.Newsletter;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.User;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.Visitor;
+import static pd1617tp.remoteclient.PD1617TPRemoteClient.Item;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.sc;
 
 /**
@@ -186,13 +187,13 @@ public class Task {
     
     public static void CreateItem(){
         
-        String Item, Price, BuyNow, budget, Category, Desc;
+        String IItem, Price, BuyNow, budget, Category, Desc;
         double price, buynow;
         
         System.out.println("\nPlease complete all possible fields\n");
 
         System.out.print("Name: ");
-        Item = sc.nextLine();
+        IItem = sc.nextLine();
         
         System.out.print("\nCategory: ");   // é possível que se tenha de escolher opções
         Category = sc.nextLine();
@@ -212,24 +213,24 @@ public class Task {
         price = Double.parseDouble(Price);
         buynow = Double.parseDouble(BuyNow);
         
-        System.out.println(User.CreateItem(Item, Category, Desc, price, buynow, budget));
+        System.out.println(Item.CreateItem(User.getUsername(), IItem, Category, Desc, price, buynow, budget));
                 
     }
     
     public static void SearchItem(){
         
-        String Item, Category;
+        String IItem, Category;
         double price, buynow;
         
         System.out.println("\nSearch:\n");
 
         System.out.print("Item Name: ");
-        Item = sc.nextLine();
+        IItem = sc.nextLine();
         
         System.out.print("\nItem Category: ");   // é possível que se tenha de escolher opções
         Category = sc.nextLine();
         
-        System.out.print(User.SearchItem(Item, Category));
+        System.out.print(Item.SearchItem(IItem, Category));
                 
     }
 }

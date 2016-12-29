@@ -12,6 +12,7 @@ import pd1617tp.IAdmin;
 import pd1617tp.INewsLetter;
 import pd1617tp.IUser;
 import pd1617tp.IVisitor;
+import pd1617tp.IItem;
 
 
 public class PD1617TPRemoteClient {
@@ -20,6 +21,7 @@ public class PD1617TPRemoteClient {
     public static INewsLetter Newsletter;
     public static IVisitor Visitor;
     public static IAdmin Admin;
+    public static IItem Item;
     
     static Scanner sc = new Scanner(System.in);
   
@@ -47,6 +49,7 @@ public class PD1617TPRemoteClient {
         String NewsLetterBean = "java:global/PD1617TP/PD1617TP-ejb/NewsLetterBean!pd1617tp.INewsLetter";
         String SessionAdminBean = "java:global/PD1617TP/PD1617TP-ejb/AdminBean!pd1617tp.IAdmin";
         String SessionVisitorBean = "java:global/PD1617TP/PD1617TP-ejb/VisitorBean!pd1617tp.IVisitor";
+        String ItemBean = "java:global/PD1617TP/PD1617TP-ejb/ItemBean!pd1617tp.IItem";
 
         try {
             System.out.println("[Info] Starting lookup");
@@ -62,6 +65,9 @@ public class PD1617TPRemoteClient {
             
             Object lookupVisitor = ctx.lookup(SessionVisitorBean);
             Visitor =(IVisitor)lookupVisitor;
+            
+            Object lookupItem = ctx.lookup(ItemBean);
+            Item =(IItem)lookupItem;
         }
         catch (NamingException e) {
             
