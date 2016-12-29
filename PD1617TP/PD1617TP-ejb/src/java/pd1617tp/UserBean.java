@@ -17,8 +17,14 @@ public class UserBean implements IUser {
     private ISystem AServer;
 
     @Override
-    public void setUsername(String Username) {
-        this.Username = Username;
+    public ResultMessage Login(String Username, String Password) {  
+        
+        ResultMessage result = AServer.LoginUser(Username, Password);
+        
+        if(result == ResultMessage.LoginSucess)
+            this.Username = Username;
+            
+        return result;
     }
     
     @Override

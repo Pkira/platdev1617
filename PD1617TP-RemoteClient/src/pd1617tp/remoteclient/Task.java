@@ -55,15 +55,12 @@ public class Task {
         System.out.print("\n Password: ");
         password = sc.nextLine();
         
-        ResultMessage result = Visitor.Login(username, password);
+        ResultMessage result = User.Login(username, password);
 
         System.out.println("\n[DONE] " + result.Message() + "\n");
         
          if(ResultMessage.LoginSucess == result)
-         {
-            User.setUsername(username);
             return true;
-         }
         else
             return false;
     }

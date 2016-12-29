@@ -10,7 +10,7 @@ import javax.jms.Message;
 @Remote
 public interface IUser {
     
-    void setUsername(String Username);
+    ResultMessage Login(String name, String password);
     boolean LogOff();
     String SeeProfile();
     ResultMessage UpdateProfile(String Address);
