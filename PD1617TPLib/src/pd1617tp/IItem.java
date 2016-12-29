@@ -1,6 +1,7 @@
 
 package pd1617tp;
 
+import java.util.ArrayList;
 import javax.ejb.Remote;
 import libraries.ResultMessage;
 
@@ -9,5 +10,5 @@ import libraries.ResultMessage;
 public interface IItem {
     
     ResultMessage CreateItem(String Owner, String Item, String Category, String Desc, double Price, double BuyNow, String Budget);
-    String SearchItem(String Item, String Category);
+    ArrayList SearchItem(String Item, String Category);
 }

@@ -31,8 +31,11 @@ public class SystemBean implements ISystem {
     private NewsLetter Newsletter = new NewsLetter();
     private HashMap<String,User> Users = new HashMap<>();
     private FactoryDB Factory = new FactoryDB();
-    private ArrayList<Item> Itens = new ArrayList<Item>();
-    private int MessageID = 1, ItemID = 1;
+    private ArrayList<Item> Itenss = new ArrayList<Item>();
+    private HashMap<Long,Item> Itens = new HashMap<>();
+    private int MessageID = 1;
+    private long ItemID = 1;
+    
       
     @Override
     public ResultMessage LoginUser(String Username, String Password) {
@@ -106,8 +109,7 @@ public class SystemBean implements ISystem {
     }
     
     @Override
-    public boolean LogOffUser(String Username)
-    {
+    public boolean LogOffUser(String Username){
         //validate input
         if(Username == null)
             return false;
@@ -127,8 +129,7 @@ public class SystemBean implements ISystem {
     }
     
     @Override
-    public String SeeProfile(String Username)
-    {
+    public String SeeProfile(String Username){
         User user =Users.get(Username);
         
         String msg = "Username:  " + user.getName() + "\nAddress:  " + user.getAddress() + "\nBalance:  " + user.getBalance() + "\n";
@@ -137,15 +138,21 @@ public class SystemBean implements ISystem {
     }
 
     @Override
-    public ResultMessage UpdateProfile(String Username, String Address)
-    {
+    public ResultMessage UpdateProfile(String Username, String Address, String password){
         User user =Users.get(Username);
         
-        if(Address != null){
+        if(!Address.contentEquals("")){
             user.setAddress(Address);
+            if(!password.contentEquals(""))
+                user.setPassword(password);
             return ResultMessage.UpdateProfileValid;
         }
-        
+        else
+            if(!password.contentEquals("")){
+                user.setPassword(password);
+                return ResultMessage.UpdateProfileValid;
+            }
+                    
         return ResultMessage.UpdateProfileInvalid;    
     }
     
@@ -167,8 +174,7 @@ public class SystemBean implements ISystem {
         
         return ResultMessage.LoadBalanceInvalid;   
     }
-    
-    
+        
     @PostConstruct
     public void loadstate(){
         try (ObjectInputStream ois =
@@ -182,7 +188,7 @@ public class SystemBean implements ISystem {
     }
     
     @PreDestroy
-    public void saveState() {
+    public void saveState(){
         try (ObjectOutputStream oos =
                 new ObjectOutputStream(
                     new BufferedOutputStream(
@@ -195,7 +201,7 @@ public class SystemBean implements ISystem {
     }
 
     @Override
-    public NewsLetter GetNewsletter() {
+    public NewsLetter GetNewsletter(){
         return this.Newsletter;
     }
     
@@ -228,10 +234,10 @@ public class SystemBean implements ISystem {
     public ResultMessage CreateItem(String Username, String Item, String Category, String Desc, double Price, double BuyNow, String Budget) {
         
         Item item = new Item(ItemID, Price, BuyNow, Item, Desc, Category, Username);
-        
+        String aux = "";
         if(item != null)
         {
-            Itens.add(item);
+            Itens.put(ItemID, item);
             ItemID++;
             return ResultMessage.CreateItemSuccess;
         }  
@@ -240,27 +246,20 @@ public class SystemBean implements ISystem {
     }
 
     @Override
-    public String SearchItem(String Item, String Category){
+    public ArrayList SearchItem(String Item, String Category){
         
-        String result = "Doesn't existe this itens";
-        
-        if(!Itens.isEmpty()){  
-            for(int i = 0; i < Itens.size(); i++)
-                if(Itens.get(i).getName().contains(Item))
-                    if(Itens.get(i).getCategory().contains(Category)){
-                        if(result.contains("Doesn't existe this itens"))
-                            result = "";
-                        result = result + "\nItem:\n Name: " + Itens.get(i).getName() + "\n";
-                        result = result + " Category: " + Itens.get(i).getCategory() + "\n";
-                        result = result + " Description: " + Itens.get(i).getDesc() + "\n";
-                        result = result + " Start Price: " + Itens.get(i).getStartPrice() + "\n";
-                        result = result + " Buy Now Price: " + Itens.get(i).getBuyNowPrice() + "\n";
-                        result = result + " Owner: " + Itens.get(i).getOwner() + "\n\n";
-                    }
-            return result;
-        }
-        
-        return "Doesn't existe itens";
+        ArrayList<Item> Aux = new ArrayList<>();
+        Aux = null;
+        Item help = new Item();
+        if(!Itens.isEmpty())  
+            for(long i = 1; i <= Itens.size(); i++)
+            {
+                help = Itens.get(i);
+                if(help!=null)
+                    if(help.getName().contains(Item))
+                        if(help.getCategory().contains(Category))
+                            Aux.add(help);
+            }
+        return Aux;
     }
-
 }

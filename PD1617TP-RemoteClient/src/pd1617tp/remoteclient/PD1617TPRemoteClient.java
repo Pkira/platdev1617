@@ -9,6 +9,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import libraries.ResultMessage;
 import pd1617tp.IAdmin;
+import pd1617tp.IAuction;
 import pd1617tp.INewsLetter;
 import pd1617tp.IUser;
 import pd1617tp.IVisitor;
@@ -22,6 +23,7 @@ public class PD1617TPRemoteClient {
     public static IVisitor Visitor;
     public static IAdmin Admin;
     public static IItem Item;
+    public static IAuction Auction;
     
     static Scanner sc = new Scanner(System.in);
   
@@ -50,6 +52,7 @@ public class PD1617TPRemoteClient {
         String SessionAdminBean = "java:global/PD1617TP/PD1617TP-ejb/AdminBean!pd1617tp.IAdmin";
         String SessionVisitorBean = "java:global/PD1617TP/PD1617TP-ejb/VisitorBean!pd1617tp.IVisitor";
         String ItemBean = "java:global/PD1617TP/PD1617TP-ejb/ItemBean!pd1617tp.IItem";
+        String AuctionBean = "java:global/PD1617TP/PD1617TP-ejb/AuctionBean!pd1617tp.IAuction";
 
         try {
             System.out.println("[Info] Starting lookup");
@@ -68,6 +71,9 @@ public class PD1617TPRemoteClient {
             
             Object lookupItem = ctx.lookup(ItemBean);
             Item =(IItem)lookupItem;
+            
+            Object lookupAuction = ctx.lookup(AuctionBean);
+            Auction =(IAuction)lookupAuction;
         }
         catch (NamingException e) {
             

@@ -16,12 +16,12 @@ public interface ISystem {
      ResultMessage RegisterUser(String Username, String Password);
      boolean LogOffUser(String Username);
      String SeeProfile(String Username);
-     ResultMessage UpdateProfile(String Username, String Address);
+     ResultMessage UpdateProfile(String Username, String Address, String password);
      String CheckBalance(String Username);
      ResultMessage LoadBalance(String Username, double increment);
      NewsLetter GetNewsletter();
      ArrayList CheckMessage(String Username);
      ResultMessage SendMessage(String Username, String Addressed, String Subject, String Message);
      ResultMessage CreateItem(String Username, String Item, String Category, String Desc, double Price, double BuyNow, String Budget);
-     String SearchItem(String Item, String Category);
+     ArrayList SearchItem(String Item, String Category);
 }

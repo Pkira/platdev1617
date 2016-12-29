@@ -1,10 +1,8 @@
 package libraries;
 
-import java.util.Date;
-
 public class Item {
 
-    int ID;
+    long ID;
     double StartPrice;
     double BuyNowPrice;
     String Name;
@@ -21,7 +19,7 @@ public class Item {
         this.ID = ID;
     }
 
-    public Item(int ID, double StartPrice, double BuyNowPrice, String Name, String Desc, String Category, String Owner){
+    public Item(long ID, double StartPrice, double BuyNowPrice, String Name, String Desc, String Category, String Owner){
         this.ID = ID;
         this.StartPrice = StartPrice;
         this.BuyNowPrice = BuyNowPrice;
@@ -32,7 +30,7 @@ public class Item {
         this.Owner = Owner;
     }
 
-    public int getID() {
+    public long getID() {
         return ID;
     }
 

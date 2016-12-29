@@ -1,6 +1,7 @@
 
 package pd1617tp;
 
+import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import libraries.ResultMessage;
@@ -18,7 +19,7 @@ public class ItemBean implements IItem {
    }
     
     @Override
-    public String SearchItem(String Item, String Category){
+    public ArrayList SearchItem(String Item, String Category){
         return AServer.SearchItem(Item, Category);
     }
 }

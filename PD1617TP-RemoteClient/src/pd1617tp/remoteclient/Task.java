@@ -8,14 +8,16 @@ package pd1617tp.remoteclient;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import libraries.Item;
 import libraries.Messages;
 import libraries.NewsLetter;
 import libraries.NewsLetterItem;
 import libraries.ResultMessage;
+import static pd1617tp.remoteclient.PD1617TPRemoteClient.Item;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.Newsletter;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.User;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.Visitor;
-import static pd1617tp.remoteclient.PD1617TPRemoteClient.Item;
+import static pd1617tp.remoteclient.PD1617TPRemoteClient.Auction;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.sc;
 
 /**
@@ -85,12 +87,15 @@ public class Task {
     
     public static void UpdateData(){
         
-        String Address;
+        String Address, password;
         
-        System.out.println("Please insert the new Address: ");
-        Address = sc.nextLine();        
+        System.out.println("Please insert the new Data: \n");
+        System.out.println("Address: ");
+        Address = sc.nextLine();
+        System.out.println("Password: ");
+        password = sc.nextLine();        
         
-        System.out.println(User.UpdateProfile(Address));
+        System.out.println(User.UpdateProfile(Address, password));
     }
     
     public static void CheckBalance(){
@@ -207,7 +212,7 @@ public class Task {
         System.out.print("\nBuy Now Price: ");
         BuyNow = sc.nextLine();
         
-        System.out.print("\nAuction Budget: ");
+        System.out.print("\nAuction duration: ");
         budget = sc.nextLine();
         
         price = Double.parseDouble(Price);
@@ -220,7 +225,6 @@ public class Task {
     public static void SearchItem(){
         
         String IItem, Category;
-        double price, buynow;
         
         System.out.println("\nSearch:\n");
 
@@ -230,7 +234,27 @@ public class Task {
         System.out.print("\nItem Category: ");   // é possível que se tenha de escolher opções
         Category = sc.nextLine();
         
-        System.out.print(Item.SearchItem(IItem, Category));
-                
+        ArrayList<Item> Aux = null;
+        Aux = Item.SearchItem(IItem, Category);
+        
+        if(Aux != null){
+            System.out.print("\nInfo of the Itens found: \n");
+            for(int i = 0; i < Aux.size(); i++){
+                System.out.print("\n Name: " + Aux.get(i).getName() + "\n");
+                System.out.print(" Category: " + Aux.get(i).getCategory() + "\n");
+                System.out.print(" Description: " + Aux.get(i).getDesc() + "\n");
+                System.out.print(" Start price: " + Aux.get(i).getStartPrice() + "\n");
+                System.out.print(" Buy now price: " + Aux.get(i).getBuyNowPrice() + "\n");
+                if(!Aux.get(i).isState())
+                    System.out.print(" State: Isn't in a Auction\n");
+                else
+                    System.out.print(" State: Is in a Auction\n");
+                System.out.print(" Owner: " + Aux.get(i).getOwner() + "\n");
+            }                
+        }
+        else
+            System.out.println("There is no Itens");
+        
+        System.out.println("");                
     }
 }
