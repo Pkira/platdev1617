@@ -8,8 +8,8 @@ import java.util.Scanner;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import libraries.ResultMessage;
-import pd1617tp.INewsLetter;
-import pd1617tp.IUser;
+import pd1617tplib.INewsLetter;
+import pd1617tplib.IUser;
 
 
 public class PD1617TPRemoteClient {
@@ -33,14 +33,15 @@ public class PD1617TPRemoteClient {
         try {
             ctx = new InitialContext(prop);
         }
-        catch (NamingException e) {
+        catch (Exception e) {
                 System.out.println(e.getMessage());
                 System.exit(1);
         }
+        
         System.out.println("[Info] InitialContext sucefull created.");
 
-        String SessionUserBean = "java:global/PD1617TP/PD1617TP-ejb/UserBean!pd1617tp.IUser";
-         String NewsLetterBean = "java:global/PD1617TP/PD1617TP-ejb/NewsLetterBean!pd1617tp.INewsLetter";
+        String SessionUserBean = "java:global/PD1617TP/PD1617TP-ejb/UserBean!pd1617tplib.IUser";
+        String NewsLetterBean = "java:global/PD1617TP/PD1617TP-ejb/NewsLetterBean!pd1617tplib.INewsLetter";
 
         try {
             System.out.println("[Info] Starting lookup");
@@ -51,7 +52,7 @@ public class PD1617TPRemoteClient {
             Object lookupNewsLetter = ctx.lookup(NewsLetterBean);
             Newsletter =(INewsLetter)lookupNewsLetter;
         }
-        catch (NamingException e) {
+        catch (Exception e) {
             
             System.out.println("[Error] Lookup ended with the following error:");
             

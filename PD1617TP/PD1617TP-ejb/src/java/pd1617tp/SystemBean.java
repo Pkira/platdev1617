@@ -1,6 +1,7 @@
 
 package pd1617tp;
 
+import pd1617tplib.ISystem;
 import libraries.ResultMessage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -170,11 +171,13 @@ public class SystemBean implements ISystem {
     
     @PostConstruct
     public void loadstate(){
-        try (ObjectInputStream ois =
-                new ObjectInputStream(
-                    new BufferedInputStream(
-                        new FileInputStream("/tmp/Users")))){
-            Users = (HashMap<String,User>) ois.readObject();       
+        try 
+        {
+            ObjectInputStream loadUsers =new ObjectInputStream(new BufferedInputStream(new FileInputStream("/tmp/Users")));
+            Users = (HashMap<String,User>) loadUsers.readObject(); 
+            
+            ObjectInputStream loadNewsLetter =new ObjectInputStream(new BufferedInputStream(new FileInputStream("/tmp/NewsLetter")));
+            Users = (HashMap<String,User>) loadNewsLetter.readObject();
         }
         catch (Exception ex){
         }
@@ -182,11 +185,14 @@ public class SystemBean implements ISystem {
     
     @PreDestroy
     public void saveState() {
-        try (ObjectOutputStream oos =
-                new ObjectOutputStream(
-                    new BufferedOutputStream(
-                        new FileOutputStream("/tmp/Users")))){
-            oos.writeObject(Users);       
+        
+        try 
+        {
+            ObjectOutputStream saveUsers = new ObjectOutputStream( new BufferedOutputStream(new FileOutputStream("/tmp/Users")));
+            saveUsers.writeObject(Users);  
+            
+            ObjectOutputStream saveNewsLetter = new ObjectOutputStream( new BufferedOutputStream(new FileOutputStream("/tmp/NewsLetter")));
+            saveNewsLetter.writeObject(Newsletter);  
         }
         catch(Exception ex){
         }

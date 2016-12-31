@@ -1,6 +1,8 @@
 
 package pd1617tp;
 
+import pd1617tplib.ISystem;
+import pd1617tplib.IUser;
 import libraries.ResultMessage;
 import java.util.ArrayList;
 import javax.ejb.EJB;
@@ -8,7 +10,7 @@ import javax.ejb.Stateful;
 import javax.jms.Message;
 
 
-@Stateful
+@Stateful(name="IUser", mappedName="ejb/IUser")
 public class UserBean implements IUser {
 
     String Username;
