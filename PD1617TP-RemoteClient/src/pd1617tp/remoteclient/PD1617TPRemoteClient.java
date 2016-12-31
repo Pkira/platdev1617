@@ -8,14 +8,22 @@ import java.util.Scanner;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import libraries.ResultMessage;
-import pd1617tplib.INewsLetter;
-import pd1617tplib.IUser;
+import pd1617tp.IAdmin;
+import pd1617tp.IAuction;
+import pd1617tp.INewsLetter;
+import pd1617tp.IUser;
+import pd1617tp.IVisitor;
+import pd1617tp.IItem;
 
 
 public class PD1617TPRemoteClient {
 
     public static IUser User;
     public static INewsLetter Newsletter;
+    public static IVisitor Visitor;
+    public static IAdmin Admin;
+    public static IItem Item;
+    public static IAuction Auction;
     
     static Scanner sc = new Scanner(System.in);
   
@@ -40,8 +48,12 @@ public class PD1617TPRemoteClient {
         
         System.out.println("[Info] InitialContext sucefull created.");
 
-        String SessionUserBean = "java:global/PD1617TP/PD1617TP-ejb/UserBean!pd1617tplib.IUser";
-        String NewsLetterBean = "java:global/PD1617TP/PD1617TP-ejb/NewsLetterBean!pd1617tplib.INewsLetter";
+        String SessionUserBean = "java:global/PD1617TP/PD1617TP-ejb/UserBean!pd1617tp.IUser";
+        String NewsLetterBean = "java:global/PD1617TP/PD1617TP-ejb/NewsLetterBean!pd1617tp.INewsLetter";
+        String SessionAdminBean = "java:global/PD1617TP/PD1617TP-ejb/AdminBean!pd1617tp.IAdmin";
+        String SessionVisitorBean = "java:global/PD1617TP/PD1617TP-ejb/VisitorBean!pd1617tp.IVisitor";
+        String ItemBean = "java:global/PD1617TP/PD1617TP-ejb/ItemBean!pd1617tp.IItem";
+        String AuctionBean = "java:global/PD1617TP/PD1617TP-ejb/AuctionBean!pd1617tp.IAuction";
 
         try {
             System.out.println("[Info] Starting lookup");
@@ -51,6 +63,18 @@ public class PD1617TPRemoteClient {
             
             Object lookupNewsLetter = ctx.lookup(NewsLetterBean);
             Newsletter =(INewsLetter)lookupNewsLetter;
+            
+            Object lookupAdmin = ctx.lookup(SessionAdminBean);
+            Admin =(IAdmin)lookupAdmin;
+            
+            Object lookupVisitor = ctx.lookup(SessionVisitorBean);
+            Visitor =(IVisitor)lookupVisitor;
+            
+            Object lookupItem = ctx.lookup(ItemBean);
+            Item =(IItem)lookupItem;
+            
+            Object lookupAuction = ctx.lookup(AuctionBean);
+            Auction =(IAuction)lookupAuction;
         }
         catch (Exception e) {
             
@@ -137,10 +161,13 @@ public class PD1617TPRemoteClient {
             
             switch(option){
                 case 1:
-                    MenuUserPerfil();
+                    MenuUserProfile();
                     break;
                 case 2:
                     MenuUserMessage();
+                    break;
+                case 3:
+                    MenuUserItem();
                     break;
                 case 5:
                     Task.ShowNewsLetter();
@@ -156,14 +183,14 @@ public class PD1617TPRemoteClient {
         }
     }
     
-    public static void MenuUserPerfil(){
+    public static void MenuUserProfile(){
         
         int option;        
         boolean continueMenu = true;
         
         while(continueMenu){
             
-            Menu.printMenuUserPerfil();
+            Menu.printMenuUserProfile();
             option = getOption(5);
         
             switch(option){
@@ -215,7 +242,55 @@ public class PD1617TPRemoteClient {
             }
         }    
     }
-    
+   
+        public static void MenuUserItem(){
+        
+        int option;        
+        boolean continueMenu = true;
+        
+        while(continueMenu){
+            
+            Menu.printMenuUserItem();
+            option = getOption(10);
+        
+            switch(option){
+                case 1:
+                    Task.CreateItem();
+                    break;
+                case 3:
+                    Task.SearchItem();
+                    break;
+                case 10:
+                    continueMenu = false;
+                    break;
+                default:
+                    System.out.println("[ERROR] Menu error");
+                    break;
+            }
+        }    
+    }
+
+    public static void MenuUserAuction(){
+        
+        int option;        
+        boolean continueMenu = true;
+        
+        while(continueMenu){
+            
+            Menu.printMenuUserAuction();
+            option = getOption(5);
+        
+            switch(option){
+                case 5:
+                    continueMenu = false;
+                    break;
+                default:
+                    System.out.println("[ERROR] Menu error");
+                    break;
+            }
+        }    
+    }    
+        
     public static int getOption(int max){
         
         int option;

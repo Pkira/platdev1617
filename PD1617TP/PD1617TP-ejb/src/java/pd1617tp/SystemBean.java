@@ -1,7 +1,7 @@
 
 package pd1617tp;
 
-import pd1617tplib.ISystem;
+import pd1617tp.ISystem;
 import libraries.ResultMessage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -19,6 +19,7 @@ import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import libraries.FactoryDB;
+import libraries.Item;
 import libraries.NewsLetter;
 import libraries.NewsLetterItem;
 import libraries.User;
@@ -31,7 +32,11 @@ public class SystemBean implements ISystem {
     private NewsLetter Newsletter = new NewsLetter();
     private HashMap<String,User> Users = new HashMap<>();
     private FactoryDB Factory = new FactoryDB();
+    private ArrayList<Item> Itenss = new ArrayList<Item>();
+    private HashMap<Long,Item> Itens = new HashMap<>();
     private int MessageID = 1;
+    private long ItemID = 1;
+    
       
     @Override
     public ResultMessage LoginUser(String Username, String Password) {
@@ -71,8 +76,7 @@ public class SystemBean implements ISystem {
     }
     
     @Override
-    public ResultMessage RegisterUser(String Username, String Password)
-    {
+    public ResultMessage RegisterUser(String Username, String Password){
         //validate input
         if(Username == null || Password == null)
             return ResultMessage.RegisterInvalid;
@@ -106,8 +110,7 @@ public class SystemBean implements ISystem {
     }
     
     @Override
-    public boolean LogOffUser(String Username)
-    {
+    public boolean LogOffUser(String Username){
         //validate input
         if(Username == null)
             return false;
@@ -127,8 +130,7 @@ public class SystemBean implements ISystem {
     }
     
     @Override
-    public String SeePerfil(String Username)
-    {
+    public String SeeProfile(String Username){
         User user =Users.get(Username);
         
         String msg = "Username:  " + user.getName() + "\nAddress:  " + user.getAddress() + "\nBalance:  " + user.getBalance() + "\n";
@@ -137,16 +139,22 @@ public class SystemBean implements ISystem {
     }
 
     @Override
-    public ResultMessage UpdatePerfil(String Username, String Address)
-    {
+    public ResultMessage UpdateProfile(String Username, String Address, String password){
         User user =Users.get(Username);
         
-        if(Address != null){
+        if(!Address.contentEquals("")){
             user.setAddress(Address);
-            return ResultMessage.UpdatePerfilValid;
+            if(!password.contentEquals(""))
+                user.setPassword(password);
+            return ResultMessage.UpdateProfileValid;
         }
-        
-        return ResultMessage.UpdatePerfilInvalid;    
+        else
+            if(!password.contentEquals("")){
+                user.setPassword(password);
+                return ResultMessage.UpdateProfileValid;
+            }
+                    
+        return ResultMessage.UpdateProfileInvalid;    
     }
     
     @Override
@@ -167,8 +175,7 @@ public class SystemBean implements ISystem {
         
         return ResultMessage.LoadBalanceInvalid;   
     }
-    
-    
+        
     @PostConstruct
     public void loadstate(){
         try 
@@ -200,7 +207,7 @@ public class SystemBean implements ISystem {
     }
 
     @Override
-    public NewsLetter GetNewsletter() {
+    public NewsLetter GetNewsletter(){
         return this.Newsletter;
     }
     
@@ -227,5 +234,37 @@ public class SystemBean implements ISystem {
         }
         else
             return ResultMessage.SendMessageNoUser;            
+    }
+
+    @Override   // AINDA COM MUITAS CORRECÇÕES A FAZER
+    public ResultMessage CreateItem(String Username, String Item, String Category, String Desc, double Price, double BuyNow, String Budget) {
+        
+        Item item = new Item(ItemID, Price, BuyNow, Item, Desc, Category, Username);
+        String aux = "";
+        if(item != null)
+        {
+            Itens.put(ItemID, item);
+            ItemID++;
+            return ResultMessage.CreateItemSuccess;
+        }  
+        
+        return ResultMessage.CreateItemUnsuccess;
+    }
+
+    @Override
+    public ArrayList SearchItem(String Item, String Category){
+        
+        ArrayList<Item> Aux = new ArrayList<>();
+        Item help = new Item();
+        if(!Itens.isEmpty())  
+            for(long i = 1; i <= Itens.size(); i++)
+            {
+                help = Itens.get(i);
+                if(help!=null)
+                    if(help.getName().contains(Item))
+                        if(help.getCategory().contains(Category))
+                            Aux.add(help);
+            }
+        return Aux;
     }
 }

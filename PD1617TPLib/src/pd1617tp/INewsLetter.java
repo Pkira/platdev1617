@@ -1,5 +1,5 @@
 
-package pd1617tplib;
+package pd1617tp;
 
 import javax.ejb.Remote;
 import libraries.NewsLetter;

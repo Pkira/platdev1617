@@ -127,6 +127,10 @@ public class User implements Serializable{
      public void setLogged(boolean Logged) {
         this.Logged = Logged;
     }
+
+    public void setPassword(String Password) {
+        this.Password = Password;
+    }
     
     @Override
     public int hashCode(){

@@ -10,9 +10,9 @@ import java.util.Date;
 public class Auction {
     
     int ID;
-    ArrayList<String> Action;
-    Item insale = new Item();
-    boolean state;
+    ArrayList<String> AuctionLog; //
+    Item insale = new Item(); //long id item
+    boolean state;            
     Date StartDate, EndDate;
 
     public Auction() {
@@ -21,15 +21,15 @@ public class Auction {
     public Auction(int ID, Item sale) {
         this.ID = ID;
         this.insale = sale;
-        this.Action = null;
+        this.AuctionLog = null;
     }
 
     public int getID() {
         return ID;
     }
 
-    public ArrayList<String> getAction() {
-        return Action;
+    public ArrayList<String> getAuctionLong() {
+        return AuctionLog;
     }
 
     public Item getInsale() {
@@ -49,7 +49,7 @@ public class Auction {
     }
 
     public void setAction(ArrayList<String> Action) {
-        this.Action = Action;
+        this.AuctionLog = Action;
     }
 
     public void setState(boolean state) {

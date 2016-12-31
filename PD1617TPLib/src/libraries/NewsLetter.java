@@ -2,8 +2,6 @@ package libraries;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import libraries.NewsLetterItem;
-import libraries.NewsLetterItem;
 
 
 public class NewsLetter implements Serializable{

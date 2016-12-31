@@ -4,20 +4,18 @@ package pd1617tp;
 import libraries.ResultMessage;
 import java.util.ArrayList;
 import javax.ejb.Remote;
-import javax.jms.Message;
 
 
 @Remote
 public interface IUser {
     
     ResultMessage Login(String name, String password);
-    ResultMessage Register(String name, String password);
-    boolean CreateUsersBatch();
     boolean LogOff();
-    String SeePerfil();
-    ResultMessage UpdatePerfil(String Address);
+    String SeeProfile();
+    ResultMessage UpdateProfile(String Address, String password);
     String CheckBalance();
     ResultMessage LoadBalance(double increment);
     ArrayList CheckMessage();
     ResultMessage SendMessage(String Addressed, String Subject, String Message);
+    String getUsername();
 }
