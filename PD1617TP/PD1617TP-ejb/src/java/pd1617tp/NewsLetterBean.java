@@ -1,12 +1,14 @@
 
 package pd1617tp;
 
+import pd1617tplib.ISystem;
+import pd1617tplib.INewsLetter;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import libraries.NewsLetter;
 
 
-@Stateless
+@Stateless(name="INewsLetter", mappedName="ejb/INewsLetter")
 public class NewsLetterBean implements INewsLetter {
   
     @EJB
