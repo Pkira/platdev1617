@@ -1,12 +1,13 @@
 
 package pd1617tp;
 
+import pd1617tp.ISystem;
+import pd1617tp.IUser;
 import libraries.ResultMessage;
 import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.jms.Message;
-
 
 @Stateful
 public class UserBean implements IUser {
