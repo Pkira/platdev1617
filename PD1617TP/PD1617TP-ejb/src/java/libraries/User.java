@@ -15,8 +15,9 @@ public class User implements Serializable{
     String Username;
     String Password;
     String Address;   
-    double balance;
-    boolean state;
+    double Balance;
+    boolean AccountActivation;
+    boolean AccountSuspension;
     
     ArrayList<Messages> MsgList;
     List<Item> SellList;
@@ -34,8 +35,8 @@ public class User implements Serializable{
         this.Username = Username;
         this.Password = Password;
         this.Address = Address;
-        this.balance = 0;
-        this.state = true;
+        this.Balance = 0;
+        this.AccountActivation = false;
         this.SellList = new ArrayList<Item>();
         this.BuyList = new ArrayList<Item>();
         this.FollowList = new ArrayList<Item>();
@@ -73,15 +74,15 @@ public class User implements Serializable{
     }
 
     public double getBalance() {
-        return balance;
+        return Balance;
     }
     
     public ArrayList<Messages> getMsgList() {
         return MsgList;
     }
 
-    public boolean isState() {
-        return state;
+    public boolean getAccountActivation() {
+        return AccountActivation;
     }
 
     public List<Item> getSellList() {
@@ -105,11 +106,11 @@ public class User implements Serializable{
     }
 
     public void setBalance(double balance) {
-        this.balance = this.balance + balance;
+        this.Balance = this.Balance + balance;
     }
 
-    public void setState(boolean state) {
-        this.state = state;
+    public void setAccountActivation(boolean state) {
+        this.AccountActivation = state;
     }
 
     public void setSellList(List<Item> SellList) {
@@ -131,6 +132,15 @@ public class User implements Serializable{
     public void setPassword(String Password) {
         this.Password = Password;
     }
+
+    public boolean isAccountSuspension() {
+        return AccountSuspension;
+    }
+
+    public void setAccountSuspension(boolean AccountSuspension) {
+        this.AccountSuspension = AccountSuspension;
+    }
+    
     
     @Override
     public int hashCode(){

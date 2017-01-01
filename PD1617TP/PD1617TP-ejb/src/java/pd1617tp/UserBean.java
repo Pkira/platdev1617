@@ -6,6 +6,7 @@ import pd1617tp.IUser;
 import libraries.ResultMessage;
 import java.util.ArrayList;
 import javax.ejb.EJB;
+import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.jms.Message;
 
@@ -33,6 +34,7 @@ public class UserBean implements IUser {
         return result;
     }
     
+    @Remove
     @Override
     public boolean LogOff() {
         return AServer.LogOffUser(Username);
@@ -67,6 +69,14 @@ public class UserBean implements IUser {
     @Override
     public ResultMessage SendMessage(String Addressed, String Subject, String Message){
         return AServer.SendMessage(Username, Addressed, Subject, Message);
+    }
+
+    @Override
+    public boolean SuspendAccount() {
+        if(AServer.SuspendAccount(Username)== ResultMessage.AccountSuspended)
+            return true;
+        else
+            return false;
     }
     
 }

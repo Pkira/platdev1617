@@ -15,6 +15,7 @@ public class FactoryDB {
         UserList = new ArrayList<User>();
         
         User admin = new User("admin","admin","");
+        admin.setAccountActivation(true);
         UserList.add(admin);
     }
        

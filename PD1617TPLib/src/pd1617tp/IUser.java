@@ -18,4 +18,5 @@ public interface IUser {
     ArrayList CheckMessage();
     ResultMessage SendMessage(String Addressed, String Subject, String Message);
     String getUsername();
+    boolean SuspendAccount();
 }

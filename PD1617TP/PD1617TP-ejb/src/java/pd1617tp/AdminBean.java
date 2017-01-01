@@ -2,6 +2,7 @@ package pd1617tp;
 
 import java.util.ArrayList;
 import javax.ejb.EJB;
+import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import libraries.Notification;
 
@@ -15,7 +16,7 @@ public class AdminBean implements IAdmin {
     @EJB
     private ISystem AServer;
     
-    
+    @Remove
     @Override
     public boolean LogOff() {
         return AServer.LogOffUser(Username);

@@ -27,4 +27,5 @@ public interface ISystem {
      ArrayList SearchItem(String Item, String Category);
      ResultMessage CreateAuction(String Username, String Item, long id);
      ArrayList<Notification> GetNotifications();
+     ResultMessage SuspendAccount(String Username);
 }

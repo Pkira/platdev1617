@@ -4,6 +4,7 @@ package libraries;
 
 public enum ResultMessage {
     LoginSucess("Logged with sucess"),
+    LoginInvalidUsername("Invalid Username specified"),
     LoginInvalid("Invalid username or password"),
     LoginUserNotFound("User not found or invalid username/password"),
     LoginAllreadyLogged("User already logged"),
@@ -20,7 +21,13 @@ public enum ResultMessage {
     CreateItemSuccess("[INFO] The was created with success"),
     CreateItemUnsuccess("[INFO] The item creation have fail"),
     AuctionCreated("[INFO] Auction created with success"),
-    AuctionNotCreated("[INFO] You don´t have this Item or th Item does't exist");
+    AuctionNotCreated("[INFO] You don´t have this Item or the Item does't exist"),
+    AccountActivated("[INFO] Your account as been activated"),
+    AccountNotActivated("[INFO] Account not activated yet"),
+    AccountSuspended("[INFO] Your account as been suspended"),
+    AccountAllreadySuspended("[INFO] Your account as been suspended"),
+    AccountReActivated("[INFO] Your account as been re-activated");
+    
     
     private String Message;
     
