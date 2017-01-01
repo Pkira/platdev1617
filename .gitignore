@@ -1,6 +1,7 @@
 /PD1617TP/build/*
 /PD1617TP/dist/*
 /PD1617TP/nbproject/*
+/PD1617TP/nbproject/private/private.properties
 
 /PD1617TPLib/build/*
 /PD1617TPLib/dist/*
@@ -13,5 +14,7 @@
 /PD1617TP-RemoteClient/build/*
 /PD1617TP-RemoteClient/dist/*
 /PD1617TP-RemoteClient/nbproject/*
+
+
 
 
