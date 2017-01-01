@@ -1,23 +1,23 @@
 
 package pd1617tp;
 
-import pd1617tp.ISystem;
+import static com.sun.xml.ws.security.addressing.impl.policy.Constants.logger;
 import libraries.ResultMessage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.Remove;
 import javax.ejb.Singleton;
-import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.jms.Message;
 import libraries.Auction;
 import libraries.FactoryDB;
 import libraries.Item;
@@ -30,7 +30,7 @@ import libraries.Notification;
 
 @Singleton
 public class SystemBean implements ISystem {
-
+    
     private NewsLetter Newsletter = new NewsLetter();
     private HashMap<String,User> Users = new HashMap<>();
     private FactoryDB Factory = new FactoryDB();
@@ -57,6 +57,14 @@ public class SystemBean implements ISystem {
             boolean isLogged = user.isLogged();
             if(isLogged)    
                 return ResultMessage.LoginAllreadyLogged;
+            
+            boolean isUnverified = user.getAccountActivation();
+            if(!isUnverified)    
+                return ResultMessage.AccountNotActivated;
+            
+            boolean isSuspended = user.isAccountSuspension();
+            if(!isSuspended)    
+                return ResultMessage.AccountSuspended;
         }
         
         user = Factory.UserLogin(Username,Password);
@@ -181,25 +189,45 @@ public class SystemBean implements ISystem {
         
     @PostConstruct
     public void loadstate(){
-        try (ObjectInputStream ois =
-                new ObjectInputStream(
-                    new BufferedInputStream(
-                        new FileInputStream("/tmp/Users")))){
-            Users = (HashMap<String,User>) ois.readObject();       
+        try 
+        {           
+            ObjectInputStream NewsletterLoad =new ObjectInputStream(new BufferedInputStream(new FileInputStream("/tmp/Newsletter")));
+            Newsletter = (NewsLetter) NewsletterLoad.readObject();  
+            
+            ObjectInputStream UsersLoad =new ObjectInputStream(new BufferedInputStream(new FileInputStream("/tmp/Users")));
+            Users = (HashMap<String,User>) UsersLoad.readObject(); 
+            
+            ObjectInputStream ItensLoad =new ObjectInputStream(new BufferedInputStream(new FileInputStream("/tmp/Itens")));
+            Itens = (HashMap<Long,Item>) ItensLoad.readObject(); 
+            
+            ObjectInputStream AuctionsLoad =new ObjectInputStream(new BufferedInputStream(new FileInputStream("/tmp/Auctions")));
+            Auctions = (HashMap<Long,Auction>) AuctionsLoad.readObject(); 
+ 
         }
         catch (Exception ex){
+
         }
     }
     
     @PreDestroy
     public void saveState(){
-        try (ObjectOutputStream oos =
-                new ObjectOutputStream(
-                    new BufferedOutputStream(
-                        new FileOutputStream("/tmp/Users")))){
-            oos.writeObject(Users);       
+        try
+        { 
+            ObjectOutputStream NewsletterSave =new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("/tmp/Newsletter")));
+            NewsletterSave.writeObject(Newsletter);
+            
+            ObjectOutputStream usersSave =new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("/tmp/Users")));
+            usersSave.writeObject(Users);    
+            
+            ObjectOutputStream itensSave =new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("/tmp/Itens")));
+            itensSave.writeObject(Itens);
+            
+            ObjectOutputStream AuctionsSave =new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("/tmp/Auctions")));
+            AuctionsSave.writeObject(Auctions);
+            
         }
         catch(Exception ex){
+
         }
         
     }
@@ -309,6 +337,31 @@ public class SystemBean implements ISystem {
     @Override
     public ArrayList<Notification> GetNotifications() {
         return (ArrayList<Notification>) this.Notifications.values();
+    }
+
+    @Override
+    public ResultMessage SuspendAccount(String Username) {
+        
+        //validate input
+        if(Username == null)
+            return ResultMessage.LoginInvalidUsername;
+        
+        //get user from list
+        User user = Users.get(Username);
+        
+        if(user != null) 
+        {
+            boolean isSuspended = user.isAccountSuspension();
+            if(isSuspended)    
+                return ResultMessage.AccountAllreadySuspended;
+            else
+            {
+                user.setAccountSuspension(true);
+                return ResultMessage.AccountSuspended;
+            }
+        }
+        else
+            return ResultMessage.LoginInvalidUsername;
     }
     
     
