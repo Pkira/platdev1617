@@ -8,12 +8,15 @@
 /PD1617TPLib/nbproject/*
 
 /PD1617TP/PD1617TP-ejb/build/*
+/PD1617TP/PD1617TP-ejb/build/classes/META-INF/MANIFEST.MF
 /PD1617TP/PD1617TP-ejb/dist/*
 /PD1617TP/PD1617TP-ejb/nbproject/*
 
 /PD1617TP-RemoteClient/build/*
 /PD1617TP-RemoteClient/dist/*
 /PD1617TP-RemoteClient/nbproject/*
+
+
 
 
 

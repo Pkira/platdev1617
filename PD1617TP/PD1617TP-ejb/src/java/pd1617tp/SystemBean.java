@@ -35,6 +35,7 @@ public class SystemBean implements ISystem {
     private HashMap<String,User> Users = new HashMap<>();
     private FactoryDB Factory = new FactoryDB();
     private HashMap<Long,Item> Itens = new HashMap<>();
+    private HashMap<Integer,Messages> Messages = new HashMap<>();
     private HashMap<Long,Auction> Auctions = new HashMap<>();
     private HashMap<Long,Notification> Notifications = new HashMap<>();
     private int MessageID = 1;
@@ -248,11 +249,11 @@ public class SystemBean implements ISystem {
     @Override
     public ResultMessage SendMessage(String Username, String Addressed, String Subject, String Message){
         
-        User SenderUser = Users.get(Username);
         User AddressedUser = Users.get(Addressed);        
         
         if(AddressedUser != null){
             Messages msg = new Messages(MessageID, Message, Subject, Addressed, Username);
+            Messages.put(MessageID, msg);
             MessageID++;
             AddressedUser.setMsgList(msg);
             
