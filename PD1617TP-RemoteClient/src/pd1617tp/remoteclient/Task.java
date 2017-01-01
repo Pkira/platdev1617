@@ -303,4 +303,19 @@ public class Task {
     {
         System.out.println("\nNot implemented yet\n");
     }
+    
+    public static boolean UserSuspendAccount()
+    {
+        
+         if(User.SuspendAccount())
+        {
+            System.out.println("\n[DONE] Account suspended\n");
+            return true;
+        }
+        else
+        {
+            System.out.println("\n[DONE] Error when suspending account\n");
+            return false;
+        }
+    }
 }
