@@ -16,6 +16,10 @@ public class Item {
         this.ID = ID;
     }
 
+    public Item(long ItemID, double Price, double BuyNow, String Item, String Desc, String Category, String Username) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public int getID() {
         return ID;
     }
