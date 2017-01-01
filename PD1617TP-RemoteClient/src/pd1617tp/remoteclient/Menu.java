@@ -65,7 +65,7 @@ public class Menu {
         System.out.println("    Auction System Remote Client  ");
         System.out.println("=====================================");
         System.out.println("  1 - Create Item");
-        System.out.println("  2 - Sell Item               (yet not implemented)");
+        System.out.println("  2 - Sell Item");
         System.out.println("  3 - Search Item");
         System.out.println("  4 - Follow Item             (yet not implemented)");
         System.out.println("  5 - Check Follow Itens      (yet not implemented)");

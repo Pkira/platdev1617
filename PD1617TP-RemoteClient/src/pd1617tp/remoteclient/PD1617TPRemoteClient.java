@@ -256,6 +256,9 @@ public class PD1617TPRemoteClient {
                 case 1:
                     Task.CreateItem();
                     break;
+                case 2:
+                    Task.CreateAuction();
+                    break;
                 case 3:
                     Task.SearchItem();
                     break;

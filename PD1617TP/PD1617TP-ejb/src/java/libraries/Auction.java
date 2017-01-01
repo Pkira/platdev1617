@@ -3,28 +3,32 @@
 package libraries;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 
 
 public class Auction {
     
-    int ID;
-    ArrayList<String> AuctionLog; //
-    Item insale = new Item(); //long id item
+    long ID;
+    ArrayList<String> AuctionLog;
+    Item insale = new Item();
     boolean state;            
-    Date StartDate, EndDate;
+    Calendar StartDate, EndDate;
 
     public Auction() {
     }
 
-    public Auction(int ID, Item sale) {
+    public Auction(long ID, Item sale) {
         this.ID = ID;
         this.insale = sale;
         this.AuctionLog = null;
+        this.StartDate = Calendar.getInstance();
+        this.EndDate = this.StartDate;
+        this.EndDate.add(Calendar.HOUR_OF_DAY, sale.getAuctionDuration());
     }
 
-    public int getID() {
+    public long getID() {
         return ID;
     }
 
@@ -40,11 +44,11 @@ public class Auction {
         return state;
     }
 
-    public Date getStartDate() {
+    public Calendar getStartDate() {
         return StartDate;
     }
 
-    public Date getEndDate() {
+    public Calendar getEndDate() {
         return EndDate;
     }
 
@@ -56,11 +60,11 @@ public class Auction {
         this.state = state;
     }
 
-    public void setStartDate(Date StartDate) {
+    public void setStartDate(Calendar StartDate) {
         this.StartDate = StartDate;
     }
 
-    public void setEndDate(Date EndDate) {
+    public void setEndDate(Calendar EndDate) {
         this.EndDate = EndDate;
     }
     

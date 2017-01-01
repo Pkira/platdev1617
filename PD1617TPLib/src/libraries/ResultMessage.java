@@ -18,7 +18,9 @@ public enum ResultMessage {
     SendMessageUnsuccess("[Error] Something wrong happen to your message!"),
     SendMessageNoUser("[INFO] The user you pretend send the message does not exist"),
     CreateItemSuccess("[INFO] The was created with success"),
-    CreateItemUnsuccess("[INFO] The item creation have fail");
+    CreateItemUnsuccess("[INFO] The item creation have fail"),
+    AuctionCreated("[INFO] Auction created with success"),
+    AuctionNotCreated("[INFO] You don´t have this Item or th Item does't exist");
     
     private String Message;
     

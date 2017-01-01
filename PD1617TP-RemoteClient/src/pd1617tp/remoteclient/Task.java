@@ -236,25 +236,44 @@ public class Task {
         
         ArrayList<Item> Aux = new ArrayList<Item>();
         Aux = Item.SearchItem(IItem, Category);
+        Item it;
         
         if(!Aux.isEmpty()){
             System.out.print("\nInfo of the Itens found: \n");
             for(int i = 0; i < Aux.size(); i++){
-                System.out.print("\n Name: " + Aux.get(i).getName() + "\n");
-                System.out.print(" Category: " + Aux.get(i).getCategory() + "\n");
-                System.out.print(" Description: " + Aux.get(i).getDesc() + "\n");
-                System.out.print(" Start price: " + Aux.get(i).getStartPrice() + "\n");
-                System.out.print(" Buy now price: " + Aux.get(i).getBuyNowPrice() + "\n");
-                if(!Aux.get(i).isState())
+                it = Aux.get(i);
+                System.out.print("\n Name: " + it.getName() + "\n");
+                System.out.print(" Category: " + it.getCategory() + "\n");
+                System.out.print(" Description: " + it.getDesc() + "\n");
+                System.out.print(" Start price: " + it.getStartPrice() + "\n");
+                System.out.print(" Buy now price: " + it.getBuyNowPrice() + "\n");
+                if(!it.isState())
                     System.out.print(" State: Isn't in a Auction\n");
                 else
                     System.out.print(" State: Is in a Auction\n");
-                System.out.print(" Owner: " + Aux.get(i).getOwner() + "\n");
+                System.out.print(" Owner: " + it.getOwner() + "\n");
             }                
         }
         else
             System.out.println("There is no Itens");
         
         System.out.println("");                
+    }
+    
+    public static void CreateAuction(){
+        
+        String IItem;
+        long id=0;
+        
+        System.out.println("\nPutt a item to auction:\n");
+
+        System.out.print("Item Name: ");
+        IItem = sc.nextLine();
+        
+        System.out.print("\nItem ID: ");  
+        id = sc.nextLong();
+        
+        System.out.println(Auction.CreateAuction(User.getUsername(), IItem, id));
+        
     }
 }

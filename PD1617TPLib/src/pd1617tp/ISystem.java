@@ -24,4 +24,5 @@ public interface ISystem {
      ResultMessage SendMessage(String Username, String Addressed, String Subject, String Message);
      ResultMessage CreateItem(String Username, String Item, String Category, String Desc, double Price, double BuyNow, String Budget);
      ArrayList SearchItem(String Item, String Category);
+     ResultMessage CreateAuction(String Username, String Item, long id);
 }

@@ -12,7 +12,7 @@ public class Item implements Serializable{
     String Category;
     String Owner;
     boolean State;
-    long AuctionDuration;
+    int AuctionDuration;
 
     public Item() {
     }
@@ -21,7 +21,7 @@ public class Item implements Serializable{
         this.ID = ID;
     }
 
-    public Item(long ID, double StartPrice, double BuyNowPrice, String Name, String Desc, String Category, String Owner){
+    public Item(long ID, double StartPrice, double BuyNowPrice, String Name, String Desc, String Category, String Owner, int duraction){
         this.ID = ID;
         this.StartPrice = StartPrice;
         this.BuyNowPrice = BuyNowPrice;
@@ -30,6 +30,7 @@ public class Item implements Serializable{
         this.Category = Category;
         this.State = false;
         this.Owner = Owner;
+        this.AuctionDuration = duraction;
     }
 
     public long getID() {
@@ -62,6 +63,14 @@ public class Item implements Serializable{
 
     public String getOwner() {
         return Owner;
+    }
+    
+    public int getAuctionDuration() {
+        return AuctionDuration;
+    }
+
+    public void setAuctionDuration(int AuctionDuration) {
+        this.AuctionDuration = AuctionDuration;
     }
 
     public void setOwner(String Owner) {

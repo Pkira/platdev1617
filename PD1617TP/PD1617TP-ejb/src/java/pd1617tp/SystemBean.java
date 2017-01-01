@@ -18,6 +18,7 @@ import javax.ejb.Singleton;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
+import libraries.Auction;
 import libraries.FactoryDB;
 import libraries.Item;
 import libraries.NewsLetter;
@@ -32,11 +33,11 @@ public class SystemBean implements ISystem {
     private NewsLetter Newsletter = new NewsLetter();
     private HashMap<String,User> Users = new HashMap<>();
     private FactoryDB Factory = new FactoryDB();
-    private ArrayList<Item> Itenss = new ArrayList<Item>();
     private HashMap<Long,Item> Itens = new HashMap<>();
+    private HashMap<Long,Auction> Auctions = new HashMap<>();
     private int MessageID = 1;
     private long ItemID = 1;
-    
+    private long AuctionID = 1;
       
     @Override
     public ResultMessage LoginUser(String Username, String Password) {
@@ -234,10 +235,10 @@ public class SystemBean implements ISystem {
     @Override   // AINDA COM MUITAS CORRECÇÕES A FAZER
     public ResultMessage CreateItem(String Username, String Item, String Category, String Desc, double Price, double BuyNow, String Budget) {
         
-        Item item = new Item(ItemID, Price, BuyNow, Item, Desc, Category, Username);
-        String aux = "";
-        if(item != null)
-        {
+        Item item = null;
+        
+        if(Item != ""){
+            item = new Item(ItemID, Price, BuyNow, Item, Desc, Category, Username, Integer.parseInt(Budget));
             Itens.put(ItemID, item);
             ItemID++;
             return ResultMessage.CreateItemSuccess;
@@ -261,5 +262,45 @@ public class SystemBean implements ISystem {
                             Aux.add(help);
             }
         return Aux;
+    }
+    
+    @Override
+    public ResultMessage CreateAuction(String Username, String Item, long id){
+        Users.get(Username);
+        Item item = null;
+        Auction auction = null;
+        
+        if(!Itens.isEmpty()){
+            if(id>0 && (int) id <= Itens.size()){
+                item = Itens.get(id);
+                if(item.getOwner() == Username)
+                    item = null;
+            }
+            else
+                if(!Item.isEmpty())
+                    for(int i = 1; i <= Itens.size(); i++){
+                        item = Itens.get(i);
+                        if(item.getName()==Item)
+                            if(item.getOwner()==Username)
+                                i = Itens.size();
+                             else
+                                item = null;
+                        else
+                            item = null;
+                    }
+            
+            if(item!=null)
+            {
+                auction = new Auction(AuctionID, item);
+                Auctions.put(AuctionID, auction);
+                AuctionID++;
+                return ResultMessage.AuctionCreated;
+            }
+            else
+                return ResultMessage.AuctionNotCreated;
+        }
+        else
+            return ResultMessage.AuctionNotCreated;
+        
     }
 }

@@ -6,6 +6,7 @@
 package pd1617tp;
 
 import javax.ejb.Remote;
+import libraries.ResultMessage;
 
 /**
  *
@@ -14,4 +15,5 @@ import javax.ejb.Remote;
 @Remote
 public interface IAuction {
     
+     ResultMessage CreateAuction(String Username, String Item, long id);
 }
