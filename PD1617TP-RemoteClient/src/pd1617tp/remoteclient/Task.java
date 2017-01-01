@@ -101,7 +101,7 @@ public class Task {
         System.out.println("Password: ");
         password = sc.nextLine();        
         
-        System.out.println(User.UpdateProfile(Address, password));
+        System.out.println(User.UpdateProfile(Address, password).Message());
     }
     
     public static void CheckBalance(){
@@ -118,7 +118,7 @@ public class Task {
         
         increment = Double.parseDouble(balance);
         
-        System.out.println(User.LoadBalance(increment));
+        System.out.println(User.LoadBalance(increment).Message());
     }
     
     public static void ShowNewsLetter(){
@@ -192,7 +192,7 @@ public class Task {
         System.out.print("\nMessage: ");
         message = sc.nextLine();
         
-        System.out.println(User.SendMessage(addressed, subject, message));
+        System.out.println(User.SendMessage(addressed, subject, message).Message());
                 
     }
     
@@ -224,7 +224,7 @@ public class Task {
         price = Double.parseDouble(Price);
         buynow = Double.parseDouble(BuyNow);
         
-        System.out.println(Item.CreateItem(User.getUsername(), IItem, Category, Desc, price, buynow, budget));
+        System.out.println(Item.CreateItem(User.getUsername(), IItem, Category, Desc, price, buynow, budget).Message());
                 
     }
     
@@ -279,7 +279,7 @@ public class Task {
         System.out.print("\nItem ID: ");  
         id = sc.nextLong();
         
-        System.out.println(Auction.CreateAuction(User.getUsername(), IItem, id));
+        System.out.println(Auction.CreateAuction(User.getUsername(), IItem, id).Message());
         
     }
     
