@@ -13,6 +13,7 @@ import libraries.Messages;
 import libraries.NewsLetter;
 import libraries.NewsLetterItem;
 import libraries.ResultMessage;
+import static pd1617tp.remoteclient.PD1617TPRemoteClient.Admin;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.Item;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.Newsletter;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.User;
@@ -47,7 +48,7 @@ public class Task {
             return false;
     }
     
-    public static boolean login(){
+    public static int login(){
        
         String username;
         String password;
@@ -63,9 +64,14 @@ public class Task {
         System.out.println("\n[DONE] " + result.Message() + "\n");
         
          if(ResultMessage.LoginSucess == result)
-            return true;
+         {
+             if(username.equals("admin"))
+                return 1;
+             else
+                 return 0;
+         }
         else
-            return false;
+            return -1;
     }
     
     public static boolean logoff(){
@@ -275,5 +281,26 @@ public class Task {
         
         System.out.println(Auction.CreateAuction(User.getUsername(), IItem, id));
         
+    }
+    
+    public static void AdminNotifications()
+    {
+        Admin.GetNotifications();
+        System.out.println("\nNot implemented yet\n");
+    }
+    
+    public static void AdminActivateAccounts()
+    {
+        System.out.println("\nNot implemented yet\n");
+    }
+    
+    public static void AdminReActivateAccounts()
+    {
+        System.out.println("\nNot implemented yet\n");
+    }
+    
+    public static void AdminSuspendAccounts()
+    {
+        System.out.println("\nNot implemented yet\n");
     }
 }

@@ -1,7 +1,9 @@
 package pd1617tp;
 
+import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import libraries.Notification;
 
 
 
@@ -27,6 +29,11 @@ public class AdminBean implements IAdmin {
         
         
         return true;
+    }
+
+    @Override
+    public ArrayList<Notification> GetNotifications() {
+        return AServer.GetNotifications();
     }
     
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.ejb.LocalBean;
 import javax.jms.Message;
 import libraries.NewsLetter;
+import libraries.Notification;
 
 
 @LocalBean
@@ -25,4 +26,5 @@ public interface ISystem {
      ResultMessage CreateItem(String Username, String Item, String Category, String Desc, double Price, double BuyNow, String Budget);
      ArrayList SearchItem(String Item, String Category);
      ResultMessage CreateAuction(String Username, String Item, long id);
+     ArrayList<Notification> GetNotifications();
 }

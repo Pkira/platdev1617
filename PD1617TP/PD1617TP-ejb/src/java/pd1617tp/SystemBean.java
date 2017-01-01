@@ -25,6 +25,7 @@ import libraries.NewsLetter;
 import libraries.NewsLetterItem;
 import libraries.User;
 import libraries.Messages;
+import libraries.Notification;
 
 
 @Singleton
@@ -35,6 +36,7 @@ public class SystemBean implements ISystem {
     private FactoryDB Factory = new FactoryDB();
     private HashMap<Long,Item> Itens = new HashMap<>();
     private HashMap<Long,Auction> Auctions = new HashMap<>();
+    private HashMap<Long,Notification> Notifications = new HashMap<>();
     private int MessageID = 1;
     private long ItemID = 1;
     private long AuctionID = 1;
@@ -303,4 +305,11 @@ public class SystemBean implements ISystem {
             return ResultMessage.AuctionNotCreated;
         
     }
+
+    @Override
+    public ArrayList<Notification> GetNotifications() {
+        return (ArrayList<Notification>) this.Notifications.values();
+    }
+    
+    
 }

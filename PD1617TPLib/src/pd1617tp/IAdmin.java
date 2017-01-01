@@ -5,7 +5,9 @@
  */
 package pd1617tp;
 
+import java.util.ArrayList;
 import javax.ejb.Remote;
+import libraries.Notification;
 
 /**
  *
@@ -16,6 +18,6 @@ public interface IAdmin {
  
      boolean CreateUsersBatch();
      boolean LogOff();
-     
+     ArrayList<Notification> GetNotifications();
     
 }

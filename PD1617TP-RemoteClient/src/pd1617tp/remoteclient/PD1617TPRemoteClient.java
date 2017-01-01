@@ -104,9 +104,15 @@ public class PD1617TPRemoteClient {
 
                 switch(option){
                     case 1:
-                        if(Task.login())
+                        int loginType = Task.login();
+                        if(loginType == 0)
                         {
                             MenuUser();
+                            break;
+                        }
+                        else if(loginType == 1)
+                        {
+                            MenuAdmin();
                             break;
                         }
                         else
@@ -172,6 +178,51 @@ public class PD1617TPRemoteClient {
                     Task.ShowNewsLetter();
                     break;
                 case 7:
+                    Task.logoff();
+                    continueMenu = false;
+                    break;
+                default:
+                    System.out.println("[ERROR] Menu error");
+                    break;
+            }
+        }
+    }
+    
+    public static void MenuAdmin(){
+        
+        int option;
+        boolean continueMenu = true;
+        
+        while(continueMenu){
+        
+            Menu.printMenuAdmin();
+            option = getOption(10);
+            
+            switch(option){
+                case 1:
+                    Task.AdminNotifications();
+                    break;
+                case 2:
+                    Task.AdminActivateAccounts();
+                    break;
+                case 3:
+                    Task.AdminReActivateAccounts();
+                    break;
+                case 4:
+                    Task.AdminSuspendAccounts();
+                    break;
+                case 5:
+                    continue;
+                case 6:
+                    continue;
+                case 7:
+                    continue;    
+                case 8:
+                    continue;
+                case 9:
+                    Task.ShowNewsLetter();
+                    break;
+                case 10:
                     Task.logoff();
                     continueMenu = false;
                     break;
