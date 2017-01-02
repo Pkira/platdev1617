@@ -25,4 +25,5 @@ public interface IAdmin {
      ResultMessage SuspendAccount(String Username);
      ResultMessage ChangeUserPassword(String Username, String Password);
      void SaveState();
+     String SeeUserProfile(String Username);
 }

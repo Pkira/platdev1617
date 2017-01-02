@@ -203,7 +203,7 @@ public class PD1617TPRemoteClient {
         while(continueMenu){
         
             Menu.printMenuAdmin();
-            option = getOption(12);
+            option = getOption(13);
             
             switch(option){
                 case 1:
@@ -219,24 +219,27 @@ public class PD1617TPRemoteClient {
                     Task.AdminSuspendAccounts();
                     break;
                 case 5:
-                    continue;
+                    Task.AdminSeeUserProfile();
+                    break;
                 case 6:
                     continue;
                 case 7:
-                    continue;    
-                case 8:
                     continue;
+                case 8:
+                    continue;    
                 case 9:
+                    continue;
+                case 10:
                     Task.AdminChangeUserPassword();
                     break;
-                case 10:
+                case 11:
                     Task.ShowNewsLetter();
                     break;
-                case 11:
+                case 12:
                     Task.logoff();
                     continueMenu = false;
                     break;
-                case 12:
+                case 13:
                     Task.SaveState();
                     continueMenu = false;
                     break;

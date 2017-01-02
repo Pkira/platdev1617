@@ -32,4 +32,5 @@ public interface ISystem {
      ResultMessage ReActivateAccount(String Username);
      ResultMessage ChangePassword(String Username, String Password);
      void SaveState();
+     String SeeUserProfile(String Username);
 }

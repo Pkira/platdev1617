@@ -63,4 +63,8 @@ public class AdminBean implements IAdmin {
         AServer.SaveState();
     }
     
+    @Override
+    public String SeeUserProfile(String User){
+        return AServer.SeeUserProfile(User);
+    }
 }

@@ -377,4 +377,13 @@ public class Task {
             System.out.println("\n[ERROR] Error when trying to save server state\n");
         }
     }
+    
+    public static void AdminSeeUserProfile(){             
+        String username;
+        
+        System.out.print("\n Username: ");
+        username = sc.nextLine();
+        
+        System.out.println("\n" + Admin.SeeUserProfile(username) + "\n");
+    }
 }

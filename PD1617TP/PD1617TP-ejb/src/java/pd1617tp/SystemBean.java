@@ -532,4 +532,15 @@ public class SystemBean implements ISystem {
             return ResultMessage.LoginInvalidUsername;
     }
     
+    @Override
+    public String SeeUserProfile(String Username){
+        
+        User user = Users.get(Username);
+        
+        if(user != null)
+            return "Username:  " + user.getName() + "\nAddress:  " + user.getAddress() + "\nBalance:  " + user.getBalance() + "\n";
+        else
+            return "User doesn't exist";
+    }
+    
 }
