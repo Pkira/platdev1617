@@ -431,4 +431,24 @@ public class SystemBean implements ISystem {
             return ResultMessage.LoginInvalidUsername;
     }
     
+    @Override
+    public ResultMessage ChangePassword(String Username, String Password) {
+        
+        //validate input
+        if(Username == null)
+            return ResultMessage.LoginInvalidUsername;
+        
+        //get user from list
+        User user = Users.get(Username);
+        
+        if(user != null) 
+        {
+            user.setPassword(Password);        
+            return ResultMessage.AccountPasswordChanged;
+            
+        }
+        else
+            return ResultMessage.LoginInvalidUsername;
+    }
+    
 }

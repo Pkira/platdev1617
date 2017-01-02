@@ -29,7 +29,8 @@ public enum ResultMessage {
     AccountSuspended("[INFO] Account suspended"),
     AccountNotSuspended("[INFO] Account as not suspended"),
     AccountAllreadySuspended("[INFO] Account as allready suspended"),
-    AccountReActivated("[INFO] Account re-activated");
+    AccountReActivated("[INFO] Account re-activated"),
+    AccountPasswordChanged("[INFO] Password changed successfully");
     
     
     private String Message;
