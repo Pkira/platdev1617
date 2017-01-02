@@ -325,6 +325,9 @@ public class SystemBean implements ISystem {
                 auction = new Auction(AuctionID, item);
                 Auctions.put(AuctionID, auction);
                 AuctionID++;
+                
+                Newsletter.addNewsToList(new NewsLetterItem("New Auction created: Id[" + AuctionID + "]"));
+                
                 return ResultMessage.AuctionCreated;
             }
             else
@@ -358,6 +361,9 @@ public class SystemBean implements ISystem {
             else
             {
                 user.setAccountActivation(true);
+                
+                Newsletter.addNewsToList(new NewsLetterItem("New user registed in system, welcome " + Username));
+                
                 return ResultMessage.AccountActivated;
             }
         }
@@ -383,6 +389,9 @@ public class SystemBean implements ISystem {
             else
             {
                 user.setAccountSuspension(true);
+                
+                Newsletter.addNewsToList(new NewsLetterItem("User " + Username + " as been suspended"));
+                
                 return ResultMessage.AccountSuspended;
             }
         }
@@ -411,6 +420,9 @@ public class SystemBean implements ISystem {
                 return ResultMessage.AccountNotActivated;
             
             user.setAccountSuspension(false);
+            
+            Newsletter.addNewsToList(new NewsLetterItem("Removed suspension for User " + Username));
+            
             return ResultMessage.AccountReActivated;
             
         }
