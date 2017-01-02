@@ -13,6 +13,7 @@ public enum ResultMessage {
     RegisterInvalid("[INFO] Invalid username or password specified"),
     UpdateProfileValid("[INFO] Update Successfull"),
     UpdateProfileInvalid("[INFO] Update invalid"),
+    UpdateProfileWrongPass("[INFO] Your current password is wrong"),
     LoadBalanceValid("[INFO] Your load balance was successfully made"),
     LoadBalanceInvalid("[INFO] Load balance invalid"),
     SendMessageSuccess("[INFO] Your message was sent with success"),

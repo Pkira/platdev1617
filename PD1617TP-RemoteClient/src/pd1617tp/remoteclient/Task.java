@@ -93,15 +93,26 @@ public class Task {
     
     public static void UpdateData(){
         
-        String Address, password;
+        String Address, password, pass, CurrentPass;
+        
         
         System.out.println("Please insert the new Data: \n");
         System.out.println("Address: ");
         Address = sc.nextLine();
-        System.out.println("Password: ");
-        password = sc.nextLine();        
+        System.out.println("New Password: ");
+        password = sc.nextLine();
+        System.out.println("Confirm password: ");
+        pass = sc.nextLine(); 
         
-        System.out.println(User.UpdateProfile(Address, password).Message());
+        if(!password.contentEquals(pass)){
+            System.out.println("The password confirmation fail");
+            UpdateData();
+        }
+        
+        System.out.println("Current password: ");
+            CurrentPass = sc.nextLine(); 
+        
+        System.out.println(User.UpdateProfile(Address, password, CurrentPass).Message());
     }
     
     public static void CheckBalance(){
@@ -285,14 +296,12 @@ public class Task {
         
     }
     
-    public static void AdminNotifications()
-    {
+    public static void AdminNotifications(){
         Admin.GetNotifications();
         System.out.println("\nNot implemented yet\n");
     }
     
-    public static void AdminActivateAccounts()
-    {
+    public static void AdminActivateAccounts(){
         String username;
         
         System.out.print("\n Username: ");
@@ -304,8 +313,7 @@ public class Task {
         
     }
     
-    public static void AdminReActivateAccounts()
-    {
+    public static void AdminReActivateAccounts(){
         String username;
         
         System.out.print("\n Username: ");
@@ -316,8 +324,7 @@ public class Task {
         System.out.println("\n" + result.Message() + "\n");
     }
     
-    public static void AdminSuspendAccounts()
-    {
+    public static void AdminSuspendAccounts(){
          String username;
         
         System.out.print("\n Username: ");
@@ -328,8 +335,7 @@ public class Task {
         System.out.println("\n" + result.Message() + "\n");
     }
     
-    public static boolean UserSuspendAccount()
-    {
+    public static boolean UserSuspendAccount(){
         
          if(User.SuspendAccount())
         {

@@ -151,22 +151,24 @@ public class SystemBean implements ISystem {
     }
 
     @Override
-    public ResultMessage UpdateProfile(String Username, String Address, String password){
+    public ResultMessage UpdateProfile(String Username, String Address, String password, String CurrentPass){
         User user =Users.get(Username);
         
-        if(!Address.contentEquals("")){
-            user.setAddress(Address);
-            if(!password.contentEquals(""))
-                user.setPassword(password);
-            return ResultMessage.UpdateProfileValid;
-        }
-        else
-            if(!password.contentEquals("")){
-                user.setPassword(password);
+        if(CurrentPass.contentEquals(user.getPassword())){
+            if(!Address.contentEquals("")){
+                user.setAddress(Address);
+                if(!password.contentEquals(""))
+                    user.setPassword(password);
                 return ResultMessage.UpdateProfileValid;
             }
-                    
-        return ResultMessage.UpdateProfileInvalid;    
+            else
+                if(!password.contentEquals("")){
+                    user.setPassword(password);
+                    return ResultMessage.UpdateProfileValid;
+                }
+            return ResultMessage.UpdateProfileInvalid; 
+        }            
+        return ResultMessage.UpdateProfileWrongPass;    
     }
     
     @Override
@@ -271,6 +273,7 @@ public class SystemBean implements ISystem {
         if(Item != ""){
             Item item = new Item(ItemID, Price, BuyNow, Item, Desc, Category, Username, Integer.parseInt(Budget));
             Itens.put(ItemID, item);
+            Newsletter.addNewsToList(new NewsLetterItem("User " + Username + " add a Item " + Item));
             ItemID++;
             return ResultMessage.CreateItemSuccess;
         }  

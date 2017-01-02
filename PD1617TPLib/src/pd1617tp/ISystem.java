@@ -17,7 +17,7 @@ public interface ISystem {
      ResultMessage RegisterUser(String Username, String Password);
      boolean LogOffUser(String Username);
      String SeeProfile(String Username);
-     ResultMessage UpdateProfile(String Username, String Address, String password);
+     ResultMessage UpdateProfile(String Username, String Address, String password, String CurrentPass);
      String CheckBalance(String Username);
      ResultMessage LoadBalance(String Username, double increment);
      NewsLetter GetNewsletter();
