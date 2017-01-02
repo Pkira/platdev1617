@@ -12,7 +12,7 @@ public interface IUser {
     ResultMessage Login(String name, String password);
     boolean LogOff();
     String SeeProfile();
-    ResultMessage UpdateProfile(String Address, String password);
+    ResultMessage UpdateProfile(String Address, String password, String CurretPass);
     String CheckBalance();
     ResultMessage LoadBalance(double increment);
     ArrayList CheckMessage();

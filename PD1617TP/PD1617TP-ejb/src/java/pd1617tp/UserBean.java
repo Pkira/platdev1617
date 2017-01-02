@@ -46,8 +46,8 @@ public class UserBean implements IUser {
     }
     
     @Override
-    public ResultMessage UpdateProfile(String Address, String password){
-        return AServer.UpdateProfile(Username, Address, password);
+    public ResultMessage UpdateProfile(String Address, String password, String CurrentPass){
+        return AServer.UpdateProfile(Username, Address, password, CurrentPass);
     }
     
     @Override
