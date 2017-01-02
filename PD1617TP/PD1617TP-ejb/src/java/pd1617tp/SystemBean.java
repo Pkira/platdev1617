@@ -64,7 +64,7 @@ public class SystemBean implements ISystem {
                 return ResultMessage.AccountNotActivated;
             
             boolean isSuspended = user.isAccountSuspension();
-            if(!isSuspended)    
+            if(isSuspended)    
                 return ResultMessage.AccountSuspended;
         }
         
@@ -341,6 +341,31 @@ public class SystemBean implements ISystem {
     }
 
     @Override
+    public ResultMessage ActivateAccount(String Username) {
+        
+        //validate input
+        if(Username == null)
+            return ResultMessage.LoginInvalidUsername;
+        
+        //get user from list
+        User user = Users.get(Username);
+        
+        if(user != null) 
+        {
+            boolean isActivated = user.getAccountActivation();
+            if(isActivated)    
+                return ResultMessage.AccountAllreadyActivated;
+            else
+            {
+                user.setAccountActivation(true);
+                return ResultMessage.AccountActivated;
+            }
+        }
+        else
+            return ResultMessage.LoginInvalidUsername;
+    }
+    
+    @Override
     public ResultMessage SuspendAccount(String Username) {
         
         //validate input
@@ -365,5 +390,32 @@ public class SystemBean implements ISystem {
             return ResultMessage.LoginInvalidUsername;
     }
     
+    @Override
+    public ResultMessage ReActivateAccount(String Username) {
+        
+        //validate input
+        if(Username == null)
+            return ResultMessage.LoginInvalidUsername;
+        
+        //get user from list
+        User user = Users.get(Username);
+        
+        if(user != null) 
+        {
+            boolean isSuspended = user.isAccountSuspension();
+            if(!isSuspended)    
+                return ResultMessage.AccountNotSuspended;
+            
+            boolean isActivated = user.getAccountActivation();
+            if(!isActivated)    
+                return ResultMessage.AccountNotActivated;
+            
+            user.setAccountSuspension(false);
+            return ResultMessage.AccountReActivated;
+            
+        }
+        else
+            return ResultMessage.LoginInvalidUsername;
+    }
     
 }

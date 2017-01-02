@@ -5,6 +5,7 @@ import javax.ejb.EJB;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import libraries.Notification;
+import libraries.ResultMessage;
 
 
 
@@ -35,6 +36,21 @@ public class AdminBean implements IAdmin {
     @Override
     public ArrayList<Notification> GetNotifications() {
         return AServer.GetNotifications();
+    }
+
+    @Override
+    public ResultMessage ActivateAccount(String Username) {
+        return AServer.ActivateAccount(Username);
+    }
+    
+    @Override
+    public ResultMessage ReActivateAccount(String Username) {
+        return AServer.ReActivateAccount(Username);
+    }
+    
+    @Override
+    public ResultMessage SuspendAccount(String Username) {
+        return AServer.SuspendAccount(Username);
     }
     
 }

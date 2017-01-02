@@ -40,7 +40,7 @@ public class Task {
         
         ResultMessage result = Visitor.Register(username, password);
 
-        System.out.println("\n[DONE] " + result.Message() + "\n");
+        System.out.println("\n" + result.Message() + "\n");
         
         if(ResultMessage.RegisterSucess == result)
             return true;
@@ -61,7 +61,7 @@ public class Task {
         
         ResultMessage result = User.Login(username, password);
 
-        System.out.println("\n[DONE] " + result.Message() + "\n");
+        System.out.println("\n" + result.Message() + "\n");
         
          if(ResultMessage.LoginSucess == result)
          {
@@ -77,12 +77,12 @@ public class Task {
     public static boolean logoff(){
         if(User.LogOff())
         {
-            System.out.println("\n[DONE] LogOff success\n");
+            System.out.println("\nLogOff success\n");
             return true;
         }
         else
         {
-            System.out.println("\n[DONE] LogOff error\n");
+            System.out.println("\nLogOff error\n");
             return false;
         }
     }
@@ -291,17 +291,39 @@ public class Task {
     
     public static void AdminActivateAccounts()
     {
-        System.out.println("\nNot implemented yet\n");
+        String username;
+        
+        System.out.print("\n Username: ");
+        username = sc.nextLine();      
+        
+        ResultMessage result = Admin.ActivateAccount(username);
+
+        System.out.println("\n" + result.Message() + "\n");
+        
     }
     
     public static void AdminReActivateAccounts()
     {
-        System.out.println("\nNot implemented yet\n");
+        String username;
+        
+        System.out.print("\n Username: ");
+        username = sc.nextLine();      
+        
+        ResultMessage result = Admin.ReActivateAccount(username);
+
+        System.out.println("\n" + result.Message() + "\n");
     }
     
     public static void AdminSuspendAccounts()
     {
-        System.out.println("\nNot implemented yet\n");
+         String username;
+        
+        System.out.print("\n Username: ");
+        username = sc.nextLine();      
+        
+        ResultMessage result = Admin.SuspendAccount(username);
+
+        System.out.println("\n" + result.Message() + "\n");
     }
     
     public static boolean UserSuspendAccount()
@@ -309,13 +331,14 @@ public class Task {
         
          if(User.SuspendAccount())
         {
-            System.out.println("\n[DONE] Account suspended\n");
+            System.out.println("\nAccount suspended\n");
             return true;
         }
         else
         {
-            System.out.println("\n[DONE] Error when suspending account\n");
+            System.out.println("\nError when suspending account\n");
             return false;
         }
     }
+    
 }

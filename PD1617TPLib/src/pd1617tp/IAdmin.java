@@ -8,6 +8,7 @@ package pd1617tp;
 import java.util.ArrayList;
 import javax.ejb.Remote;
 import libraries.Notification;
+import libraries.ResultMessage;
 
 /**
  *
@@ -19,5 +20,8 @@ public interface IAdmin {
      boolean CreateUsersBatch();
      boolean LogOff();
      ArrayList<Notification> GetNotifications();
+     ResultMessage ActivateAccount(String Username);
+     ResultMessage ReActivateAccount(String Username);
+     ResultMessage SuspendAccount(String Username);
     
 }

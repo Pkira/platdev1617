@@ -34,7 +34,6 @@ public class UserBean implements IUser {
         return result;
     }
     
-    @Remove
     @Override
     public boolean LogOff() {
         return AServer.LogOffUser(Username);

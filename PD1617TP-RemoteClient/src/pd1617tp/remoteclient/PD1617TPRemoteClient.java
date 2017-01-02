@@ -35,7 +35,8 @@ public class PD1617TPRemoteClient {
         prop.setProperty("java.naming.factory.initial", "com.sun.enterprise.naming.SerialInitContextFactory");
         prop.setProperty("java.naming.factory.url.pkgs", "com.sun.enterprise.naming");
         prop.setProperty("java.naming.factory.state", "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
-        prop.setProperty("org.omg.CORBA.ORBInitialHost", "192.168.56.175");
+        //prop.setProperty("org.omg.CORBA.ORBInitialHost", "192.168.56.175");
+        prop.setProperty("org.omg.CORBA.ORBInitialHost", "localhost");
         prop.setProperty("org.omg.CORBA.ORBInitialPort", "3700");
 
         try {
