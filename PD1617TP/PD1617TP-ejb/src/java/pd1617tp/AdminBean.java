@@ -52,5 +52,10 @@ public class AdminBean implements IAdmin {
     public ResultMessage SuspendAccount(String Username) {
         return AServer.SuspendAccount(Username);
     }
+
+    @Override
+    public ResultMessage ChangeUserPassword(String Username, String Password) {
+        return AServer.ChangePassword(Username, Password);
+    }
     
 }

@@ -341,4 +341,19 @@ public class Task {
         }
     }
     
+    public static void AdminChangeUserPassword()
+    {             
+        String username;
+        String password;
+        
+        System.out.print("\n Username: ");
+        username = sc.nextLine();
+        
+        System.out.print("\n Password: ");
+        password = sc.nextLine();    
+        
+        ResultMessage result = Admin.ChangeUserPassword(username,password);
+
+        System.out.println("\n" + result.Message() + "\n");
+    }
 }
