@@ -263,19 +263,26 @@ public class SystemBean implements ISystem {
             return ResultMessage.SendMessageNoUser;            
     }
 
-    @Override   // AINDA COM MUITAS CORRECÇÕES A FAZER
+    @Override  
     public ResultMessage CreateItem(String Username, String Item, String Category, String Desc, double Price, double BuyNow, String Budget) {
         
-        Item item = null;
+        try{
         
         if(Item != ""){
-            item = new Item(ItemID, Price, BuyNow, Item, Desc, Category, Username, Integer.parseInt(Budget));
+            Item item = new Item(ItemID, Price, BuyNow, Item, Desc, Category, Username, Integer.parseInt(Budget));
             Itens.put(ItemID, item);
             ItemID++;
             return ResultMessage.CreateItemSuccess;
         }  
         
+        }
+        catch(Exception ex)
+        {
+
+        }
+        
         return ResultMessage.CreateItemUnsuccess;
+ 
     }
 
     @Override
@@ -297,45 +304,58 @@ public class SystemBean implements ISystem {
     
     @Override
     public ResultMessage CreateAuction(String Username, String Item, long id){
-        Users.get(Username);
-        Item item = null;
-        Auction auction = null;
         
-        if(!Itens.isEmpty()){
-            if(id>0 && (int) id <= Itens.size()){
-                item = Itens.get(id);
-                if(item.getOwner() == Username)
-                    item = null;
-            }
-            else
-                if(!Item.isEmpty())
-                    for(int i = 1; i <= Itens.size(); i++){
-                        item = Itens.get(i);
-                        if(item.getName()==Item)
-                            if(item.getOwner()==Username)
-                                i = Itens.size();
-                             else
+        //validate input
+        if(Username == null || Item == null)
+            return ResultMessage.LoginInvalid;
+        
+        //get user from list
+        User user = Users.get(Username);
+        
+        //check if user is already logged
+        if(user != null) 
+        {
+            Item item = null;
+            Auction auction = null;
+        
+            if(!Itens.isEmpty()){
+                if(id>0 && (int) id <= Itens.size()){
+                    item = Itens.get(id);
+                    
+                    if(item != null && item.getOwner() == Username)
+                        item = null;
+                }
+                else
+                    if(!Item.isEmpty())
+                        for(int i = 1; i <= Itens.size(); i++){
+                            item = Itens.get(i);
+                            if(item != null && item.getName()==Item)
+                                if(item.getOwner()==Username)
+                                    i = Itens.size();
+                                 else
+                                    item = null;
+                            else
                                 item = null;
-                        else
-                            item = null;
-                    }
-            
-            if(item!=null)
-            {
-                auction = new Auction(AuctionID, item);
-                Auctions.put(AuctionID, auction);
-                AuctionID++;
-                
-                Newsletter.addNewsToList(new NewsLetterItem("New Auction created: Id[" + AuctionID + "]"));
-                
-                return ResultMessage.AuctionCreated;
+                        }
+
+                if(item!=null)
+                {
+                    auction = new Auction(AuctionID, item);
+                    Auctions.put(AuctionID, auction);
+                    AuctionID++;
+
+                    Newsletter.addNewsToList(new NewsLetterItem("New Auction created: Id[" + AuctionID + "]"));
+
+                    return ResultMessage.AuctionCreated;
+                }
+                else
+                    return ResultMessage.AuctionNotCreated;
             }
             else
                 return ResultMessage.AuctionNotCreated;
-        }
-        else
-            return ResultMessage.AuctionNotCreated;
-        
+            }
+               
+        return ResultMessage.AuctionNotCreated;  
     }
 
     @Override

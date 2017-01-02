@@ -224,7 +224,9 @@ public class Task {
         price = Double.parseDouble(Price);
         buynow = Double.parseDouble(BuyNow);
         
-        System.out.println(Item.CreateItem(User.getUsername(), IItem, Category, Desc, price, buynow, budget).Message());
+        ResultMessage result = Item.CreateItem(User.getUsername(), IItem, Category, Desc, price, buynow, budget);
+        
+        System.out.println(result.Message());
                 
     }
     
