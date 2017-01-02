@@ -58,4 +58,9 @@ public class AdminBean implements IAdmin {
         return AServer.ChangePassword(Username, Password);
     }
     
+    @Override
+    public void SaveState() {
+        AServer.SaveState();
+    }
+    
 }

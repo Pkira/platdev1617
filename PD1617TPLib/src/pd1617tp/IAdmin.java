@@ -24,4 +24,5 @@ public interface IAdmin {
      ResultMessage ReActivateAccount(String Username);
      ResultMessage SuspendAccount(String Username);
      ResultMessage ChangeUserPassword(String Username, String Password);
+     void SaveState();
 }

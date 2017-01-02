@@ -53,6 +53,7 @@ public class Menu {
         System.out.println("  9 - Change User Password");
         System.out.println("  10 - Show Newletter");
         System.out.println("  11 - Log off");
+        System.out.println("  12 - Save Server State");
         System.out.println("=====================================");
     }
     

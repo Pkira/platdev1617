@@ -31,4 +31,5 @@ public interface ISystem {
      ResultMessage SuspendAccount(String Username);
      ResultMessage ReActivateAccount(String Username);
      ResultMessage ChangePassword(String Username, String Password);
+     void SaveState();
 }

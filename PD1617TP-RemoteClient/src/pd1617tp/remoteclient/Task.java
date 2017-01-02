@@ -364,4 +364,17 @@ public class Task {
 
         System.out.println("\n" + result.Message() + "\n");
     }
+    
+    public static void SaveState()
+    {
+        try
+        {
+            Admin.SaveState();
+            System.out.println("\n[DONE] Server State Saved\n");
+        }
+        catch(Exception ex)
+        {
+            System.out.println("\n[ERROR] Error when trying to save server state\n");
+        }
+    }
 }

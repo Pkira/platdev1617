@@ -5,12 +5,14 @@ import static com.sun.xml.ws.security.addressing.impl.policy.Constants.logger;
 import libraries.ResultMessage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,8 +69,8 @@ public class SystemBean implements ISystem {
             if(isSuspended)    
                 return ResultMessage.AccountSuspended;
         }
-        
-        user = Factory.UserLogin(Username,Password);
+        else
+            user = Factory.UserLogin(Username,Password);
         
         if(user != null)
         {
@@ -194,17 +196,17 @@ public class SystemBean implements ISystem {
     public void loadstate(){
         try 
         {           
-            ObjectInputStream NewsletterLoad =new ObjectInputStream(new BufferedInputStream(new FileInputStream("/tmp/Newsletter")));
-            Newsletter = (NewsLetter) NewsletterLoad.readObject();  
+            ObjectInputStream NewsletterLoad =new ObjectInputStream(new BufferedInputStream(new FileInputStream("/tmp/newsletter.ser")));
+            this.Newsletter = (NewsLetter) NewsletterLoad.readObject();  
             
-            ObjectInputStream UsersLoad =new ObjectInputStream(new BufferedInputStream(new FileInputStream("/tmp/Users")));
-            Users = (HashMap<String,User>) UsersLoad.readObject(); 
+            ObjectInputStream UsersLoad =new ObjectInputStream(new BufferedInputStream(new FileInputStream("/tmp/users.ser")));
+            this.Users = (HashMap<String,User>) UsersLoad.readObject(); 
             
-            ObjectInputStream ItensLoad =new ObjectInputStream(new BufferedInputStream(new FileInputStream("/tmp/Itens")));
-            Itens = (HashMap<Long,Item>) ItensLoad.readObject(); 
+            ObjectInputStream ItensLoad =new ObjectInputStream(new BufferedInputStream(new FileInputStream("/tmp/itens.ser")));
+            this.Itens = (HashMap<Long,Item>) ItensLoad.readObject(); 
             
-            ObjectInputStream AuctionsLoad =new ObjectInputStream(new BufferedInputStream(new FileInputStream("/tmp/Auctions")));
-            Auctions = (HashMap<Long,Auction>) AuctionsLoad.readObject(); 
+            ObjectInputStream AuctionsLoad =new ObjectInputStream(new BufferedInputStream(new FileInputStream("/tmp/auctions.ser")));
+            this.Auctions = (HashMap<Long,Auction>) AuctionsLoad.readObject(); 
  
         }
         catch (Exception ex){
@@ -216,21 +218,78 @@ public class SystemBean implements ISystem {
     public void saveState(){
         try
         { 
-            ObjectOutputStream NewsletterSave =new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("/tmp/Newsletter")));
-            NewsletterSave.writeObject(Newsletter);
+             final File parent = new File("/tmp/");
+            if (!parent.mkdirs())
+            {
+               System.err.println("Could not create parent directories ");
+            }
             
-            ObjectOutputStream usersSave =new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("/tmp/Users")));
-            usersSave.writeObject(Users);    
+            try (ObjectOutputStream outNewsletter = new ObjectOutputStream(new FileOutputStream("/tmp/newsletter.ser"))) {
+                outNewsletter.writeObject(Newsletter);
+            }
             
-            ObjectOutputStream itensSave =new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("/tmp/Itens")));
-            itensSave.writeObject(Itens);
+            try (ObjectOutputStream outUsers = new ObjectOutputStream(new FileOutputStream("/tmp/users.ser"))) {
+                
+                Collection<User> users = Users.values();
+                for (User user : users )
+                    if(user.isLogged())
+                        user.setLogged(false);            
+                
+                outUsers.writeObject(Users);
+            }
             
-            ObjectOutputStream AuctionsSave =new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("/tmp/Auctions")));
-            AuctionsSave.writeObject(Auctions);
+            try (ObjectOutputStream outItens = new ObjectOutputStream(new FileOutputStream("/tmp/itens.ser"))) {
+                outItens.writeObject(Itens);
+            }
+            
+            try (ObjectOutputStream outAuctions = new ObjectOutputStream(new FileOutputStream("/tmp/auctions.ser"))) {
+                outAuctions.writeObject(Auctions);
+            }
+            
             
         }
         catch(Exception ex){
 
+        }
+        
+    }
+    
+    @Override
+     public void SaveState(){
+        try
+        { 
+            final File parent = new File("/tmp/");
+            if (!parent.mkdirs())
+            {
+               System.err.println("Could not create parent directories ");
+            }
+            
+            try (ObjectOutputStream outNewsletter = new ObjectOutputStream(new FileOutputStream("/tmp/newsletter.ser"))) {
+                outNewsletter.writeObject(Newsletter);
+            }
+            
+            try (ObjectOutputStream outUsers = new ObjectOutputStream(new FileOutputStream("/tmp/users.ser"))) {
+                
+                Collection<User> users = Users.values();
+                for (User user : users )
+                    if(user.isLogged())
+                        user.setLogged(false);
+                
+                outUsers.writeObject(Users);
+            }
+            
+            try (ObjectOutputStream outItens = new ObjectOutputStream(new FileOutputStream("/tmp/itens.ser"))) {
+                outItens.writeObject(Itens);
+            }
+            
+            try (ObjectOutputStream outAuctions = new ObjectOutputStream(new FileOutputStream("/tmp/auctions.ser"))) {
+                outAuctions.writeObject(Auctions);
+            }
+            
+            
+        }
+        catch(Exception ex){
+            logger.log(Level.SEVERE, ex.getMessage());
         }
         
     }
