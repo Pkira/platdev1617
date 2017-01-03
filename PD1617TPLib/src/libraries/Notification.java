@@ -10,11 +10,13 @@ public class Notification {
     String Message;
     Date CreationDate;
     boolean Resolved;
+    long id;
 
-    public Notification(String FromUser, String Message, Date CreationDate) {
+    public Notification(String FromUser, String Message, long id) {
+        this.id = id;
         this.FromUser = FromUser;
         this.Message = Message;
-        this.CreationDate = CreationDate;
+        this.CreationDate = new Date();
         this.Resolved = false;
     }
 

@@ -30,7 +30,10 @@ public enum ResultMessage {
     AccountNotSuspended("[INFO] Account as not suspended"),
     AccountAllreadySuspended("[INFO] Account as allready suspended"),
     AccountReActivated("[INFO] Account re-activated"),
-    AccountPasswordChanged("[INFO] Password changed successfully");
+    AccountPasswordChanged("[INFO] Password changed successfully"),
+    AccountReactivation("[INFO] The request for the account reactivation was sent to the Admin, please wait a while."),
+    AccountReactivationFail("[INFO] This accout is not suspend"),
+    AccountReactivationNoUser("[INFO] This account doesn't exist");
     
     
     private String Message;

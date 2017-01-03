@@ -10,5 +10,6 @@ import libraries.ResultMessage;
 public interface IVisitor {
     
     ResultMessage Register(String name, String password);
+    ResultMessage AskReactivation(String name);
     
 }

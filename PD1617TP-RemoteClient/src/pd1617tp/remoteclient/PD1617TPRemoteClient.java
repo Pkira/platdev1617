@@ -101,7 +101,7 @@ public class PD1617TPRemoteClient {
             while(continueMenu){
 
                 Menu.printMenuVisitor();
-                option = getOption(3);
+                option = getOption(5);
 
                 switch(option){
                     case 1:
@@ -126,7 +126,11 @@ public class PD1617TPRemoteClient {
                     case 3:
                         Task.ShowNewsLetter();
                         break;
-
+                    case 4:
+                        continue;
+                    case 5:
+                        Task.VisitorAskAccountReactivation();
+                        break;
                     case 0:
                         continueMenu = false;
                         break;

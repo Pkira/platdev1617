@@ -43,6 +43,7 @@ public class SystemBean implements ISystem {
     private int MessageID = 1;
     private long ItemID = 1;
     private long AuctionID = 1;
+    private long NotificationID = 1;
       
     @Override
     public ResultMessage LoginUser(String Username, String Password) {
@@ -423,6 +424,24 @@ public class SystemBean implements ISystem {
     @Override
     public ArrayList<Notification> GetNotifications() {
         return (ArrayList<Notification>) this.Notifications.values();
+    }
+    
+     public ResultMessage AskReactivation(String name){
+         
+         String notification = "A visitor ask for the reactivation of the account " + name;
+         User user = Users.get(name);
+         Notification note;
+         if(user != null)
+            if(!user.getAccountActivation()){
+                note = new Notification(name, notification, NotificationID);
+                Notifications.put(NotificationID, note);
+                NotificationID++;
+                return ResultMessage.AccountReactivation;
+            }
+            else
+                return ResultMessage.AccountReactivationFail;
+                 
+        return ResultMessage.AccountReactivationNoUser;
     }
 
     @Override

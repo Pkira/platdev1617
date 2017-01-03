@@ -12,6 +12,7 @@ import libraries.Item;
 import libraries.Messages;
 import libraries.NewsLetter;
 import libraries.NewsLetterItem;
+import libraries.Notification;
 import libraries.ResultMessage;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.Admin;
 import static pd1617tp.remoteclient.PD1617TPRemoteClient.Item;
@@ -297,8 +298,14 @@ public class Task {
     }
     
     public static void AdminNotifications(){
-        Admin.GetNotifications();
-        System.out.println("\nNot implemented yet\n");
+         ArrayList<Notification> Notifications = Admin.GetNotifications();
+            
+            if(!Notifications.isEmpty())
+                for(int i = Notifications.size() - 1; i >= 0; i--)
+                    if(!Notifications.get(i).isResolved())
+                        System.out.print("\n" + Notifications.get(i).getMessage() + "\n");
+            else
+                System.out.println("Doesn't exist notifications");
     }
     
     public static void AdminActivateAccounts(){
@@ -385,5 +392,15 @@ public class Task {
         username = sc.nextLine();
         
         System.out.println("\n" + Admin.SeeUserProfile(username) + "\n");
+    }
+    
+    
+    public static void VisitorAskAccountReactivation(){             
+        String username;
+        
+        System.out.print("\n Username: ");
+        username = sc.nextLine();
+        
+        System.out.println("\n" + Visitor.AskReactivation(username) + "\n");
     }
 }

@@ -19,6 +19,7 @@ public class Menu {
         System.out.println("  2 - Regist new user"); 
         System.out.println("  3 - Show Newletter");         
         System.out.println("  4 - Last 3 itens sell (Not implemented yet)");
+        System.out.println("  5 - Account Reactivation");
         System.out.println("=====================================");
         System.out.println("    Exit (Press '0')  ");
         System.out.println("=====================================");

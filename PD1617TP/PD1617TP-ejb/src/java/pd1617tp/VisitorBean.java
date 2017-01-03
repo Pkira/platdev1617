@@ -18,5 +18,8 @@ public class VisitorBean implements IVisitor {
         return AServer.RegisterUser(Username, Password);
     }
     
-    
+    @Override
+    public ResultMessage AskReactivation(String name){
+         return AServer.AskReactivation(name);
+    }
 }
