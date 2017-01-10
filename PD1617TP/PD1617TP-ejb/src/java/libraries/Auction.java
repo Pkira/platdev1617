@@ -17,6 +17,7 @@ public class Auction {
     Calendar StartDate, EndDate;
 
     public Auction() {
+        this.ID = 0;
     }
 
     public Auction(long ID, Item sale) {

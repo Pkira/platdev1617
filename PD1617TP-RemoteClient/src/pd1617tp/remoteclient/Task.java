@@ -356,8 +356,7 @@ public class Task {
         }
     }
     
-    public static void AdminChangeUserPassword()
-    {             
+    public static void AdminChangeUserPassword(){             
         String username;
         String password;
         
@@ -372,8 +371,7 @@ public class Task {
         System.out.println("\n" + result.Message() + "\n");
     }
     
-    public static void SaveState()
-    {
+    public static void SaveState(){
         try
         {
             Admin.SaveState();
@@ -393,7 +391,6 @@ public class Task {
         
         System.out.println("\n" + Admin.SeeUserProfile(username) + "\n");
     }
-    
     
     public static void VisitorAskAccountReactivation(){             
         String username;

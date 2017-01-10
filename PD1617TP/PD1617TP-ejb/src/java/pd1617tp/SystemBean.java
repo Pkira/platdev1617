@@ -330,7 +330,7 @@ public class SystemBean implements ISystem {
         
         try{
         
-        if(Item != ""){
+        if(!Item.isEmpty()){
             Item item = new Item(ItemID, Price, BuyNow, Item, Desc, Category, Username, Integer.parseInt(Budget));
             Itens.put(ItemID, item);
             Newsletter.addNewsToList(new NewsLetterItem("User " + Username + " add a Item " + Item));
@@ -357,7 +357,7 @@ public class SystemBean implements ISystem {
             for(long i = 1; i <= Itens.size(); i++)
             {
                 help = Itens.get(i);
-                if(help!=null)
+                if(help.getID()!=0)
                     if(help.getName().contains(Item))
                         if(help.getCategory().contains(Category))
                             Aux.add(help);
@@ -369,56 +369,56 @@ public class SystemBean implements ISystem {
     public ResultMessage CreateAuction(String Username, String Item, long id){
         
         //validate input
-        if(Username == null || Item == null)
-            return ResultMessage.LoginInvalid;
-        
+        if (Username.isEmpty() || Item.isEmpty()) {
+            return ResultMessage.AuctionNotCreated;
+        }
+
         //get user from list
         User user = Users.get(Username);
-        
-        //check if user is already logged
-        if(user != null) 
-        {
-            Item item = null;
-            Auction auction = null;
-        
-            if(!Itens.isEmpty()){
-                if(id>0 && (int) id <= Itens.size()){
-                    item = Itens.get(id);
-                    
-                    if(item != null && item.getOwner() == Username)
-                        item = null;
-                }
-                else
-                    if(!Item.isEmpty())
-                        for(int i = 1; i <= Itens.size(); i++){
-                            item = Itens.get(i);
-                            if(item != null && item.getName()==Item)
-                                if(item.getOwner()==Username)
-                                    i = Itens.size();
-                                 else
-                                    item = null;
-                            else
-                                item = null;
-                        }
 
-                if(item!=null)
-                {
+        //check if user is already logged
+        if (user != null) {
+            Item item = new Item();
+            Auction auction = new Auction();
+
+            if (!Itens.isEmpty()) {
+                if (id > 0 && (int) id <= Itens.size()) {
+                    item = Itens.get(id);
+
+                    if (item.getID() != 0 && !item.getOwner().contains(Username)) {
+                        item = new Item();
+                    }
+                } else if (!Item.isEmpty()) {
+                    for (int i = 1; i <= Itens.size(); i++) {
+                        item = Itens.get(i);
+                        if (item.getID() != 0 && item.getName().contentEquals(Item)){
+                            if (item.getOwner().contentEquals(Username)){
+                                i = Itens.size();
+                            } else {
+                                item = new Item();
+                            }
+                        } else {
+                            item = new Item();
+                        }
+                    }
+                }
+
+                if (item.getID() != 0) {
                     auction = new Auction(AuctionID, item);
                     Auctions.put(AuctionID, auction);
                     AuctionID++;
-
                     Newsletter.addNewsToList(new NewsLetterItem("New Auction created: Id[" + AuctionID + "]"));
-
+                    item.setState(true);
                     return ResultMessage.AuctionCreated;
-                }
-                else
+                } else {
                     return ResultMessage.AuctionNotCreated;
-            }
-            else
+                }
+            } else {
                 return ResultMessage.AuctionNotCreated;
             }
-               
-        return ResultMessage.AuctionNotCreated;  
+        }
+
+        return ResultMessage.AuctionNotCreated; 
     }
 
     @Override
@@ -426,7 +426,8 @@ public class SystemBean implements ISystem {
         return (ArrayList<Notification>) this.Notifications.values();
     }
     
-     public ResultMessage AskReactivation(String name){
+    @Override
+    public ResultMessage AskReactivation(String name){
          
          String notification = "A visitor ask for the reactivation of the account " + name;
          User user = Users.get(name);

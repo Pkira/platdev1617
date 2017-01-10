@@ -15,6 +15,7 @@ public class Item implements Serializable{
     int AuctionDuration;
 
     public Item() {
+        this.ID=0;
     }
 
     public Item(int ID) {
