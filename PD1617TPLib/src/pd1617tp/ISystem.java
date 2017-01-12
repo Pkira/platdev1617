@@ -34,4 +34,5 @@ public interface ISystem {
      void SaveState();
      String SeeUserProfile(String Username);
      ResultMessage AskReactivation(String name);
+     ArrayList ItemInSell(String username);
 }

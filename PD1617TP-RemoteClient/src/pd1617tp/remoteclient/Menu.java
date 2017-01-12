@@ -91,7 +91,7 @@ public class Menu {
         System.out.println("  4 - Follow Item             (Not implemented yet)");
         System.out.println("  5 - Check Follow Itens      (Not implemented yet)");
         System.out.println("  6 - Cancel Follow Item      (Not implemented yet)");
-        System.out.println("  7 - Check Itens sell        (Not implemented yet)");
+        System.out.println("  7 - Check Itens in sell");
         System.out.println("  8 - See historic itens sell (Not implemented yet)");
         System.out.println("  9 - See historic itens buy  (Not implemented yet)");
         System.out.println("  10 - Return");

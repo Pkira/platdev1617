@@ -563,4 +563,25 @@ public class SystemBean implements ISystem {
             return "User doesn't exist";
     }
     
+    @Override
+    public ArrayList ItemInSell(String username){
+        
+        ArrayList<Item> it = new ArrayList();
+        Item aux = new Item();
+        
+        if(!Itens.isEmpty()){
+            for(long i = 1; i <= Itens.size(); i++){
+                aux = Itens.get(i);
+                if(aux.getOwner().contains(username)){
+                    if(aux.isState()){
+                        it.add(aux);
+                    }
+                }
+            }            
+        }
+        
+        return it;
+                
+    }    
+    
 }

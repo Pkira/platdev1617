@@ -11,4 +11,5 @@ public interface IItem {
     
     ResultMessage CreateItem(String Owner, String Item, String Category, String Desc, double Price, double BuyNow, String Budget);
     ArrayList SearchItem(String Item, String Category);
+    public ArrayList ItemInSell(String username);
 }

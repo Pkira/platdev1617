@@ -22,4 +22,9 @@ public class ItemBean implements IItem {
     public ArrayList SearchItem(String Item, String Category){
         return AServer.SearchItem(Item, Category);
     }
+   
+    @Override
+    public ArrayList ItemInSell(String username){
+        return AServer.ItemInSell(username);
+    }
 }

@@ -400,4 +400,31 @@ public class Task {
         
         System.out.println("\n" + Visitor.AskReactivation(username) + "\n");
     }
+    
+    public static void UserCheckItensInSell(){             
+        
+        ArrayList<Item> aux = new ArrayList();
+        Item it;
+        it = new Item();
+        String user = User.getUsername();
+        
+        aux = Item.ItemInSell(user);
+        
+        if(aux.isEmpty())
+            System.out.println("\n[INFO] You don't have itens in sell!\n");
+        else
+        {
+            System.out.print("You have " + aux.size() + " in sell\n");
+            
+            for(int i = 0; i < aux.size(); i++){
+                it = aux.get(i);
+                System.out.print("\n Name: " + it.getName() + "\n");
+                System.out.print(" Category: " + it.getCategory() + "\n");
+                System.out.print(" Description: " + it.getDesc() + "\n");
+                System.out.print(" Start price: " + it.getStartPrice() + "\n");
+                System.out.print(" Buy now price: " + it.getBuyNowPrice() + "\n");
+            }
+        }
+        
+    }
 }

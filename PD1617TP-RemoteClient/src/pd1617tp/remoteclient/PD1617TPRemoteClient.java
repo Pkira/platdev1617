@@ -314,7 +314,7 @@ public class PD1617TPRemoteClient {
         }    
     }
    
-        public static void MenuUserItem(){
+    public static void MenuUserItem(){
         
         int option;        
         boolean continueMenu = true;
@@ -333,6 +333,9 @@ public class PD1617TPRemoteClient {
                     break;
                 case 3:
                     Task.SearchItem();
+                    break;
+                case 7:
+                    Task.UserCheckItensInSell();
                     break;
                 case 10:
                     continueMenu = false;
