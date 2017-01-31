@@ -3,6 +3,7 @@ package pd1617tp;
 
 import libraries.ResultMessage;
 import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.LocalBean;
 import javax.jms.Message;
 import libraries.NewsLetter;
@@ -35,4 +36,5 @@ public interface ISystem {
      String SeeUserProfile(String Username);
      ResultMessage AskReactivation(String name);
      ArrayList ItemInSell(String username);
+     List FollowItens(String username);
 }

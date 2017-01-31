@@ -13,7 +13,8 @@ public class Auction {
     long ID;
     ArrayList<String> AuctionLog;
     Item insale = new Item();
-    boolean state;            
+    long AuctionState;       
+    long ItemState;
     Calendar StartDate, EndDate;
 
     public Auction() {
@@ -27,6 +28,8 @@ public class Auction {
         this.StartDate = Calendar.getInstance();
         this.EndDate = this.StartDate;
         this.EndDate.add(Calendar.HOUR_OF_DAY, sale.getAuctionDuration());
+        this.ItemState = 0;
+        this.AuctionState = 0;
     }
 
     public long getID() {
@@ -41,8 +44,8 @@ public class Auction {
         return insale;
     }
 
-    public boolean isState() {
-        return state;
+    public long isAuctionState() {
+        return AuctionState;
     }
 
     public Calendar getStartDate() {
@@ -57,8 +60,8 @@ public class Auction {
         this.AuctionLog = Action;
     }
 
-    public void setState(boolean state) {
-        this.state = state;
+    public void setAuctionState(long AuctionState) {
+        this.AuctionState = AuctionState;
     }
 
     public void setStartDate(Calendar StartDate) {
@@ -68,6 +71,15 @@ public class Auction {
     public void setEndDate(Calendar EndDate) {
         this.EndDate = EndDate;
     }
+
+    public long getItemState() {
+        return ItemState;
+    }
+
+    public void setItemState(long ItemState) {
+        this.ItemState = ItemState;
+    }
+    
     
     
 }

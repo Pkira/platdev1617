@@ -334,6 +334,9 @@ public class PD1617TPRemoteClient {
                 case 3:
                     Task.SearchItem();
                     break;
+                case 5:
+                    Task.UserFollowItensList();
+                    break;
                 case 7:
                     Task.UserCheckItensInSell();
                     break;

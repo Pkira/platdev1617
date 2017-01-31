@@ -20,9 +20,9 @@ public class User implements Serializable{
     boolean AccountSuspension;
     
     ArrayList<Messages> MsgList;
-    List<Item> SellList;
-    List<Item> BuyList;
-    List<Item> FollowList;
+    List<Long> SellList;
+    List<Long> BuyList;
+    List<Long> FollowList;
     
     boolean Advised;
     boolean Logged;
@@ -37,9 +37,9 @@ public class User implements Serializable{
         this.Address = Address;
         this.Balance = 0;
         this.AccountActivation = false;
-        this.SellList = new ArrayList<Item>();
-        this.BuyList = new ArrayList<Item>();
-        this.FollowList = new ArrayList<Item>();
+        this.SellList = new ArrayList<>();
+        this.BuyList = new ArrayList<>();
+        this.FollowList = new ArrayList<>();
         this.MsgList = new ArrayList<Messages>();
         this.Logged = false;
         this.Advised = false;
@@ -85,15 +85,15 @@ public class User implements Serializable{
         return AccountActivation;
     }
 
-    public List<Item> getSellList() {
+    public List<Long> getSellList() {
         return SellList;
     }
 
-    public List<Item> getBuyList() {
+    public List<Long> getBuyList() {
         return BuyList;
     }
 
-    public List<Item> getFollowList() {
+    public List<Long> getFollowList() {
         return FollowList;
     }
 
@@ -113,15 +113,15 @@ public class User implements Serializable{
         this.AccountActivation = state;
     }
 
-    public void setSellList(List<Item> SellList) {
+    public void setSellList(List<Long> SellList) {
         this.SellList = SellList;
     }
 
-    public void setBuyList(List<Item> BuyList) {
+    public void setBuyList(List<Long> BuyList) {
         this.BuyList = BuyList;
     }
 
-    public void setFollowList(List<Item> FollowList) {
+    public void setFollowList(List<Long> FollowList) {
         this.FollowList = FollowList;
     }
     

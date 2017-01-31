@@ -8,6 +8,7 @@ package pd1617tp.remoteclient;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import libraries.Item;
 import libraries.Messages;
 import libraries.NewsLetter;
@@ -426,5 +427,21 @@ public class Task {
             }
         }
         
+    }
+    
+    public static void UserFollowItensList(){
+        List<Item> FollowItens;
+        
+        FollowItens = Item.FollowItens(User.getUsername());
+        
+        if(FollowItens != null){
+            System.out.println("Item Names");
+            for(int i = 0; i < FollowItens.size(); i++){
+                System.out.println("N" + i+1 + " : " + FollowItens.get(i).getName());
+            }
+        }
+        else{
+            System.out.println("[INFO] You doen't are follow any item!");
+        }
     }
 }

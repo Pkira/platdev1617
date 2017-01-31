@@ -14,6 +14,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -155,7 +156,7 @@ public class SystemBean implements ISystem {
 
     @Override
     public ResultMessage UpdateProfile(String Username, String Address, String password, String CurrentPass){
-        User user =Users.get(Username);
+        User user = Users.get(Username);
         
         if(CurrentPass.contentEquals(user.getPassword())){
             if(!Address.contentEquals("")){
@@ -572,16 +573,33 @@ public class SystemBean implements ISystem {
         if(!Itens.isEmpty()){
             for(long i = 1; i <= Itens.size(); i++){
                 aux = Itens.get(i);
-                if(aux.getOwner().contains(username)){
-                    if(aux.isState()){
+                if(aux.getOwner().contains(username) && aux.isState()){
                         it.add(aux);
                     }
                 }
             }            
-        }
+        
         
         return it;
                 
     }    
     
+    @Override
+    public List FollowItens(String username){
+        
+        User user = Users.get(username);
+        List<Item> ItensFollow = null;
+        List<Long> ItensIdFollow = null;
+        
+        if(user != null){
+            if(!user.getFollowList().isEmpty()){
+                ItensIdFollow = user.getFollowList();
+                for(int i = 0; i < ItensIdFollow.size(); i++){
+                    ItensFollow.add(Itens.get(i));
+                }
+            }
+        }
+        
+        return ItensFollow;
+    }
 }

@@ -2,6 +2,7 @@
 package pd1617tp;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import libraries.ResultMessage;
@@ -26,5 +27,10 @@ public class ItemBean implements IItem {
     @Override
     public ArrayList ItemInSell(String username){
         return AServer.ItemInSell(username);
+    }
+    
+    @Override
+    public List FollowItens(String username){
+        return AServer.FollowItens(username);
     }
 }
