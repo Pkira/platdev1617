@@ -33,7 +33,10 @@ public enum ResultMessage {
     AccountPasswordChanged("[INFO] Password changed successfully"),
     AccountReactivation("[INFO] The request for the account reactivation was sent to the Admin, please wait a while."),
     AccountReactivationFail("[INFO] This accout is not suspend"),
-    AccountReactivationNoUser("[INFO] This account doesn't exist");
+    AccountReactivationNoUser("[INFO] This account doesn't exist"),
+    FollowItemSucess("[INFO] Item added to the follow list with sucess!"),
+    FollowItemAlreadyFollow("[INFO] You already follow this Item or this Item is yours."),
+    ItemNotExist("[INFO] The indicated item does not exist.");
     
     
     private String Message;

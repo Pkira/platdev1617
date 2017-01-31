@@ -263,7 +263,8 @@ public class Task {
             System.out.print("\nInfo of the Itens found: \n");
             for(int i = 0; i < Aux.size(); i++){
                 it = Aux.get(i);
-                System.out.print("\n Name: " + it.getName() + "\n");
+                System.out.print("\n ID: " + it.getID() + "\n");
+                System.out.print(" Name: " + it.getName() + "\n");
                 System.out.print(" Category: " + it.getCategory() + "\n");
                 System.out.print(" Description: " + it.getDesc() + "\n");
                 System.out.print(" Start price: " + it.getStartPrice() + "\n");
@@ -431,17 +432,35 @@ public class Task {
     
     public static void UserFollowItensList(){
         List<Item> FollowItens;
-        
+        Item ItemAux = new Item();
         FollowItens = Item.FollowItens(User.getUsername());
         
-        if(FollowItens != null){
+        if(!FollowItens.isEmpty()){
             System.out.println("Item Names");
             for(int i = 0; i < FollowItens.size(); i++){
-                System.out.println("N" + i+1 + " : " + FollowItens.get(i).getName());
+                ItemAux = FollowItens.get(i);
+                System.out.println("N" + i+1 + " : ");
+                System.out.println("ID: " + ItemAux.getID());
+                System.out.println("Name: " + ItemAux.getName());
+                System.out.println("Description: " + ItemAux.getDesc());
+                System.out.println("Owner: " + ItemAux.getOwner());
+                System.out.println("BuyPrice: " + ItemAux.getBuyNowPrice());
+                System.out.println("StartPrice: " + ItemAux.getStartPrice() + "\n");
             }
         }
         else{
             System.out.println("[INFO] You doen't are follow any item!");
         }
+    }
+    
+    public static void UserFollowItem(){
+        
+        String username = User.getUsername();
+        Long ItemId;
+        
+        System.out.println("Insert the Id of the Item to follow: ");
+        ItemId = sc.nextLong();
+        
+        System.out.println(Item.FollowItem(ItemId, username).Message());
     }
 }

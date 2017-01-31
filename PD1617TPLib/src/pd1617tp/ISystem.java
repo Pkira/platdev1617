@@ -37,4 +37,5 @@ public interface ISystem {
      ResultMessage AskReactivation(String name);
      ArrayList ItemInSell(String username);
      List FollowItens(String username);
+     ResultMessage FollowItem(Long Item, String Username);
 }

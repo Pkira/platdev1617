@@ -14,4 +14,5 @@ public interface IItem {
     ArrayList SearchItem(String Item, String Category);
     ArrayList ItemInSell(String username);
     List FollowItens(String username);
+    ResultMessage FollowItem(Long Item, String Username);
 }

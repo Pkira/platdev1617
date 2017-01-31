@@ -588,18 +588,46 @@ public class SystemBean implements ISystem {
     public List FollowItens(String username){
         
         User user = Users.get(username);
-        List<Item> ItensFollow = null;
-        List<Long> ItensIdFollow = null;
+        List<Item> ItensFollow = new ArrayList<>();
+        List<Long> ItensIdFollow = new ArrayList<>();
         
         if(user != null){
             if(!user.getFollowList().isEmpty()){
                 ItensIdFollow = user.getFollowList();
                 for(int i = 0; i < ItensIdFollow.size(); i++){
-                    ItensFollow.add(Itens.get(i));
+                    ItensFollow.add(Itens.get(ItensIdFollow.get(i)));
                 }
             }
         }
         
         return ItensFollow;
     }
+
+    @Override
+    public ResultMessage FollowItem(Long Item, String Username) {
+        
+        User user = Users.get(Username);
+        List<Long> IdItens = new ArrayList<>();
+        boolean exist = false;
+        
+        if(Itens.containsKey(Item) && user != null){        
+        
+           IdItens = user.getFollowList();
+           if(!IdItens.isEmpty())
+               for(int i = 0; i < IdItens.size(); i++){
+                   if(Item.equals(IdItens.get(i))){
+                       exist = true;
+                   }
+               }
+           if(!exist && !user.getName().equals(Itens.get(Item).getOwner())){
+               user.setFollowList(Item);
+               return ResultMessage.FollowItemSucess;
+           }else{
+               return ResultMessage.FollowItemAlreadyFollow;
+           }
+        }   
+        return ResultMessage.ItemNotExist;
+    }
+    
+    
 }
