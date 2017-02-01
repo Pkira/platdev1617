@@ -340,6 +340,9 @@ public class PD1617TPRemoteClient {
                 case 5:
                     Task.UserFollowItensList();
                     break;
+                case 6:
+                    Task.UserCancelFollowItem();
+                    break;
                 case 7:
                     Task.UserCheckItensInSell();
                     break;

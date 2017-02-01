@@ -620,7 +620,8 @@ public class SystemBean implements ISystem {
                    }
                }
            if(!exist && !user.getName().equals(Itens.get(Item).getOwner())){
-               user.setFollowList(Item);
+               IdItens.add(Item);
+               user.setFollowList(IdItens);
                return ResultMessage.FollowItemSucess;
            }else{
                return ResultMessage.FollowItemAlreadyFollow;
@@ -628,6 +629,31 @@ public class SystemBean implements ISystem {
         }   
         return ResultMessage.ItemNotExist;
     }
-    
-    
+
+    @Override
+    public ResultMessage CancelFollowItem(Long Item, String Username) {
+        
+        User user = Users.get(Username);
+        List<Long> IdItens = new ArrayList<>();
+        boolean exist = false;
+        
+        if(user != null){        
+        
+           IdItens = user.getFollowList();
+           if(!IdItens.isEmpty())
+               for(int i = 0; i < IdItens.size(); i++){
+                   if(Item.equals(IdItens.get(i))){
+                       exist = true;
+                   }
+               }
+           if(exist){
+               IdItens.remove(Item);
+               user.setFollowList(IdItens);
+               return ResultMessage.CancelFollowItemSucess;
+           }else{
+               return ResultMessage.CancelFollowItemAlreadyNotFollow;
+           }
+        }   
+        return ResultMessage.CancelFollowItemError;
+    }
 }

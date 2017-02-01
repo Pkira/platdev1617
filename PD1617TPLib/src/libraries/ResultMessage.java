@@ -36,7 +36,10 @@ public enum ResultMessage {
     AccountReactivationNoUser("[INFO] This account doesn't exist"),
     FollowItemSucess("[INFO] Item added to the follow list with sucess!"),
     FollowItemAlreadyFollow("[INFO] You already follow this Item or this Item is yours."),
-    ItemNotExist("[INFO] The indicated item does not exist.");
+    ItemNotExist("[INFO] The indicated item does not exist."),
+    CancelFollowItemSucess("[INFO] The item was successfuly removed from the follow list."),
+    CancelFollowItemAlreadyNotFollow("[INFO] You don't follow the indicated Item."),
+    CancelFollowItemError("[INFO] Some error have ocurred during the procedure, please try again later.");
     
     
     private String Message;

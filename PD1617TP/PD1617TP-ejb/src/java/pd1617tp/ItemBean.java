@@ -38,4 +38,9 @@ public class ItemBean implements IItem {
     public ResultMessage FollowItem(Long Item, String Username) {
         return AServer.FollowItem(Item, Username);
     }
+    
+    @Override
+    public ResultMessage CancelFollowItem(Long Item, String Username) {
+        return AServer.CancelFollowItem(Item, Username);
+    }
 }

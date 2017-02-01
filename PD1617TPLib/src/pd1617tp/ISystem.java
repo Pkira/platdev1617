@@ -38,4 +38,5 @@ public interface ISystem {
      ArrayList ItemInSell(String username);
      List FollowItens(String username);
      ResultMessage FollowItem(Long Item, String Username);
+     ResultMessage CancelFollowItem(Long Item, String Username);
 }

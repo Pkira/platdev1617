@@ -461,6 +461,17 @@ public class Task {
         System.out.println("Insert the Id of the Item to follow: ");
         ItemId = sc.nextLong();
         
-        System.out.println(Item.FollowItem(ItemId, username).Message());
+        System.out.println("\n" + Item.FollowItem(ItemId, username).Message());
+    }
+    
+    public static void UserCancelFollowItem(){
+        
+        String username = User.getUsername();
+        Long ItemId;
+        
+        System.out.println("Insert the Id of the Item to remove from the follow item list : ");
+        ItemId = sc.nextLong();
+        
+        System.out.println("\n" + Item.CancelFollowItem(ItemId, username).Message());
     }
 }
