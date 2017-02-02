@@ -229,7 +229,8 @@ public class PD1617TPRemoteClient {
                     Task.AdminSeeUserProfile();
                     break;
                 case 6:
-                    continue;
+                    Task.SearchItem();
+                    break;
                 case 7:
                     continue;
                 case 8:

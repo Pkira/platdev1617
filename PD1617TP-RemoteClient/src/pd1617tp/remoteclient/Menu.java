@@ -48,7 +48,7 @@ public class Menu {
         System.out.println("  3 - Re-Activate Account");
         System.out.println("  4 - Suspend Account");
         System.out.println("  5 - See user profile");
-        System.out.println("  6 - Search Items          (Not implemented yet)");
+        System.out.println("  6 - Search Items");
         System.out.println("  7 - Cancel Items          (Not implemented yet)");
         System.out.println("  8 - Add new Category      (Not implemented yet)");
         System.out.println("  9 - Edit Category         (Not implemented yet)");
