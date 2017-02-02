@@ -474,4 +474,28 @@ public class Task {
         
         System.out.println("\n" + Item.CancelFollowItem(ItemId, username).Message());
     }
+    
+    public static void AuctionReportItem(){
+        
+        Long Id;
+        
+        System.out.println("Indicate the Id of the Item to report: \n");
+        Id = sc.nextLong();
+        
+        String message = Auction.ReportItem(User.getUsername(), Id).Message();
+        
+        System.out.println(message);
+    }
+    
+    public static void AuctionReportSeller(){
+        
+        String reported;
+        
+        System.out.println("Indicate the name of the Seller to report: \n");
+        reported = sc.nextLine();
+        
+        String message = Auction.ReportUser(User.getUsername(), reported).Message();
+        
+        System.out.println(message);
+    }
 }

@@ -179,6 +179,9 @@ public class PD1617TPRemoteClient {
                 case 3:
                     MenuUserItem();
                     break;
+                case 4:
+                    MenuUserAuction();
+                    break;
                 case 5:
                     Task.ShowNewsLetter();
                     break;
@@ -367,6 +370,15 @@ public class PD1617TPRemoteClient {
             option = getOption(5);
         
             switch(option){
+                case 1:
+                    Task.SearchItem();
+                    break;
+                case 3:
+                    Task.AuctionReportItem();
+                    break;
+                case 4:
+                    Task.AuctionReportSeller();
+                    break;
                 case 5:
                     continueMenu = false;
                     break;

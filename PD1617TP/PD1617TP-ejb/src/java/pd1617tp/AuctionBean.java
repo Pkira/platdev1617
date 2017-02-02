@@ -17,4 +17,14 @@ public class AuctionBean implements IAuction {
      public ResultMessage CreateAuction(String Username, String Item, long id){
         return AServer.CreateAuction(Username, Item, id);
     }
+     
+    @Override
+    public ResultMessage ReportItem(String name, Long Id) {
+        return AServer.ReportItem(name, Id);
+    }
+    
+    @Override
+    public ResultMessage ReportUser(String name, String reported) {
+        return AServer.ReportUser(name, reported);
+    }
 }

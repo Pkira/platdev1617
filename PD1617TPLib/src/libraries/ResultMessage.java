@@ -39,7 +39,9 @@ public enum ResultMessage {
     ItemNotExist("[INFO] The indicated item does not exist."),
     CancelFollowItemSucess("[INFO] The item was successfuly removed from the follow list."),
     CancelFollowItemAlreadyNotFollow("[INFO] You don't follow the indicated Item."),
-    CancelFollowItemError("[INFO] Some error have ocurred during the procedure, please try again later.");
+    CancelFollowItemError("[INFO] Some error have ocurred during the procedure, please try again later."),
+    ReportSuccess("[INFO] The report was sended to the administrator."),
+    ReportInsuccess("[INFO] The report can't be made, please make sure that you have insert the right information.");
     
     
     private String Message;

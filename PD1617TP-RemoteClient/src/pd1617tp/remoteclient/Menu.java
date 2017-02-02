@@ -32,7 +32,7 @@ public class Menu {
         System.out.println("  1 - Profile");
         System.out.println("  2 - Messages");
         System.out.println("  3 - Item");
-        System.out.println("  4 - Auction                 (Not implemented yet)");
+        System.out.println("  4 - Auction");
         System.out.println("  5 - Show Newletter");
         System.out.println("  6 - Suspend Accout          (Not implemented yet)");
         System.out.println("  7 - Log off");
@@ -103,9 +103,9 @@ public class Menu {
         System.out.println("    Auction System Remote Client  ");
         System.out.println("=====================================");
         System.out.println("  1 - Search Item");
-        System.out.println("  2 - Bid Item");
-        System.out.println("  3 - Report Item             (Not implemented yet)");
-        System.out.println("  4 - Report Seller           (Not implemented yet)");
+        System.out.println("  2 - Bid Item            (Not implemented yet)");
+        System.out.println("  3 - Report Item");
+        System.out.println("  4 - Report Seller");
         System.out.println("  5 - Return");
         System.out.println("=====================================");
     }

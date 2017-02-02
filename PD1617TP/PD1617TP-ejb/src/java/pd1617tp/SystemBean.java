@@ -656,4 +656,34 @@ public class SystemBean implements ISystem {
         }   
         return ResultMessage.CancelFollowItemError;
     }
+    
+    @Override
+    public ResultMessage ReportItem(String name, Long Id){
+         
+         String notification = "User " + name + " have reported the item with the Id " + Id;
+         Notification note;
+        if (Itens.get(Id) != null) {
+            note = new Notification(name, notification, NotificationID);
+            Notifications.put(NotificationID, note);
+            NotificationID++;
+            return ResultMessage.ReportSuccess;
+        } else {
+            return ResultMessage.ReportInsuccess;
+        }
+    }
+    
+    @Override
+    public ResultMessage ReportUser(String name, String reported){
+         
+         String notification = "User " + name + " have reported the user " + reported;
+         Notification note;
+        if (Users.get(reported) != null) {
+            note = new Notification(name, notification, NotificationID);
+            Notifications.put(NotificationID, note);
+            NotificationID++;
+            return ResultMessage.ReportSuccess;
+        } else {
+            return ResultMessage.ReportInsuccess;
+        }
+    }
 }

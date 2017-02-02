@@ -39,4 +39,6 @@ public interface ISystem {
      List FollowItens(String username);
      ResultMessage FollowItem(Long Item, String Username);
      ResultMessage CancelFollowItem(Long Item, String Username);
+     ResultMessage ReportItem(String name, Long Id);
+     ResultMessage ReportUser(String name, String reported);
 }

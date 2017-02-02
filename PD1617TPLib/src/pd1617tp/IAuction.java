@@ -16,4 +16,6 @@ import libraries.ResultMessage;
 public interface IAuction {
     
      ResultMessage CreateAuction(String Username, String Item, long id);
+     ResultMessage ReportItem(String name, Long Id);
+     ResultMessage ReportUser(String name, String reported);
 }
