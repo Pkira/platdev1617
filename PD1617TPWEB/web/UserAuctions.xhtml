@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="/WEB-INF/layout.xhtml">
+
+            <ui:define name="content">
+                
+                <div class="container">
+                    <div class="check">	 
+                        <div class="col-md-3 cart-total">
+                            <a class="continue" href="#">Create new Auction</a>
+                            <div class="price-details">
+                                    <h3>Auctions Details</h3>
+                                    <span>Auctions</span>
+                                    <span class="total1">2</span>
+                                    <div class="clearfix"></div>				 
+                            </div>	
+                            <ul class="total_price">
+                              <li class="last_price"> <h4>TOTAL</h4></li>	
+                              <li class="last_price"><span>635.00 $</span></li>
+                              <div class="clearfix"> </div>
+                            </ul>
+
+
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="col-md-9 cart-items">
+                            <h1>My Auctions</h1>
+                            
+                            <script>$(document).ready(function(c) {
+                                    $('.close1').on('click', function(c){
+                                            $('.cart-header').fadeOut('slow', function(c){
+                                                    $('.cart-header').remove();
+                                            });
+                                            });	  
+                                    });
+                            </script>
+                            
+                            <div class="cart-header">
+                                    <div class="close1"> </div>
+                                    <div class="cart-sec simpleCart_shelfItem">
+                                        
+                                            <div class="cart-item cyc">
+                                                     <img src="Images/9.jpg" class="img-responsive" alt=""/>
+                                            </div>
+                                            <div class="cart-item-info">
+                                                <h3><a href="#">Item1</a><span>Category: X</span></h3>
+                                                <ul class="qty">
+                                                        <li><p>Users in auction : 5</p></li>
+                                                </ul>
+
+                                                 <div class="delivery">
+                                                 <p>Current Price : 100.00$</p>
+                                                 <span>Ends in 13 hours</span>
+                                                 <div class="clearfix"></div>
+                                                 </div>	
+                                            </div>
+                                            <div class="clearfix"></div>
+
+                                     </div>
+                            </div>
+                            <script>$(document).ready(function(c) {
+                                           $('.close2').on('click', function(c){
+                                                           $('.cart-header2').fadeOut('slow', function(c){
+                                                   $('.cart-header2').remove();
+                                           });
+                                           });	  
+                                           });
+                            </script>
+                            <div class="cart-header2">
+                                <div class="close2"> </div>
+                                <div class="cart-sec simpleCart_shelfItem">
+                                        
+                                            <div class="cart-item cyc">
+                                                     <img src="Images/10.jpg" class="img-responsive" alt=""/>
+                                            </div>
+                                            <div class="cart-item-info">
+                                                <h3><a href="#">Item2</a><span>Category: Y</span></h3>
+                                                <ul class="qty">
+                                                        <li><p>Users in auction : 5</p></li>
+                                                </ul>
+
+                                                 <div class="delivery">
+                                                 <p>Current Price : 258.00$</p>
+                                                 <span>Ends in 2 hours</span>
+                                                 <div class="clearfix"></div>
+                                                 </div>	
+                                            </div>
+                                            <div class="clearfix"></div>
+
+                                     </div>
+                             </div>		
+                        </div>
+
+
+                        <div class="clearfix"> </div>
+                    </div>
+                </div>
+                             
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

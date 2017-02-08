@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    
+    <body>       
+        
+        <ui:composition template="/WEB-INF/layout.xhtml">
+            
+            <ui:define name="content">
+                
+                <div class="container">
+                    
+                    <div class="main">
+                        
+                        <div class="registration">
+                            <div class="registration_left">
+                                <h2>new user? <span> create an account </span></h2>
+                                
+                                <script>
+                                    function() {
+
+                                        // Create input element for testing
+                                        var inputs = document.createElement('input');
+
+                                        // Create the supports object
+                                        var supports = {};
+
+                                        supports.autofocus   = 'autofocus' in inputs;
+                                        supports.required    = 'required' in inputs;
+                                        supports.placeholder = 'placeholder' in inputs;
+
+                                        // Fallback for autofocus attribute
+                                        if(!supports.autofocus) {
+
+                                        }
+
+                                        // Fallback for required attribute
+                                        if(!supports.required) {
+
+                                        }
+
+                                        // Fallback for placeholder attribute
+                                        if(!supports.placeholder) {
+
+                                        }
+
+                                        // Change text inside send button on submit
+                                        var send = document.getElementById('register-submit');
+                                        if(send) {
+                                            send.onclick = function () {
+                                                this.innerHTML = '...Sending';
+                                            }
+                                        }
+
+                                    };
+                                </script>
+                                
+                                <div class="registration_form">
+                                    
+                                    <h:form>
+                                        <div>
+                                            <label>
+                                                <h:outputLabel value="Username:" for="username" />
+                                                <h:inputText id="username"
+                                                             value="#{userController.username}"
+                                                             required="true"
+                                                             requiredMessage="Falta o nome"/>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <h:outputLabel value="Password:" for="password" />
+                                                <h:inputSecret id="password"
+                                                               value="#{userController.password}"
+                                                               required="true"
+                                                               requiredMessage="Falta a password" />
+                                            </label>
+                                        </div>						
+                                        <div>
+                                            <label>
+                                                <h:outputLabel value="Retry Password:" for="password2" />
+                                                <h:inputSecret id="password2"
+                                                               value="#{userController.password}"
+                                                               required="true"
+                                                               requiredMessage="Falta a password" />
+                                            </label>
+                                        </div>	
+                                        <div>
+                                            
+                                            <h:commandButton action="#{userController.createNew}" value="Create Account" id="register-submit"/>
+                                        </div>
+                                        <div class="sky-form">
+                                            <label class="checkbox"><input type="checkbox" name="checkbox" /><i></i>i agree to shoppe.com &nbsp;<a class="terms" href="#"> terms of service</a> </label>
+                                        </div>
+                                    </h:form>
+                                    <!-- /Form -->
+                                </div>
+                            </div>
+                            
+                            <div class="registration_left">
+                                <h2>existing user</h2>
+                                <div class="registration_form">
+                                    <!-- Form -->
+                                    <h:form id="registration_form">
+                                        <div>
+                                            <label>
+                                                <input name="user" placeholder="email:" type="email" tabindex="3" />
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <input name="password" placeholder="password" type="password" tabindex="4" />
+                                            </label>
+                                        </div>						
+                                        <div>
+                                            <input type="submit" value="sign in" id="register-submit" />
+                                        </div>
+                                        <div class="forget">
+                                            <a href="#">forgot your password</a>
+                                        </div>
+                                    </h:form>
+                                    <!-- /Form -->
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <!-- end registration -->
+                    </div>
+                </div>
+                
+            </ui:define>
+            
+        </ui:composition>
+        
+    </body>
+</html>

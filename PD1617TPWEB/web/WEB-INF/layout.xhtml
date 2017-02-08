@@ -1,0 +1,283 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    
+    <h:head>
+        <title>ProjectoPD</title>
+        <script src="Scripts/global.js"> </script>
+        <link href="Content/bootstrap.css" rel='stylesheet' type='text/css' />
+        <!-- jQuery (necessary JavaScript plugins) -->
+        <script type='text/javascript' src="Scripts/jquery-1.11.1.min.js"></script>
+        <!-- Custom Theme files -->
+        <link href="Content/style.css" rel='stylesheet' type='text/css' />
+        <!-- Custom Theme files -->
+        <!--//theme-style-->
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css' />
+        <link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,900' rel='stylesheet' type='text/css' />
+        <!-- start menu -->
+        <link href="Content/megamenu.css" rel="stylesheet" type="text/css" media="all" />
+        <script type="text/javascript" src="Scripts/megamenu.js"></script>
+        <script src="Scripts/menu_jquery.js"></script>
+        <script src="Scripts/jquery.etalage.min.js"></script>
+        <link rel="stylesheet" href="Content/etalage.css" />
+        <script src="Scripts/simpleCart.min.js"> </script>
+        <script>
+            jQuery(document).ready(function($){
+                $('#etalage').etalage({
+                    thumb_image_width: 300,
+                    thumb_image_height: 400,
+                    source_image_width: 900,
+                    source_image_height: 1200,
+                    show_hint: true,
+                    click_callback: function(image_anchor, instance_id){
+                        alert('Callback example:\nYou clicked on an image with the anchor: "'+image_anchor+'"\n(in Etalage instance: "'+instance_id+'")');
+                    }
+                });
+            });
+        </script>
+        <script>$(document).ready(function(){$(".megamenu").megamenu();});</script>
+    </h:head>
+    
+    <h:body>
+        
+        <div class="top_bg">
+            <div class="container">
+                <div class="header_top">
+                    <div class="top_right">
+                        <ul>
+                            <li>
+                                <h:form>
+                                    <h:commandLink action="index" value="Mestrado Informática e Sistemas | Desenvolvimento de Aplicações 2016/2017" />
+                                </h:form> 
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="top_left">
+                        <h2>
+                            <h:panelGroup rendered="#{userController.isLogged}">
+                                
+                                <h:link outcome="UserProfile" value="#{userController.username}" styleClass="white"/>
+
+                            </h:panelGroup>
+                        </h2>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+        </div>
+        <!-- header -->
+        <div class="header_bg">
+            <div class="container">
+                <div class="header">
+                    <div class="head-t">
+                        <div class="logo">
+                            <h:form>
+                                <h:commandLink action="index" value="Projecto Plataformas de Desenvolvimento" />
+                            </h:form> 
+
+                        </div>
+                        <!-- start header_right -->
+                        <div class="header_right">
+                            <div class="rgt-bottom">
+                                
+                                <div id="visitantOptions">
+                                    <h:panelGroup rendered="#{!userController.isLogged}">
+                                    <div class="log">
+                                        <div class="login" >
+                                            <div id="loginContainer"><a href="#" id="loginButton"><span>Login</span></a>
+                                                <div id="loginBox">   
+
+                                                        <h:form id="loginForm">
+                                                           <fieldset id="body">
+                                                               <fieldset>
+                                                                   <h:outputLabel value="Username:" for="username" />
+                                                                   <h:inputText id="username"
+                                                                                value="#{userController.username}"
+                                                                                required="true"
+                                                                                requiredMessage="Falta o nome"/>
+                                                               </fieldset>
+                                                               <fieldset>
+                                                                   <h:outputLabel value="Password:" for="password" />
+                                                                   <h:inputSecret id="password"
+                                                                                  value="#{userController.password}"
+                                                                                  required="true"
+                                                                                  requiredMessage="Falta a password" />
+                                                               </fieldset>
+                                                               <h:commandButton action="#{userController.login}" value="Sign in" id="login"/>
+                                                           </fieldset>
+                                                           <span><a href="#">Forgot your password?</a></span>
+                                                       </h:form>                                                 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="reg">
+                                        <h:form>
+                                            <h:commandLink action="UserRegister" value="REGISTER" />
+                                        </h:form>                 
+                                    </div>
+                                    </h:panelGroup>
+                                </div>
+                                <div id="islogged">
+                                    <h:panelGroup rendered="#{userController.isLogged}"> 
+                                        
+                                    <div class="reg" style="width:177px;">
+                                        <h:form>                                         
+                                            <h:commandLink action="#{userController.logoff}" value="Sign Out" />
+                                         
+                                            <h:commandLink action="UserProfile" value="Profile" style="padding-left: 30px;"/>
+                                            
+                                        </h:form>                 
+                                    </div>
+                                        
+                                    </h:panelGroup>
+                                </div>
+                                
+                                
+                                <div class="reg" style="width: 150px;margin-left:24px;">
+                                    <h:form>
+                                        <h:commandLink action="UserItems">
+                                            <span id="simpleCart_quantity" class="simpleCart_quantity">0</span> items<img src="Images/bag1.png" alt="" />
+                                        </h:commandLink>
+                                    </h:form>	
+                                    <div class="clearfix"> </div>
+                                </div>
+                                <div class="create_btn">
+                                    <h:form>
+                                        <h:commandLink action="UserAuctions" value="MyAuctions" />
+                                    </h:form>
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                            <div class="search">
+                                <h:form>
+                                    <input type="text" value="" placeholder="search..." />
+                                    <input type="submit" value="" />
+                                </h:form>
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <!-- start header menu -->
+                    <ul class="megamenu skyblue">
+                        <li class="active grid">
+          
+                                <h:link outcome="index" value="HOME" styleClass="color1"/>
+
+                        </li>
+                        <li class="grid"><a class="color2" href="#">Auctions</a>
+                            <div class="megapanel">
+                                <div class="row">
+                                    <div class="col1">
+                                        <div class="h_nav">
+                                            <h4>Categories</h4>
+                                            <ul>
+                                                <li><a href="shop.jsp">Category 1</a></li>
+                                                <li><a href="shop.jsp">Category 2</a></li>
+                                                <li><a href="shop.jsp">Category 3</a></li>
+                                                <li><a href="shop.jsp">Category 4</a></li>
+                                                <li><a href="shop.jsp">Category 5</a></li>
+                                                <li><a href="shop.jsp">Category 6</a></li>
+                                            </ul>	
+                                        </div>							
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                      	<li class="grid"><a class="color6" href="#">Items</a>
+                            <div class="megapanel">
+                                <div class="row">
+                                    <div class="col2">
+                                        <div class="h_nav">
+                                            <h4>Categories</h4>
+                                            <ul>
+                                                <li><a href="shop.jsp">Item 1</a></li>
+                                                <li><a href="shop.jsp">Item 2</a></li>
+                                                <li><a href="shop.jsp">Item 3</a></li>
+                                                <li><a href="shop.jsp">Item 4</a></li>
+                                                <li><a href="shop.jsp">Item 5</a></li>
+                                                <li><a href="shop.jsp">Item 6</a></li>
+                                            </ul>	
+                                        </div>							
+                                    </div>
+                                </div>
+                            </div>
+                        </li>		
+                       
+                    </ul> 
+                </div>
+            </div>
+        </div>
+        
+        <div id="content" class="center_content">
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+        
+        <div class="foot-top">
+            <div class="container">
+                <div class="col-md-6 s-c">
+                    <li>
+                        <div class="fooll">
+                            <h5>follow us on</h5>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="social-ic">
+                            <ul>
+                                <li><a href="#"><i class="facebok"> </i></a></li>
+                                <li><a href="#"><i class="twiter"> </i></a></li>
+                                <li><a href="#"><i class="goog"> </i></a></li>
+                                <li><a href="#"><i class="be"> </i></a></li>
+                                <li><a href="#"><i class="pp"> </i></a></li>
+                                <div class="clearfix"></div>	
+                            </ul>
+                        </div>
+                    </li>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="col-md-6 s-c">
+                    <div class="stay">
+                        <div class="stay-left">
+                            <form>
+                                <input type="text" placeholder="Enter your email to join our newsletter" required="" />
+                            </form>
+                        </div>
+                        <div class="btn-1">
+                            <form>
+                                <input type="submit" value="join" />
+                            </form>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="container">
+                
+                <div class="col-md-6 myac">
+                    <div class="clearfix"> </div>
+                    <li><i class="add"> </i>Carlos Silva</li>
+                    <li><i class="phone"> </i>Mestrado MIS 2016/2017</li>
+                    <li><a href="#"><i class="mail"> </i>a21220091</a></li>
+                </div>
+                <div class="col-md-6 myac">
+                    <div class="clearfix"> </div>
+                    <li><i class="add"> </i>Pedro Salgado</li>
+                    <li><i class="phone"> </i>Mestrado MIS 2016/2017</li>
+                    <li><a href="#"><i class="mail"> </i>a21220091</a></li>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </h:body>
+    
+</html>
