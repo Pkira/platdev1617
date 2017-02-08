@@ -30,5 +30,7 @@ public interface IUser {
     ResultMessage SendMessage(String Addressed, String Subject, String Message);
     String getUsername();
     boolean SuspendAccount();
+    ResultMessage ReportItem(long UserId, long ItemId);
+    ResultMessage ReportUser(long FromUserId, long ToUserId);
     
 }

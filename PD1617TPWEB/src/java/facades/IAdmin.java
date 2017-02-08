@@ -11,11 +11,10 @@ import utils.ResultMessage;
 public interface IAdmin {
  
      boolean LogOff();
-//     ArrayList<Notification> GetNotifications();
-//     ResultMessage ActivateAccount(String Username);
-//     ResultMessage ReActivateAccount(String Username);
-//     ResultMessage SuspendAccount(String Username);
-//     ResultMessage ChangeUserPassword(String Username, String Password);
-//     void SaveState();
-//     String SeeUserProfile(String Username);
+     ArrayList<Notification> GetNotifications();
+     ResultMessage ActivateAccount(String Username);
+     ResultMessage ReActivateAccount(String Username);
+     ResultMessage SuspendAccount(String Username);
+     ResultMessage ChangeUserPassword(String Username, String Password);
+     String SeeUserProfile(String Username);
 }

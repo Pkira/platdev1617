@@ -9,6 +9,7 @@ import entities.User;
 import javax.ejb.EJB;
 import controllers.IDAO;
 import entities.Message;
+import entities.Notification;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -185,6 +186,52 @@ public class UserFacade implements IUser {
         else
            return ResultMessage.LoginAllreadyLogged;
 
+    }
+
+    @Override
+    public ResultMessage ReportItem(long UserId, long ItemId) {
+        
+        User user = (User)dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
+        
+        if(user == null)
+            return ResultMessage.ReportInsuccess;
+                
+        Notification notification = new Notification();
+        notification.setId((long) -1);
+        notification.setMessage("User " + user.getUsername() + "with Id:" + UserId + " have reported the Item with Id: " + ItemId);
+        notification.setStatus(0);
+        notification.setUserid(user);
+        
+        dAO.getEntityManager().persist(notification);
+        
+        return ResultMessage.ReportSuccess;
+        
+    }
+    
+    @Override
+    public ResultMessage ReportUser(long FromUserId, long ToUserId) {
+        
+        User FromUser = (User)dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", FromUserId).getSingleResult();
+        
+        if(user == null)
+            return ResultMessage.ReportInsuccess;
+        
+        
+         User ToUser = (User)dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", ToUserId).getSingleResult();
+        
+        if(user == null)
+            return ResultMessage.ReportInsuccess;
+                
+        Notification notification = new Notification();
+        notification.setId((long) -1);
+        notification.setMessage("User " + FromUser.getUsername() + "with Id:" + FromUserId + " have reported the User " + ToUser.getUsername()+ " with Id: " + ToUserId);
+        notification.setStatus(0);
+        notification.setUserid(FromUser);
+        
+        dAO.getEntityManager().persist(notification);
+        
+        return ResultMessage.ReportSuccess;
+        
     }
            
    

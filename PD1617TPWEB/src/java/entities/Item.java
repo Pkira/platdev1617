@@ -6,9 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,12 +16,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -39,7 +35,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Item.findByDescription", query = "SELECT i FROM Item i WHERE i.description = :description"),
     @NamedQuery(name = "Item.findByStartprice", query = "SELECT i FROM Item i WHERE i.startprice = :startprice"),
     @NamedQuery(name = "Item.findByBuynowprice", query = "SELECT i FROM Item i WHERE i.buynowprice = :buynowprice"),
-    @NamedQuery(name = "Item.findByAuctionduration", query = "SELECT i FROM Item i WHERE i.auctionduration = :auctionduration")})
+    @NamedQuery(name = "Item.findByAuctionduration", query = "SELECT i FROM Item i WHERE i.auctionduration = :auctionduration"),
+    @NamedQuery(name = "Item.findByImage", query = "SELECT i FROM Item i WHERE i.image = :image"),
+    @NamedQuery(name = "Item.findByCategory", query = "SELECT i FROM Item i INNER JOIN i.categoryid c WHERE c.name like :name"),
+    @NamedQuery(name = "Item.findByOwnerId", query = "SELECT i FROM Item i WHERE i.ownerid = :ownerid")
+})
 public class Item implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -70,16 +70,15 @@ public class Item implements Serializable {
     @NotNull
     @Column(name = "auctionduration")
     private long auctionduration;
+    @Size(max = 100)
+    @Column(name = "image")
+    private String image;
     @JoinColumn(name = "categoryid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Category categoryid;
     @JoinColumn(name = "ownerid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User ownerid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "itemid")
-    private Collection<Auction> auctionCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "itemid")
-    private Collection<UserItem> userItemCollection;
 
     public Item() {
     }
@@ -88,13 +87,14 @@ public class Item implements Serializable {
         this.id = id;
     }
 
-    public Item(Long id, String name, String description, double startprice, double buynowprice, long auctionduration) {
+    public Item(Long id, String name, String description, double startprice, double buynowprice, long auctionduration, String image) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.startprice = startprice;
         this.buynowprice = buynowprice;
         this.auctionduration = auctionduration;
+        this.image = image;
     }
 
     public Long getId() {
@@ -145,6 +145,14 @@ public class Item implements Serializable {
         this.auctionduration = auctionduration;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public Category getCategoryid() {
         return categoryid;
     }
@@ -159,24 +167,6 @@ public class Item implements Serializable {
 
     public void setOwnerid(User ownerid) {
         this.ownerid = ownerid;
-    }
-
-    @XmlTransient
-    public Collection<Auction> getAuctionCollection() {
-        return auctionCollection;
-    }
-
-    public void setAuctionCollection(Collection<Auction> auctionCollection) {
-        this.auctionCollection = auctionCollection;
-    }
-
-    @XmlTransient
-    public Collection<UserItem> getUserItemCollection() {
-        return userItemCollection;
-    }
-
-    public void setUserItemCollection(Collection<UserItem> userItemCollection) {
-        this.userItemCollection = userItemCollection;
     }
 
     @Override

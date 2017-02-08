@@ -1,6 +1,7 @@
 
 package facades;
 
+import entities.Item;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.LocalBean;
@@ -10,10 +11,10 @@ import utils.ResultMessage;
 @LocalBean
 public interface IItem {
     
-//    ResultMessage CreateItem(String Owner, String Item, String Category, String Desc, double Price, double BuyNow, String Budget);
-//    ArrayList SearchItem(String Item, String Category);
-//    ArrayList ItemInSell(String username);
-//    List FollowItens(String username);
-//    ResultMessage FollowItem(Long Item, String Username);
-//    ResultMessage CancelFollowItem(Long Item, String Username);
+    ResultMessage CreateItem(String Username, String Name, String Category, String Desc, double Price, double BuyNow, long AuctionDuration, String Image);
+    List<Item> SearchItem(String ItemName, String CategoryName);
+    List<Item> ItemInSell(long UserId);
+    List<Item> FollowItens(long UserId);
+    ResultMessage FollowItem(long ItemId, long UserId);
+    ResultMessage CancelFollowItem(long ItemId, long UserId);
 }
