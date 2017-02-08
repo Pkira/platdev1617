@@ -25,14 +25,18 @@ public class UserController implements Serializable {
     private long userid;
     private String username;
     private String password;
+    private String newpassword;
     private String address;
     private boolean isLogged;
+    private double balance;
 
     public UserController() {
+        this.userid = 0;
         this.username = null;
         this.password = null;
         this.address = null;
         this.isLogged = false;
+        this.balance = 0;
     }
     
     public List<User> getAllUsers()
@@ -51,6 +55,12 @@ public class UserController implements Serializable {
         
         if(result.equals(ResultMessage.LoginSucess) || result.equals(ResultMessage.LoginAllreadyLogged))
             setIsLogged(true);
+        
+        User user = userFacade.SeeProfile();
+        
+        this.userid = user.getId();
+        this.address = user.getAddress();
+        this.balance = user.getBalance();
     }
     
     public void logoff()
@@ -59,6 +69,17 @@ public class UserController implements Serializable {
         
         if(result)
             setIsLogged(false);
+    }
+    
+    public void updateProfile()
+    {
+        if(newpassword.isEmpty())
+            newpassword = password;
+        
+        ResultMessage result = userFacade.UpdateProfile(address, newpassword, password);
+        userFacade.LoadBalance(balance);
+        
+        this.balance = userFacade.SeeProfile().getBalance();
     }
 
     public long getUserid() {
@@ -99,6 +120,22 @@ public class UserController implements Serializable {
 
     public void setIsLogged(boolean isLogged) {
         this.isLogged = isLogged;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public String getNewpassword() {
+        return newpassword;
+    }
+
+    public void setNewpassword(String newpassword) {
+        this.newpassword = newpassword;
     }
     
     

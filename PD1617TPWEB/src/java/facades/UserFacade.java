@@ -78,12 +78,7 @@ public class UserFacade implements IUser {
     }
     
     @Override
-    public ResultMessage UpdateProfile(String Address, String Password, String CurrentPassword){
-        
-        User user = (User)dAO.getEntityManager().createNamedQuery("User.findByUsername").setParameter("username", Address).getSingleResult();            
-        
-        if(user == null)
-            return ResultMessage.LoginUserNotFound;
+    public ResultMessage UpdateProfile(String Address, String Password, String CurrentPassword){     
         
         if(CurrentPassword.equals(user.getPassword())){
             
@@ -100,7 +95,7 @@ public class UserFacade implements IUser {
             }
             
             if(toUpdate)
-                dAO.getEntityManager().persist(user);
+                dAO.getEntityManager().merge(user);
             
             return ResultMessage.UpdateProfileInvalid; 
         }
@@ -118,7 +113,7 @@ public class UserFacade implements IUser {
         if(increment > 0){
             user.setBalance(user.getBalance() + increment);
             
-            dAO.getEntityManager().persist(user);
+            dAO.getEntityManager().merge(user);
             
             return ResultMessage.LoadBalanceValid;
         }

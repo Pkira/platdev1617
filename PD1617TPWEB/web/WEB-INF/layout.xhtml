@@ -123,8 +123,10 @@
                                     </div>
                                     </h:panelGroup>
                                 </div>
+                                
+                                <h:panelGroup rendered="#{userController.isLogged}"> 
                                 <div id="islogged">
-                                    <h:panelGroup rendered="#{userController.isLogged}"> 
+                                    
                                         
                                     <div class="reg" style="width:177px;">
                                         <h:form>                                         
@@ -135,7 +137,7 @@
                                         </h:form>                 
                                     </div>
                                         
-                                    </h:panelGroup>
+                                    
                                 </div>
                                 
                                 
@@ -151,7 +153,10 @@
                                     <h:form>
                                         <h:commandLink action="UserAuctions" value="MyAuctions" />
                                     </h:form>
-                                </div>
+                                </div>                              
+                                
+                                </h:panelGroup>
+                                
                                 <div class="clearfix"> </div>
                             </div>
                             <div class="search">

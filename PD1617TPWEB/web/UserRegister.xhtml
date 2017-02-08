@@ -102,26 +102,31 @@
                             <div class="registration_left">
                                 <h2>existing user</h2>
                                 <div class="registration_form">
-                                    <!-- Form -->
-                                    <h:form id="registration_form">
+                                    
+                                    <h:form>
                                         <div>
                                             <label>
-                                                <input name="user" placeholder="email:" type="email" tabindex="3" />
+                                                <h:outputLabel value="Username:" for="username" />
+                                                <h:inputText id="username"
+                                                             value="#{userController.username}"
+                                                             required="true"
+                                                             requiredMessage="Falta o nome"/>
                                             </label>
                                         </div>
                                         <div>
                                             <label>
-                                                <input name="password" placeholder="password" type="password" tabindex="4" />
+                                                <h:outputLabel value="Password:" for="password" />
+                                                <h:inputSecret id="password"
+                                                               value="#{userController.password}"
+                                                               required="true"
+                                                               requiredMessage="Falta a password" />
                                             </label>
                                         </div>						
-                                        <div>
-                                            <input type="submit" value="sign in" id="register-submit" />
-                                        </div>
-                                        <div class="forget">
-                                            <a href="#">forgot your password</a>
+                                        <div>                                            
+                                            <h:commandButton action="#{userController.login}" value="Sign in" id="login"/>
                                         </div>
                                     </h:form>
-                                    <!-- /Form -->
+                                    
                                 </div>
                             </div>
                             <div class="clearfix"></div>
