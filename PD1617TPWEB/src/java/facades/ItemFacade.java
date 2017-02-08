@@ -4,6 +4,7 @@ package facades;
 import controllers.IDAO;
 import entities.Item;
 import entities.Newsletter;
+import entities.User;
 import entities.UserItem;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,22 +65,41 @@ public class ItemFacade implements IItem {
                 items.put(i.getId(), i);
         }
         
-        return (List<Item>) items.values();
+        return new ArrayList<Item>(items.values());
         
     }
    
+    @Override
+    public List<Item> UserItems(long UserId){
+        
+        if(UserId == 0)
+            return null;
+        
+        HashMap<Long,Item> items = new HashMap<>();
+        
+        User user = (User)dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
+        
+        for(UserItem i : (List<UserItem>)dAO.getEntityManager().createNamedQuery("UserItem.findSellingByUserId").setParameter("userid", user).getResultList())
+        {
+            if(!items.containsKey(i.getItemid().getId()))
+                items.put(i.getItemid().getId(), i.getItemid());
+        }
+        
+        return new ArrayList<Item>(items.values());
+    }
+    
     @Override
     public List<Item> ItemInSell(long UserId){
         
         HashMap<Long,Item> items = new HashMap<>();
         
-        for(Item i : (List<Item>)dAO.getEntityManager().createNamedQuery("Item.findByOwnerId").setParameter("userid", UserId).getResultList())
+        for(Item i : (List<Item>)dAO.getEntityManager().createNamedQuery("Item.findSellingItems").setParameter("userid", UserId).getResultList())
         {
             if(!items.containsKey(i.getId()))
                 items.put(i.getId(), i);
         }
         
-        return (List<Item>) items.values();
+        return new ArrayList<Item>(items.values());
     }
     
     @Override
@@ -93,7 +113,7 @@ public class ItemFacade implements IItem {
                 items.put(i.getItemid().getId(), i.getItemid());
         }
         
-        return (List<Item>) items.values();
+        return new ArrayList<Item>(items.values());
     }
 
     @Override
@@ -105,4 +125,14 @@ public class ItemFacade implements IItem {
     public ResultMessage CancelFollowItem(long Item, long Username) {
         return null;
     }
+
+    @Override
+    public Item GetItemById(long ItemId) {
+        
+        Item item = (Item)dAO.getEntityManager().createNamedQuery("Item.findById").setParameter("id", ItemId).getSingleResult();
+        
+        return item;
+    }
+    
+    
 }

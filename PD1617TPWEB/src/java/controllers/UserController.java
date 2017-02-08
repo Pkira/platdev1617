@@ -5,12 +5,14 @@
  */
 package controllers;
 
+import entities.Item;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import java.util.List;
 import entities.User;
+import facades.IItem;
 import facades.IUser;
 import utils.ResultMessage;
 
@@ -20,7 +22,11 @@ import utils.ResultMessage;
 public class UserController implements Serializable {
 
     @EJB
+    private IItem itemFacade;
+
+    @EJB
     private IUser userFacade;
+    
     
     private long userid;
     private String username;
@@ -29,6 +35,8 @@ public class UserController implements Serializable {
     private String address;
     private boolean isLogged;
     private double balance;
+    private int totaluseritems;
+    private List<Item> useritems;
 
     public UserController() {
         this.userid = 0;
@@ -61,6 +69,7 @@ public class UserController implements Serializable {
         this.userid = user.getId();
         this.address = user.getAddress();
         this.balance = user.getBalance();
+        this.useritems = itemFacade.UserItems(userid);
     }
     
     public void logoff()
@@ -137,6 +146,25 @@ public class UserController implements Serializable {
     public void setNewpassword(String newpassword) {
         this.newpassword = newpassword;
     }
+
+    public int getTotaluseritems() {
+        this.useritems = itemFacade.UserItems(userid);
+        totaluseritems = this.useritems.size();
+        return totaluseritems;
+    }
+
+    public void setTotaluseritems(int totaluseritems) {
+        this.totaluseritems = totaluseritems;
+    }
+
+    public List<Item> getUseritems() {
+        return useritems;
+    }
+
+    public void setUseritems(List<Item> useritems) {
+        this.useritems = useritems;
+    }
+    
     
     
 }

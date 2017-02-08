@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     
     <body>
         
@@ -12,8 +14,8 @@
                 
                 <div class="container">
                     <div class="women_main">
-                        <!-- start sidebar -->
-                        <div class="col-md-3 s-d">
+                   
+                        <!--<div class="col-md-3 s-d">
                             <div class="w_sidebar">
                                 <div class="w_nav1">
                                     <h4>Categories</h4>
@@ -27,109 +29,76 @@
                                     </ul>	
                                 </div>
                             </div>
-                        </div>
-                        <!-- start content -->
+                        </div>-->
+                      
                         <div class="col-md-9 w_content">
                             <div class="women">
-                                <a href="#"><h4><span>5 Items</span> </h4></a>
+                                <a href="#"><h4><span>#{userController.totaluseritems} Items</span> </h4></a>
                                 <div class="clearfix"></div>	
                             </div>
-                            <!-- grids_of_4 -->
-                            <div class="grids_of_4">
-                                <div class="grid1_of_4">
-                                    <div class="content_box">
-                                        <h:form>
-                                            <h:commandLink action="Item">
-                                                <img src="Images/w1.jpg" class="img-responsive" alt=""/>
-                                                <h4>Item1</h4>
-                                            </h:commandLink>
-                                        </h:form>
-                                        
-                                        <div class="grid_1 simpleCart_shelfItem">
-                                            
-                                            <div class="item_add"><span class="item_price"><h6>$99.00</h6></span></div>
-                                            <div class="item_add"><span class="item_price"><a href="#">Start new Auction</a></span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="grid1_of_4">
-                                    <div class="content_box">
-                                        
-                                        <h:form>
-                                            <h:commandLink action="Item">
-                                                <img src="Images/w2.jpg" class="img-responsive" alt=""/>
-                                                <h4>Item2</h4>
-                                            </h:commandLink>
-                                        </h:form>
-                                        
-                                        <div class="grid_1 simpleCart_shelfItem">
-                                            
-                                            <div class="item_add"><span class="item_price"><h6>$76.00</h6></span></div>
-                                            <div class="item_add"><span class="item_price"><a href="#">Start new Auction</a></span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="grid1_of_4">
-                                    <div class="content_box"><a href="details.html">
-                                            <img src="Images/w3.jpg" class="img-responsive" alt=""/>
-                                        </a>
-                                        <h4><a href="details.html">Item3</a></h4>
-                                        <div class="grid_1 simpleCart_shelfItem">
-                                            
-                                            <div class="item_add"><span class="item_price"><h6>$58.00</h6></span></div>
-                                            <div class="item_add"><span class="item_price"><a href="#">Start new Auction</a></span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="grid1_of_4">
-                                    <div class="content_box"><a href="details.html">
-                                            <img src="Images/w4.jpg" class="img-responsive" alt=""/>
-                                        </a>
-                                        <h4><a href="details.html">Item4</a></h4>
-                                        <div class="grid_1 simpleCart_shelfItem">
-                                            
-                                            <div class="item_add"><span class="item_price"><h6>$112.00</h6></span></div>
-                                            <div class="item_add"><span class="item_price"><a href="#">Start new Auction</a></span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
                             
-                            
-                            <div class="grids_of_4">
-                                <div class="grid1_of_4">
-                                    <div class="content_box"><a href="details.html">
-                                            <img src="Images/w5.jpg" class="img-responsive" alt=""/>
-                                        </a>
-                                        <h4><a href="details.html">Item5</a></h4>
-                                        <div class="grid_1 simpleCart_shelfItem">
+                            <h:form>
+                                
+                                <c:set var="count" value="0" scope="view" />
+                                
+                                <c:forEach var="item" items="#{userController.useritems}">
+                                    
+                                  <c:set var="count" value="${count + 1}" scope="view"/>
+                                  
+                                  <c:choose>
+                                      
+                                    <c:when test="#{count % 4 eq 0}">
+                                        
+                                     <div class="grids_of_4">
+                                        <div class="grid1_of_4">
+                                          <div class="content_box">
                                             
-                                            <div class="item_add"><span class="item_price"><h6>$109.00</h6></span></div>
-                                            <div class="item_add"><span class="item_price"><a href="#">Start new Auction</a></span></div>
+                                              
+                                                <h:commandLink action="#{itemController.ShowDetails(item.id)}">
+                                                    <f:param name="id" value="#{item.id}" />
+                                                    <img src="#{item.image}" class="img-responsive" alt=""/>
+                                                    <h4>#{item.name}</h4>
+                                                </h:commandLink>
+                                         
+                                          
+
+                                              <div class="grid_1 simpleCart_shelfItem">
+
+                                                  <div class="item_add"><span class="item_price"><h6>#{item.startprice} $</h6></span></div>
+                                                  <div class="item_add"><span class="item_price"><a href="#">Start new Auction</a></span></div>
+                                                  
+                                              </div>
+                                          </div>
+                                      </div>
+                                    </div>
+                                  </c:when>
+                                  <c:otherwise>
+                                    <div class="grid1_of_4">
+                                        <div class="content_box">
+                                           
+                                                <h:commandLink action="#{itemController.ShowDetails(item.id)}">
+                                                    <f:param name="id" value="#{item.id}" />
+                                                    <img src="#{item.image}" class="img-responsive" alt=""/>
+                                                    <h4>#{item.name}</h4>
+                                                </h:commandLink>
+                                         
+
+                                            <div class="grid_1 simpleCart_shelfItem">
+
+                                                <div class="item_add"><span class="item_price"><h6>#{item.startprice} $</h6></span></div>
+                                                <div class="item_add"><span class="item_price"><a href="#">Start new Auction</a></span></div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="grid1_of_4">
-                                    <div class="content_box"><a href="details.html">
-                                            <img src="Images/w6.jpg" class="img-responsive" alt=""/>
-                                        </a>
-                                        <h4><a href="details.html">Item6</a></h4>
-                                        <div class="grid_1 simpleCart_shelfItem">
-                                            
-                                            <div class="item_add"><span class="item_price"><h6>$95.00</h6></span></div>
-                                            <div class="item_add"><span class="item_price"><a href="#">Start new Auction</a></span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                              
-                                <div class="clearfix"></div>
-                            </div>                           
+                                  </c:otherwise>
+                                </c:choose>
+                                    
+                                </c:forEach>
+                            </h:form>                       
                             
                         </div>
                         <div class="clearfix"></div>
                         
-                        <!-- end content -->
                     </div>
                 </div>
                 

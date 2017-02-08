@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    
+    <body>
+        
+        <ui:composition template="/WEB-INF/layout.xhtml">
+            
+            <ui:define name="content">
+                
+                <div class="container">
+                    
+                    <div class="women_main">
+                        
+                        <div class="row single">
+                            
+                            <div class="col-md-9 det">
+                                
+                                <h:form>
+                                
+                                    <div class="single_left">
+
+                                        <div class="grid Images_3_of_2">
+                                            <ul id="etalage">
+                                                <li>
+                                                    <a href="#">
+                                                        <img class="img-responsive etalage_thumb_image" src="#{itemController.image}" />
+                                                        <img class="img-responsive etalage_source_image" src="#{itemController.image}" />
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <img class="img-responsive etalage_thumb_image" src="#{itemController.image}" />
+                                                    <img class="img-responsive etalage_source_image" src="#{itemController.image}" />
+                                                </li>
+                                                <li>
+                                                    <img class="img-responsive etalage_thumb_image" src="#{itemController.image}" />
+                                                    <img class="img-responsive etalage_source_image" src="#{itemController.image}" />
+                                                </li>
+                                                <li>
+                                                    <img class="img-responsive etalage_thumb_image" src="#{itemController.image}" />
+                                                    <img class="img-responsive etalage_source_image" src="#{itemController.image}" />
+                                                </li>
+                                            </ul>
+
+                                        </div>
+
+                                        <div class="desc1 span_3_of_2">
+
+                                            <h3>#{itemController.name}</h3>                                       
+
+                                            <span class="code">Product Id: #{itemController.id}</span>
+
+                                            <p><span class="brand">Description: <a href="#">#{itemController.description}</a></span></p>
+                                            <div class="price">
+                                                <span class="text">Price:</span>
+                                                <span class="price-new">#{itemController.price} $</span> 
+                                            </div>
+
+                                            <div class="btn_form">
+                                                <a href="#">Start new Auction</a>
+                                            </div>
+                                            <a href="#"><span>Add to favorites</span></a>
+
+                                        </div>
+
+
+                                        <div class="clearfix"></div>
+
+                                    </div>
+
+                                    <div class="single-bottom1">
+                                        <h6>Details</h6>
+                                        <p class="prod-desc">#{itemController.description}</p>
+                                    </div>
+                                    
+                                </h:form>
+                                        
+                            </div>
+                            
+                            <div class="clearfix"></div>
+                            
+                        </div>
+                           
+                    </div>
+                    
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

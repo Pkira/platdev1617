@@ -17,4 +17,6 @@ public interface IItem {
     List<Item> FollowItens(long UserId);
     ResultMessage FollowItem(long ItemId, long UserId);
     ResultMessage CancelFollowItem(long ItemId, long UserId);
+    List<Item> UserItems(long UserId);
+    Item GetItemById(long ItemId);
 }
