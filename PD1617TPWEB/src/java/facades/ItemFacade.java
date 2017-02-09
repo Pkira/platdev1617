@@ -2,6 +2,7 @@
 package facades;
 
 import controllers.IDAO;
+import entities.Category;
 import entities.Item;
 import entities.Newsletter;
 import entities.User;
@@ -21,14 +22,35 @@ public class ItemFacade implements IItem {
     private IDAO dAO;
 
     @Override
-    public ResultMessage CreateItem(String Username, String Name, String Category, String Desc, double Price, double BuyNow, long AuctionDuration, String Image){
+    public ResultMessage CreateItem(long UserId, String Name, String category, String Desc, double Price, double BuyNow, long AuctionDuration, String Image){
        
         try
         {
-            if(Username.isEmpty() || Name.isEmpty() || Category.isEmpty() || Desc.isEmpty() || Price == 0 || BuyNow == 0 || AuctionDuration == 0 || Image.isEmpty())
+            if(UserId == 0 || Name.isEmpty() || category.isEmpty() || Desc.isEmpty() || Price == 0 || BuyNow == 0 || AuctionDuration == 0 || Image.isEmpty())
                 return ResultMessage.CreateItemUnsuccess;
             
+            User user = (User)dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
+            
+            Category cat = null;
+            try
+            {
+                cat = (Category)dAO.getEntityManager().createNamedQuery("Category.findByName").setParameter("name", category).getSingleResult();
+            }
+            catch(Exception ex)
+            {
+
+            }
+            
+            if(cat == null)
+            {
+                cat = new Category((long)-1, category);
+                dAO.getEntityManager().persist(cat);
+                cat = (Category)dAO.getEntityManager().createNamedQuery("Category.findByName").setParameter("name", category).getSingleResult();
+            }
+            
             Item item = new Item((long)-1,Name,Desc,Price,BuyNow,AuctionDuration, Image);
+            item.setOwnerid(user);
+            item.setCategoryid(cat);
 
             //Newsletter.addNewsToList(new NewsLetterItem("User " + Username + " add a Item " + Item));
 
@@ -79,10 +101,10 @@ public class ItemFacade implements IItem {
         
         User user = (User)dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
         
-        for(UserItem i : (List<UserItem>)dAO.getEntityManager().createNamedQuery("UserItem.findSellingByUserId").setParameter("userid", user).getResultList())
+        for(Item i : (List<Item>)dAO.getEntityManager().createNamedQuery("Item.findByOwnerId").setParameter("ownerid", user).getResultList())
         {
-            if(!items.containsKey(i.getItemid().getId()))
-                items.put(i.getItemid().getId(), i.getItemid());
+            if(!items.containsKey(i.getId()))
+                items.put(i.getId(), i);
         }
         
         return new ArrayList<Item>(items.values());

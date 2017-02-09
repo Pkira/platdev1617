@@ -36,6 +36,7 @@ public class UserController implements Serializable {
     private boolean isLogged;
     private double balance;
     private int totaluseritems;
+    private int totaluseritemsprice;
     private List<Item> useritems;
 
     public UserController() {
@@ -163,6 +164,20 @@ public class UserController implements Serializable {
 
     public void setUseritems(List<Item> useritems) {
         this.useritems = useritems;
+    }
+
+    public int getTotaluseritemsprice() {
+        totaluseritemsprice = 0;
+        this.useritems = itemFacade.UserItems(userid);
+        
+        for(Item i : this.useritems)
+            totaluseritemsprice += i.getStartprice();
+        
+        return totaluseritemsprice;
+    }
+
+    public void setTotaluseritemsprice(int totaluseritemsprice) {
+        this.totaluseritemsprice = totaluseritemsprice;
     }
     
     

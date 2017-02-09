@@ -15,25 +15,32 @@
                 <div class="container">
                     <div class="women_main">
                    
-                        <!--<div class="col-md-3 s-d">
-                            <div class="w_sidebar">
-                                <div class="w_nav1">
-                                    <h4>Categories</h4>
-                                    <ul>
-                                        <li><a href="#">Category 1</a></li>
-                                        <li><a href="#">Category 2</a></li>
-                                        <li><a href="#">Category 3</a></li>
-                                        <li><a href="#">Category 4</a></li>
-                                        <li><a href="#">Category 5</a></li>
-                                        <li><a href="#">Category 6</a></li>
-                                    </ul>	
-                                </div>
-                            </div>
-                        </div>-->
+                        <div class="col-md-3 s-d">
+                            <h:form>
+                                <h:commandLink styleClass="continue" action="#{itemController.AddNewItem(userController.userid)}">
+                                    <f:param name="id" value="#{userController.userid}" />
+                                    Add new Item
+                                </h:commandLink>
+                            </h:form>
+                            <div class="price-details">
+                                    <h3>Items Details</h3>
+                                    <span>Items</span>
+                                    <span class="total1">#{userController.totaluseritems}</span>
+                                    <div class="clearfix"></div>				 
+                            </div>	
+                            <ul class="total_price">
+                              <li class="last_price"> <h4>TOTAL</h4></li>	
+                              <li class="last_price"><span>#{userController.totaluseritemsprice} $</span></li>
+                              <div class="clearfix"> </div>
+                            </ul>
+
+
+                            <div class="clearfix"></div>
+                        </div>
                       
                         <div class="col-md-9 w_content">
                             <div class="women">
-                                <a href="#"><h4><span>#{userController.totaluseritems} Items</span> </h4></a>
+                                <a href="#"><h4><span>My Items</span> </h4></a>
                                 <div class="clearfix"></div>	
                             </div>
                             

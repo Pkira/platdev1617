@@ -5,6 +5,7 @@ import facades.IItem;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import utils.ResultMessage;
 
 
 @Named(value = "itemController")
@@ -23,6 +24,7 @@ public class ItemController {
     private String image;
     private String owner;
     private long ownerid;
+    private long auctionduration;
     
     public ItemController() {
        
@@ -43,6 +45,19 @@ public class ItemController {
         this.ownerid = item.getOwnerid().getId();
         
         return "ItemDetails.xhtml";
+    }
+    
+    public String AddNewItem(long UserId) {
+        
+        this.ownerid = UserId;
+        
+        return "ItemAddNew.xhtml";
+    }
+    
+    public void insertNewItem() {
+        
+        ResultMessage result = itemFacade.CreateItem(this.ownerid, this.name, this.category, this.description, this.price,this.buynow, this.auctionduration, this.image);
+        
     }
     
     public long getId() {
@@ -116,8 +131,14 @@ public class ItemController {
     public void setOwnerid(long ownerid) {
         this.ownerid = ownerid;
     }
-    
-    
-    
+
+    public long getAuctionduration() {
+        return auctionduration;
+    }
+
+    public void setAuctionduration(long auctionduration) {
+        this.auctionduration = auctionduration;
+    }
+
     
 }
