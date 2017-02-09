@@ -2,6 +2,7 @@
 package facades;
 
 import entities.Notification;
+import entities.User;
 import java.util.ArrayList;
 import javax.ejb.LocalBean;
 import utils.ResultMessage;
@@ -12,9 +13,9 @@ public interface IAdmin {
  
      boolean LogOff();
      ArrayList<Notification> GetNotifications();
-     ResultMessage ActivateAccount(String Username);
-     ResultMessage ReActivateAccount(String Username);
-     ResultMessage SuspendAccount(String Username);
-     ResultMessage ChangeUserPassword(String Username, String Password);
-     String SeeUserProfile(String Username);
+     ResultMessage ActivateAccount(Long UserId);
+     ResultMessage ReActivateAccount(Long UserId);
+     ResultMessage SuspendAccount(Long UserId);
+     ResultMessage ChangeUserPassword(Long UserId, String Password);
+     User SeeUserProfile(String Username);
 }
