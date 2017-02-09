@@ -34,6 +34,7 @@ public class UserController implements Serializable {
     private String newpassword;
     private String address;
     private boolean isLogged;
+    private boolean isAdmin;
     private double balance;
     private int totaluseritems;
     private int totaluseritemsprice;
@@ -46,6 +47,7 @@ public class UserController implements Serializable {
         this.address = null;
         this.isLogged = false;
         this.balance = 0;
+        this.isAdmin = false;
     }
     
     public List<User> getAllUsers()
@@ -71,6 +73,11 @@ public class UserController implements Serializable {
         this.address = user.getAddress();
         this.balance = user.getBalance();
         this.useritems = itemFacade.UserItems(userid);
+        
+        if(this.username.equals("admin"))
+        {
+            this.isAdmin = true;
+        }
     }
     
     public void logoff()
@@ -178,6 +185,14 @@ public class UserController implements Serializable {
 
     public void setTotaluseritemsprice(int totaluseritemsprice) {
         this.totaluseritemsprice = totaluseritemsprice;
+    }
+
+    public boolean isIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
     
     

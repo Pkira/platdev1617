@@ -70,23 +70,31 @@
                 </div>
             </div>
         </div>
-        <!-- header -->
+        
+        
         <div class="header_bg">
+            
             <div class="container">
+                
                 <div class="header">
+                    
                     <div class="head-t">
+                        
                         <div class="logo">
                             <h:form>
                                 <h:commandLink action="index" value="Projecto Plataformas de Desenvolvimento" />
                             </h:form> 
 
                         </div>
-                        <!-- start header_right -->
+                        
                         <div class="header_right">
+                            
                             <div class="rgt-bottom">
                                 
                                 <div id="visitantOptions">
+                                    
                                     <h:panelGroup rendered="#{!userController.isLogged}">
+                                        
                                     <div class="log">
                                         <div class="login" >
                                             <div id="loginContainer"><a href="#" id="loginButton"><span>Login</span></a>
@@ -132,7 +140,13 @@
                                         <h:form>                                         
                                             <h:commandLink action="#{userController.logoff}" value="Sign Out" />
                                          
-                                            <h:commandLink action="UserProfile" value="Profile" style="padding-left: 30px;"/>
+                                            <h:panelGroup rendered="#{!userController.isAdmin}"> 
+                                                <h:commandLink action="UserProfile" value="Profile" style="padding-left: 30px;"/>
+                                            </h:panelGroup>
+                                            
+                                            <h:panelGroup rendered="#{userController.isAdmin}"> 
+                                                <h:commandLink action="AdminOptions" value="Admin Page" style="padding-left: 30px;"/>
+                                            </h:panelGroup>
                                             
                                         </h:form>                 
                                     </div>
@@ -140,49 +154,54 @@
                                     
                                 </div>
                                 
-                                
-                                <div class="reg" style="width: 150px;margin-left:24px;">
-                                    <h:form>
-                                        <h:commandLink action="UserItems">
-                                            <span>#{userController.totaluseritems}</span> items <img src="Images/bag1.png"/>
-                                        </h:commandLink>
-                                    </h:form>	
-                                    <div class="clearfix"> </div>
-                                </div>
-                                <div class="create_btn">
-                                    <h:form>
-                                        <h:commandLink action="UserAuctions" value="MyAuctions" />
-                                    </h:form>
-                                </div>                              
+                                <h:panelGroup rendered="#{!userController.isAdmin}"> 
+                                    <div class="reg" style="width: 150px;margin-left:24px;">
+                                        <h:form>
+                                            <h:commandLink action="UserItems">
+                                                <span>#{userController.totaluseritems}</span> items <img src="Images/bag1.png"/>
+                                            </h:commandLink>
+                                        </h:form>	
+                                        <div class="clearfix"> </div>
+                                    </div>
+                                    <div class="create_btn">
+                                        <h:form>
+                                            <h:commandLink action="UserAuctions" value="MyAuctions" />
+                                        </h:form>
+                                    </div>  
+                                </h:panelGroup>
                                 
                                 </h:panelGroup>
                                 
                                 <div class="clearfix"> </div>
                             </div>
-                            <div class="search">
-                                <h:form>
-                                    <input type="text" value="" placeholder="search..." />
-                                    <input type="submit" value="" />
-                                </h:form>
-                            </div>
+                            <h:panelGroup rendered="#{userController.isLogged}">
+                                <div class="search">
+                                    <h:form>
+                                        <input type="text" value="" placeholder="search..." />
+                                        <input type="submit" value="" />
+                                    </h:form>
+                                </div>
+                            </h:panelGroup>
                             <div class="clearfix"> </div>
                         </div>
                         <div class="clearfix"> </div>
                     </div>
-                    <!-- start header menu -->
-                    <ul class="megamenu skyblue">
-                        <li class="active grid">
-          
-                                <h:link outcome="index" value="HOME" styleClass="color1"/>
+                    
+                    <h:panelGroup rendered="#{userController.isLogged}">
+                        <ul class="megamenu skyblue">
+                            <li class="active grid">
 
-                        </li>
-                        <li class="grid"><a class="color2" href="#">Auctions</a>
-                        </li>
-                      	<li class="grid"><a class="color6" href="#">Items</a>
-                        </li>		
-                        <li class="grid"><a class="color3" href="#">Following</a>
-                        </li>
-                    </ul> 
+                                    <h:link outcome="index" value="HOME" styleClass="color1"/>
+
+                            </li>
+                            <li class="grid"><a class="color2" href="#">Auctions</a>
+                            </li>
+                            <li class="grid"><a class="color6" href="#">Items</a>
+                            </li>		
+                            <li class="grid"><a class="color3" href="#">Following</a>
+                            </li>
+                        </ul> 
+                    </h:panelGroup>
                 </div>
             </div>
         </div>
