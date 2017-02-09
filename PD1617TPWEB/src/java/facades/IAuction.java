@@ -15,6 +15,6 @@ import utils.ResultMessage;
 @LocalBean
 public interface IAuction {
     
-     ResultMessage CreateAuction(String Username, String Item, long id);
+     ResultMessage CreateAuction(Long UserId, Long ItemId);
      
 }

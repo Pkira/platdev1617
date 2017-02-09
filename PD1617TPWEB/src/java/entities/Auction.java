@@ -74,17 +74,19 @@ public class Auction implements Serializable {
     private Collection<AuctionLog> auctionLogCollection;
 
     public Auction() {
+        this.startdate = new Date();
     }
 
     public Auction(Long id) {
         this.id = id;
+        this.startdate = new Date();
     }
 
-    public Auction(Long id, int auctionstate, int itemstate, Date startdate, Date enddate) {
+    public Auction(Long id, int auctionstate, int itemstate, Date enddate) {
         this.id = id;
         this.auctionstate = auctionstate;
         this.itemstate = itemstate;
-        this.startdate = startdate;
+        this.startdate = new Date();
         this.enddate = enddate;
     }
 
