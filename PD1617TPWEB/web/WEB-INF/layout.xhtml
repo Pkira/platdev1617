@@ -156,17 +156,9 @@
                                 </div>
                                 
                                 <h:panelGroup rendered="#{!userController.isAdmin}"> 
-                                    <div class="reg" style="width: 150px;margin-left:24px;">
-                                        <h:form>
-                                            <h:commandLink action="UserItems">
-                                                <span>#{userController.totaluseritems}</span> items <img src="Images/bag1.png"/>
-                                            </h:commandLink>
-                                        </h:form>	
-                                        <div class="clearfix"> </div>
-                                    </div>
                                     <div class="create_btn">
                                         <h:form>
-                                            <h:commandLink action="UserAuctions" value="MyAuctions" />
+                                            <h:commandLink action="UserAuctions" value="MyAuctions" style="margin-left: 175px;"/>
                                         </h:form>
                                     </div>  
                                 </h:panelGroup>
@@ -204,12 +196,32 @@
                                     <h:link outcome="index" value="HOME" styleClass="color1"/>
 
                             </li>
-                            <li class="grid"><a class="color2" href="#">Auctions</a>
+                            <li class="grid">
+                                <h:link outcome="AuctionList" styleClass="color2">
+                                    Auctions
+                                </h:link>
                             </li>
-                            <li class="grid"><a class="color6" href="#">Items</a>
-                            </li>		
-                            <li class="grid"><a class="color3" href="#">Following</a>
+                            <li class="grid">
+                                <h:link outcome="ItemList" styleClass="color6">
+                                    Items
+                                </h:link>
+                            </li>	
+                            <li class="grid">
+                                <h:link outcome="UserItemsFollowing" styleClass="color3">
+                                    Items Following
+                                </h:link>
                             </li>
+                            <li class="grid">        
+                                <h:link outcome="UserItems" styleClass="color4">
+                                    My Items (<span>#{userController.totaluseritems}</span>)
+                                </h:link>                          
+                            </li>
+                            <li class="grid">
+                                <h:link outcome="UserItemsInAuction" styleClass="color5">
+                                    My Items in Auction
+                                </h:link>
+                            </li>
+
                         </ul> 
                     </h:panelGroup>
                 </div>
