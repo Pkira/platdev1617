@@ -33,9 +33,17 @@ public class AdminFacade implements IAdmin {
     }   
 
     @Override
-    public ArrayList<Notification> GetNotifications() {
+    public List<Notification> GetNotifications() {
         
-        return (ArrayList<Notification>) dAO.getEntityManager().createNamedQuery("Notification.findByStatus").setParameter("status", false).getResultList();
+        List<Notification> notifications;
+                
+        try {
+            notifications = dAO.getEntityManager().createNamedQuery("Notification.findAll").getResultList();
+        } catch (Exception e) {
+            return new ArrayList<Notification>();
+        }
+        
+        return notifications;
     }
 
     @Override

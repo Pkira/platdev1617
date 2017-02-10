@@ -13,7 +13,7 @@ import utils.ResultMessage;
 public interface IAdmin {
  
      boolean LogOff();
-     ArrayList<Notification> GetNotifications();
+     List<Notification> GetNotifications();
      ResultMessage ActivateAccount(Long UserId);
      ResultMessage ReActivateAccount(Long UserId);
      ResultMessage SuspendAccount(Long UserId);
