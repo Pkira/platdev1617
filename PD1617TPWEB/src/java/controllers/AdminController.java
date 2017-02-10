@@ -36,7 +36,7 @@ public class AdminController implements Serializable {
         List<User> users = null;
         
         try {
-            users = dAO.getEntityManager().createNamedQuery("User.findByAccountActivation").setParameter("accountActivation", false).getResultList();
+            users = adminFacade.GetAllUsersToActivate();
         } catch (Exception e) {
              context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Unable to get users to activate", null));
             return new ArrayList<User>();
@@ -52,7 +52,7 @@ public class AdminController implements Serializable {
         List<User> users = null;
         
         try {
-            users = dAO.getEntityManager().createNamedQuery("User.findByAccountSuspension").setParameter("accountSuspension", true).getResultList();
+            users = users = adminFacade.GetAllUsersSuspended();
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Unable to get users to reactivate", null));
             return new ArrayList<User>();

@@ -1,11 +1,10 @@
 package facades;
 
 import controllers.IDAO;
-import entities.Newsletter;
 import entities.Notification;
 import entities.User;
-import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
@@ -187,5 +186,32 @@ public class AdminFacade implements IAdmin {
         
         return user;
 
+    }
+    
+    public List<User> GetAllUsersToActivate()
+    {
+        List<User> users = null;
+        
+        try {
+            users = dAO.getEntityManager().createNamedQuery("User.findByAccountActivation").setParameter("accountActivation", false).getResultList();
+        } catch (Exception e) {
+            return new ArrayList<User>();
+        }
+        
+        return users;
+    }
+    
+    public List<User> GetAllUsersSuspended()
+    {
+        
+        List<User> users = null;
+        
+        try {
+            users = dAO.getEntityManager().createNamedQuery("User.findByAccountSuspension").setParameter("accountSuspension", true).getResultList();
+        } catch (Exception e) {
+            return new ArrayList<User>();
+        }
+        
+        return users;
     }
 }

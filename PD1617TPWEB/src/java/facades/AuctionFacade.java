@@ -6,8 +6,10 @@ import entities.Auction;
 import entities.Item;
 import entities.Newsletter;
 import entities.User;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import utils.ResultMessage;
@@ -26,6 +28,18 @@ public class AuctionFacade implements IAuction {
     
     @EJB
     private ISystem AServer;
+    
+    public List<Auction> GetAll(){
+    
+        List<Auction> auctions = null;
+        try {
+            auctions = dAO.getEntityManager().createNamedQuery("Auction.findAll").getResultList();
+        } catch (Exception e) {
+            return new ArrayList<Auction>();
+        }
+        
+        return auctions;
+    }
     
      public ResultMessage CreateAuction(Long UserId, Long ItemId){
        
