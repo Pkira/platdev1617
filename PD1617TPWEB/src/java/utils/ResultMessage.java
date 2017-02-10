@@ -31,6 +31,7 @@ public enum ResultMessage {
     AccountAllreadySuspended("Account as allready suspended"),
     AccountReActivated("Account re-activated"),
     AccountPasswordChanged("Password changed successfully"),
+    AccountPasswordNotChanged("An error occur, password not changed"),
     AccountReactivation("The request for the account reactivation was sent to the Admin, please wait a while."),
     AccountReactivationFail("This accout is not suspend"),
     AccountReactivationNoUser("This account doesn't exist"),

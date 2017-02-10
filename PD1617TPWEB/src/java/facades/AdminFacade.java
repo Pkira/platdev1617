@@ -41,7 +41,8 @@ public class AdminFacade implements IAdmin {
 
     @Override
     public ResultMessage ActivateAccount(Long UserId) {
-        //validate input
+    
+        
         if(UserId == null)
             return ResultMessage.LoginInvalidUsername;
         
@@ -52,28 +53,32 @@ public class AdminFacade implements IAdmin {
              return ResultMessage.LoginInvalidUsername;
         }
        
-            boolean isActivated = user.getAccountActivation();
-            if(isActivated)    
-                return ResultMessage.AccountAllreadyActivated;
-            else
-            {
-                user.setAccountActivation(true);
-                
-                Newsletter.addNewsletterItem("New user registed in system, welcome " + Username);
-                
+        boolean isActivated = user.getAccountActivation();
+        if(isActivated)    
+            return ResultMessage.AccountAllreadyActivated;
+        else
+        {
+            user.setAccountActivation(true);
+            
+            try {
                 dAO.getEntityManager().persist(user);
-                
-                return ResultMessage.AccountActivated;
+            } catch (Exception e) {
+                return ResultMessage.AccountNotActivated;
             }
+
+            Newsletter.addNewsletterItem("New user registed in system, welcome " + Username);          
+
+            return ResultMessage.AccountActivated;
+        }
     }
     
     @Override
     public ResultMessage ReActivateAccount(Long UserId) {
-        //validate input
+   
+        
         if(UserId == null)
             return ResultMessage.LoginInvalidUsername;
         
-        //get user from BD
         User user = new User();
         
         try{
@@ -93,9 +98,13 @@ public class AdminFacade implements IAdmin {
             
             user.setAccountSuspension(false);
             
-            Newsletter.addNewsletterItem("Removed suspension for User " + Username);
+            try {
+                dAO.getEntityManager().persist(user);
+            } catch (Exception e) {
+                return ResultMessage.AccountNotActivated;
+            }
             
-            dAO.getEntityManager().persist(user);
+            Newsletter.addNewsletterItem("Removed suspension for User " + Username);
             
             return ResultMessage.AccountReActivated;
 
@@ -103,11 +112,11 @@ public class AdminFacade implements IAdmin {
     
     @Override
     public ResultMessage SuspendAccount(Long UserId) {
-//        validate input
+
         if(UserId == null)
             return ResultMessage.LoginInvalidUsername;
         
-        //get user from BD
+        
         User user = new User();
         
         try{
@@ -126,7 +135,11 @@ public class AdminFacade implements IAdmin {
 
             Newsletter.addNewsletterItem("User " + Username + " as been suspended");
             
-            dAO.getEntityManager().persist(user);
+            try {
+                dAO.getEntityManager().persist(user);
+            } catch (Exception e) {
+                return ResultMessage.AccountNotSuspended;
+            }
                 
             return ResultMessage.AccountSuspended;
         }
@@ -151,7 +164,11 @@ public class AdminFacade implements IAdmin {
         
         user.setPassword(Password);       
         
-        dAO.getEntityManager().persist(user);
+        try {
+            dAO.getEntityManager().persist(user);
+        } catch (Exception e) {
+            return ResultMessage.AccountPasswordNotChanged;
+        }
         
         return ResultMessage.AccountPasswordChanged;
 
