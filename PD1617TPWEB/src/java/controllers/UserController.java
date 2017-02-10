@@ -82,6 +82,7 @@ public class UserController implements Serializable {
         this.address = user.getAddress();
         this.balance = user.getBalance();
         this.useritems = itemFacade.UserItems(userid);
+        this.isAdmin = false;
         
         if(this.username.equals("admin"))
         {
@@ -113,10 +114,16 @@ public class UserController implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
             return;
         }
+        else
+        {
+            userFacade.LoadBalance(balance);
         
-        userFacade.LoadBalance(balance);
+            this.balance = userFacade.SeeProfile().getBalance();
+            
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
+        }
         
-        this.balance = userFacade.SeeProfile().getBalance();
+
     }
 
     public long getUserid() {

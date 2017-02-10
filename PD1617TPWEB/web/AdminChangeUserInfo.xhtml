@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/layout.xhtml">
+
+            <ui:define name="content">
+                
+                <div class="container">
+                    
+                    <div class="main">
+                        
+                        <div class="registration">                           
+                            
+                            <div class="registration_left">
+                                <h2>Edit Profile</h2>
+                                <div class="registration_form">
+                                    
+                                    <h:form>                                      
+                                        <div>
+                                            <label>
+                                                <h:outputLabel value="New Password:" for="password" />
+                                                <h:inputSecret id="password"
+                                                               value="#{adminController.userToEdit.password}"/>
+                                            </label>
+                                        </div>						
+                                       <div>
+                                            <label>
+                                                <h:outputLabel value="Address:" for="address" />
+                                                <h:outputLabel id="address"
+                                                               value="#{adminController.userToEdit.address}" />
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <h:outputLabel value="Balance:" for="balance" />
+                                                <h:outputLabel id="balance"
+                                                               value="#{adminController.userToEdit.balance}" />
+                                            </label>
+                                        </div>
+                                        <div>                                       
+                                            <h:commandButton action="#{adminController.updateUserProfile}" value="Update Profile"/>
+                                        </div>
+
+                                    </h:form>
+                                    
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                      
+                    </div>
+                </div>
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

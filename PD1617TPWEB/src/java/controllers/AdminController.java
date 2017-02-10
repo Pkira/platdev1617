@@ -4,6 +4,7 @@ package controllers;
 import entities.Notification;
 import entities.User;
 import facades.IAdmin;
+import facades.IUser;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -24,6 +25,11 @@ public class AdminController implements Serializable {
     
     @EJB
     private IAdmin adminFacade;
+    
+    @EJB
+    private IUser userFacade;
+    
+    private User userToEdit;
 
     public AdminController() {       
         
@@ -87,7 +93,7 @@ public class AdminController implements Serializable {
         
         List<Notification> notifications = null;
         try {
-            notifications = dAO.getEntityManager().createNamedQuery("Notification.findAll").getResultList();
+            notifications = adminFacade.GetNotifications();
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Unable to get notifications", null));
             return new ArrayList<Notification>();
@@ -95,5 +101,49 @@ public class AdminController implements Serializable {
         
         return notifications;
     }
+    
+    public List<User> getAllUsers()
+    {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        List<User> users = null;
+        
+        try {
+            users = userFacade.getAll();
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Unable to get users list", null));
+            return new ArrayList<User>();
+        }
+        
+        return users;
+    }
+    
+    public String changeUserInfo(long UserId){
+        
+        userToEdit = adminFacade.SeeUserProfile(UserId);
+        return "AdminChangeUserInfo.xhtml";
+    }
+    
+    public void updateUserProfile(){
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        ResultMessage result = adminFacade.ChangeUserPassword(userToEdit.getId(), userToEdit.getPassword());
+        
+        if(result != ResultMessage.AccountPasswordChanged)
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+        else
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
+    }
+
+    public User getUserToEdit() {
+        return userToEdit;
+    }
+
+    public void setUserToEdit(User userToEdit) {
+        this.userToEdit = userToEdit;
+    }
+    
+    
     
 }

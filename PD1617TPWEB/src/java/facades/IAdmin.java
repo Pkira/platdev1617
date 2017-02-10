@@ -18,7 +18,7 @@ public interface IAdmin {
      ResultMessage ReActivateAccount(Long UserId);
      ResultMessage SuspendAccount(Long UserId);
      ResultMessage ChangeUserPassword(Long UserId, String Password);
-     User SeeUserProfile(String Username);
+     User SeeUserProfile(long UserId);
      List<User> GetAllUsersToActivate();
      List<User> GetAllUsersSuspended();
 }

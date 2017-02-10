@@ -77,6 +77,33 @@
                                                 <h:commandButton action="#{adminController.reactivateUser(user.id)}" value="ReActivate"/>
                                            </h:column>
                                        </h:dataTable>   
+                                        
+                                        <p><h2>Registed Users:</h2></p>
+
+                                        <h:dataTable value="#{adminController.allUsers}"
+                                                var="user"
+                                                rules="all"
+                                                styleClass="table table-bordered"
+                                                >
+                                           <h:column>
+                                               <f:facet name="header">
+                                                   <h:outputText value="Id"/>
+                                               </f:facet>
+                                               <h:outputText value="#{user.id}"/>
+                                           </h:column>
+                                           <h:column>
+                                               <f:facet name="header">
+                                                   <h:outputText value="Username"/>
+                                               </f:facet>
+                                               <h:outputText value="#{user.username}"/>
+                                           </h:column>
+                                            <h:column headerClass="columnsmall">
+                                               <f:facet name="header">
+                                                   <h:outputText value="Options"/>
+                                               </f:facet>
+                                                <h:commandButton action="#{adminController.changeUserInfo(user.id)}" value="Edit"/>
+                                           </h:column>
+                                       </h:dataTable>  
 
                                     </div>
                                     

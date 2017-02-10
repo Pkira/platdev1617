@@ -174,12 +174,12 @@ public class AdminFacade implements IAdmin {
     }
     
     @Override
-    public User SeeUserProfile(String User){
+    public User SeeUserProfile(long UserId){
          
         User user = new User();
         
         try{
-            user = (User) dAO.getEntityManager().createNamedQuery("User.findByUsername").setParameter("username", User).getSingleResult();
+            user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
         }catch(Exception e){
              return null;
         }
