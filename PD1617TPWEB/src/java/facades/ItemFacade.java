@@ -135,7 +135,36 @@ public class ItemFacade implements IItem {
 
     @Override
     public ResultMessage FollowItem(long Item, long Username) {
-        return null;
+        
+        Item item = new Item();
+        UserItem follow = new UserItem();
+        List<Item> following = FollowItens(Username);
+        User user = new User();
+        
+        if(!following.contains(Item))
+        {
+            try{
+                user = (User) dAO.getEntityManager().createNamedQuery("UserItem.findById").setParameter("id", Username).getSingleResult();
+            }catch(Exception e){
+                return ResultMessage.UserNotExist;
+            }
+            if((item = GetItemById(Item)).getId() != null)
+            {
+                follow.setId((long)-1);
+                follow.setIsbuying(false);
+                follow.setIsfollowing(true);
+                follow.setIsselling(false);
+                follow.setItemid(item);
+                follow.setUserid(user);
+                dAO.getEntityManager().persist(follow);
+                return ResultMessage.FollowItemSucess;
+            }
+            else
+                return ResultMessage.ItemNotExist;
+        }
+        else
+            return ResultMessage.FollowItemAlreadyFollow;
+
     }
     
     @Override
@@ -146,8 +175,13 @@ public class ItemFacade implements IItem {
     @Override
     public Item GetItemById(long ItemId) {
         
-        Item item = (Item)dAO.getEntityManager().createNamedQuery("Item.findById").setParameter("id", ItemId).getSingleResult();
+        Item item = new Item();
         
+        try{
+            item = (Item)dAO.getEntityManager().createNamedQuery("Item.findById").setParameter("id", ItemId).getSingleResult();
+        }catch(Exception e){
+            return item;
+        }
         return item;
     }
     

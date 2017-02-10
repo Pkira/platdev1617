@@ -38,6 +38,7 @@ public enum ResultMessage {
     FollowItemSucess("Item added to the follow list with sucess!"),
     FollowItemAlreadyFollow("You already follow this Item or this Item is yours."),
     ItemNotExist("The indicated item does not exist."),
+    UserNotExist("The indicated user does not exist."),
     CancelFollowItemSucess("The item was successfuly removed from the follow list."),
     CancelFollowItemAlreadyNotFollow("You don't follow the indicated Item."),
     CancelFollowItemError("Some error have ocurred during the procedure, please try again later."),
