@@ -4,6 +4,7 @@ package facades;
 import controllers.IDAO;
 import javax.ejb.Stateless;
 import entities.Newsletter;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 
@@ -24,6 +25,7 @@ public class NewsletterFacade implements INewsLetter {
         Newsletter newNewsletter = new Newsletter();
         newNewsletter.setId((long)-1);
         newNewsletter.setMessage(Message);
+        newNewsletter.setCreationdate(new Date());
         
         dAO.getEntityManager().persist(newNewsletter);
     }

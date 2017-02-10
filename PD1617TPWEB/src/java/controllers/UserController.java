@@ -14,6 +14,8 @@ import java.util.List;
 import entities.User;
 import facades.IItem;
 import facades.IUser;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import utils.ResultMessage;
 
 
@@ -62,10 +64,17 @@ public class UserController implements Serializable {
     
     public void login()
     {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
         ResultMessage result = userFacade.Login(username, password);
         
         if(result.equals(ResultMessage.LoginSucess) || result.equals(ResultMessage.LoginAllreadyLogged))
             setIsLogged(true);
+        else
+        {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+            return;
+        }
         
         User user = userFacade.SeeProfile();
         
@@ -80,20 +89,31 @@ public class UserController implements Serializable {
         }
     }
     
-    public void logoff()
+    public String logoff()
     {
         boolean result = userFacade.LogOff();
         
         if(result)
             setIsLogged(false);
+        
+        return "index.xhtml";
     }
     
     public void updateProfile()
     {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
         if(newpassword.isEmpty())
             newpassword = password;
         
         ResultMessage result = userFacade.UpdateProfile(address, newpassword, password);
+        
+        if(result != ResultMessage.UpdateProfileValid)
+        {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+            return;
+        }
+        
         userFacade.LoadBalance(balance);
         
         this.balance = userFacade.SeeProfile().getBalance();

@@ -5,6 +5,8 @@ import facades.IItem;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import utils.ResultMessage;
 
 
@@ -56,7 +58,15 @@ public class ItemController {
     
     public void insertNewItem() {
         
+        FacesContext context = FacesContext.getCurrentInstance();
+         
         ResultMessage result = itemFacade.CreateItem(this.ownerid, this.name, this.category, this.description, this.price,this.buynow, this.auctionduration, this.image);
+        
+        if(result != ResultMessage.CreateItemSuccess)
+        {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+            return;
+        }
         
     }
     

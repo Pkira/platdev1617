@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/layout.xhtml">
+
+            <ui:define name="content">
+                
+                <div class="container">
+                    
+                    <div class="main">
+                        
+                        <div class="registration">
+                            
+                            <div class="registration_left">
+                                
+                                <h:form>
+                                
+                                    <div class="registration_form">
+                                        
+                                        <h2>Admin Notifications:</h2>
+
+                                        <h:dataTable value="#{adminController.notifications}"
+                                                var="notification"
+                                                rules="all"
+                                                styleClass="table table-bordered"
+                                                >
+                                           <h:column>
+                                               <f:facet name="columnsmall">
+                                                   <h:outputText value="Id"/>
+                                               </f:facet>
+                                               <h:outputText value="#{notification.id}"/>
+                                           </h:column>
+                                           <h:column>
+                                               <f:facet name="header">
+                                                   <h:outputText value="From"/>
+                                               </f:facet>
+                                               <h:outputText value="#{notification.userid.username}"/>
+                                           </h:column>
+                                            <h:column headerClass="header">
+                                               <f:facet name="header">
+                                                   <h:outputText value="Date"/>
+                                               </f:facet>
+                                                <h:outputText value="#{notification.creationdate}"/>
+                                           </h:column>
+                                            <h:column headerClass="header">
+                                               <f:facet name="header">
+                                                   <h:outputText value="Message"/>
+                                               </f:facet>
+                                                <h:outputText value="#{notification.message}"/>
+                                           </h:column>
+                                       </h:dataTable>   
+                                       
+                                    </div>
+                                    
+                                </h:form>
+                            </div>                            
+                            
+                            <div class="clearfix"></div>
+                        </div>
+                      
+                    </div>
+                    
+                </div>
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

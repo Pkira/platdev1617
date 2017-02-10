@@ -44,6 +44,7 @@
     </h:head>
     
     <h:body>
+     
         
         <div class="top_bg">
             <div class="container">
@@ -84,7 +85,6 @@
                             <h:form>
                                 <h:commandLink action="index" value="Projecto Plataformas de Desenvolvimento" />
                             </h:form> 
-
                         </div>
                         
                         <div class="header_right">
@@ -148,6 +148,7 @@
                                                 <h:commandLink action="AdminOptions" value="Admin Page" style="padding-left: 30px;"/>
                                             </h:panelGroup>
                                             
+                                            
                                         </h:form>                 
                                     </div>
                                         
@@ -169,7 +170,16 @@
                                         </h:form>
                                     </div>  
                                 </h:panelGroup>
-                                
+                                    
+                                <h:panelGroup rendered="#{userController.isAdmin}"> 
+                                    
+                                    <div class="create_btn">
+                                        <h:form>
+                                            <h:commandLink action="AdminNotifications" value="Notifications" style="margin-left: 170px;"/>
+                                        </h:form>  
+                                    </div>  
+                                </h:panelGroup>
+                              
                                 </h:panelGroup>
                                 
                                 <div class="clearfix"> </div>
@@ -205,6 +215,18 @@
                 </div>
             </div>
         </div>
+        
+        <h:panelGroup rendered="#{not empty facesContext.messageList}">
+  
+
+            <div class="container">
+
+                <h:messages globalOnly="false" layout="list" errorClass="list-group-item list-group-item-danger" infoClass="list-group-item list-group-item-info" styleClass="list-group"/>
+       
+            </div>  
+            
+  
+        </h:panelGroup>
         
         <div id="content" class="center_content">
             <ui:insert name="content">Content</ui:insert>

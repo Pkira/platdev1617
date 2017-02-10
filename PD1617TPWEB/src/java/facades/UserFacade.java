@@ -30,7 +30,12 @@ public class UserFacade implements IUser {
 
     @Override
     public List<User> getAll() {
-        return dAO.getEntityManager().createNamedQuery("User.findAll").getResultList();
+        
+        try {
+            return dAO.getEntityManager().createNamedQuery("User.findAll").getResultList();
+        } catch (Exception e) {
+            return new ArrayList<User>();
+        }
     }
 
     @Override
@@ -42,7 +47,11 @@ public class UserFacade implements IUser {
         
         long tryUser = 0;
         
-        tryUser = (long)dAO.getEntityManager().createNamedQuery("User.GetIdByUsername").setParameter("username", username).getFirstResult();
+        try {
+            tryUser = (long) dAO.getEntityManager().createNamedQuery("User.GetIdByUsername").setParameter("username", username).getFirstResult();
+        } catch (Exception e) {
+            
+        }
         
         if(tryUser > 0)
             return ResultMessage.RegisterAllreadyExist;
@@ -94,10 +103,15 @@ public class UserFacade implements IUser {
                 toUpdate = true;
             }
             
-            if(toUpdate)
-                dAO.getEntityManager().merge(user);
+            try {
+                if (toUpdate) {
+                    dAO.getEntityManager().merge(user);
+                }
+            } catch (Exception e) {
+                return ResultMessage.UpdateProfileInvalid; 
+            }
             
-            return ResultMessage.UpdateProfileInvalid; 
+            return ResultMessage.UpdateProfileValid; 
         }
         else
             return ResultMessage.UpdateProfileWrongPass;
@@ -113,7 +127,10 @@ public class UserFacade implements IUser {
         if(increment > 0){
             user.setBalance(user.getBalance() + increment);
             
-            dAO.getEntityManager().merge(user);
+            try {
+                dAO.getEntityManager().merge(user);
+            } catch (Exception e) {
+            }
             
             return ResultMessage.LoadBalanceValid;
         }
@@ -131,10 +148,14 @@ public class UserFacade implements IUser {
     @Override
     public ResultMessage SendMessage(String Addressed, String Subject, String Message){
         
-        User toUser = (User)dAO.getEntityManager().createNamedQuery("User.findByUsername").setParameter("username", Addressed).getSingleResult();
+        User toUser = null;
         
-        if(toUser == null)
+        try {
+            toUser = (User) dAO.getEntityManager().createNamedQuery("User.findByUsername").setParameter("username", Addressed).getSingleResult();
+        } catch (Exception e) {
             return ResultMessage.SendMessageNoUser;
+        }
+        
         
         Message newMessage = new Message();
         newMessage.setId((long) -1);
@@ -143,7 +164,11 @@ public class UserFacade implements IUser {
         newMessage.setMessage(Message);
         newMessage.setSubject(Subject);
         
-        dAO.getEntityManager().persist(newMessage);
+        try {
+            dAO.getEntityManager().persist(newMessage);
+        } catch (Exception e) {
+            return ResultMessage.SendMessageUnsuccess;
+        }
         
         return ResultMessage.SendMessageSuccess;
     }
@@ -152,7 +177,12 @@ public class UserFacade implements IUser {
     public boolean SuspendAccount() {
         
         this.user.setAccountSuspension(true);
-        dAO.getEntityManager().persist(this.user);
+        
+        try {
+            dAO.getEntityManager().persist(this.user);
+        } catch (Exception e) {
+        }
+        
         return true;
     }
     
@@ -168,15 +198,22 @@ public class UserFacade implements IUser {
         
         if(!isLogged) 
         {
-            this.user = (User)dAO.getEntityManager().createNamedQuery("User.Login").setParameter("username", Username).setParameter("password", Password).getSingleResult();
-            
-            if(this.user != null)
-            {
-                AServer.AddUserToActiveList(this.user);
-                return ResultMessage.LoginSucess;
-            }           
-            else
+            try {
+                this.user = (User) dAO.getEntityManager().createNamedQuery("User.Login").setParameter("username", Username).setParameter("password", Password).getSingleResult();
+            } catch (Exception e) {
                 return ResultMessage.LoginUserNotFound;
+            }
+                     
+            if(!this.user.getAccountActivation())
+                return ResultMessage.AccountNotActivated;
+
+            if(this.user.getAccountSuspension())
+                return ResultMessage.AccountSuspended;
+
+            AServer.AddUserToActiveList(this.user);
+            return ResultMessage.LoginSucess;
+
+            
         }
         else
            return ResultMessage.LoginAllreadyLogged;
@@ -186,18 +223,25 @@ public class UserFacade implements IUser {
     @Override
     public ResultMessage ReportItem(long UserId, long ItemId) {
         
-        User user = (User)dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
+        User user = null;
         
-        if(user == null)
-            return ResultMessage.ReportInsuccess;
-                
+        try {
+            user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
+        } catch (Exception e) {
+             return ResultMessage.ReportInsuccess;
+        }
+            
         Notification notification = new Notification();
         notification.setId((long) -1);
         notification.setMessage("User " + user.getUsername() + "with Id:" + UserId + " have reported the Item with Id: " + ItemId);
         notification.setStatus(0);
         notification.setUserid(user);
         
-        dAO.getEntityManager().persist(notification);
+        try {
+            dAO.getEntityManager().persist(notification);
+        } catch (Exception e) {
+            return ResultMessage.ReportInsuccess;
+        }
         
         return ResultMessage.ReportSuccess;
         
@@ -206,24 +250,31 @@ public class UserFacade implements IUser {
     @Override
     public ResultMessage ReportUser(long FromUserId, long ToUserId) {
         
-        User FromUser = (User)dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", FromUserId).getSingleResult();
-        
-        if(user == null)
+        User FromUser = null;
+        try {
+            FromUser = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", FromUserId).getSingleResult();
+        } catch (Exception e) {
             return ResultMessage.ReportInsuccess;
+        }
         
-        
-         User ToUser = (User)dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", ToUserId).getSingleResult();
-        
-        if(user == null)
+        User ToUser = null;
+        try {
+            ToUser = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", ToUserId).getSingleResult();
+        } catch (Exception e) {
             return ResultMessage.ReportInsuccess;
-                
+        }
+          
         Notification notification = new Notification();
         notification.setId((long) -1);
         notification.setMessage("User " + FromUser.getUsername() + "with Id:" + FromUserId + " have reported the User " + ToUser.getUsername()+ " with Id: " + ToUserId);
         notification.setStatus(0);
         notification.setUserid(FromUser);
         
-        dAO.getEntityManager().persist(notification);
+        try {
+            dAO.getEntityManager().persist(notification);
+        } catch (Exception e) {
+            return ResultMessage.ReportInsuccess;
+        }
         
         return ResultMessage.ReportSuccess;
         

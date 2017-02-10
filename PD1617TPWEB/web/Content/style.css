@@ -9,6 +9,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     color: #ffffff;
 }
 
+.columnsmall { width: 20px; }
+
 h4, h5, h6,
 h1, h2, h3 {margin-top: 0;}
 ul, ol {margin: 0;}

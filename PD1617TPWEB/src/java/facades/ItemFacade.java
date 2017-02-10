@@ -38,15 +38,10 @@ public class ItemFacade implements IItem {
             }
             catch(Exception ex)
             {
-
-            }
-            
-            if(cat == null)
-            {
                 cat = new Category((long)-1, category);
                 dAO.getEntityManager().persist(cat);
                 cat = (Category)dAO.getEntityManager().createNamedQuery("Category.findByName").setParameter("name", category).getSingleResult();
-            }
+            }            
             
             Item item = new Item((long)-1,Name,Desc,Price,BuyNow,AuctionDuration, Image);
             item.setOwnerid(user);
