@@ -127,7 +127,7 @@ public class UserController implements Serializable {
 
     }
     
-    public void FollowItem(long ItemId){
+    public String FollowItem(long ItemId){
         
         FacesContext context = FacesContext.getCurrentInstance();
         ResultMessage result = null;
@@ -137,6 +137,8 @@ public class UserController implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR ", null));
         }
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
+        
+        return "UserItems.xhtml";
     }
 
     public long getUserid() {
