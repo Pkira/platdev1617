@@ -38,10 +38,10 @@
                                         <div>
                                             <label>
                                                 <h:outputLabel value="Category:" for="category" />
-                                                <h:inputText id="category"
-                                                             value="#{itemController.category}"
-                                                             required="true"
-                                                             requiredMessage="Falta a category"/>
+                                                
+                                                <h:selectOneMenu value="#{bean.name}">
+                                                    <f:selectItems value="#{bean.names}" />
+                                                </h:selectOneMenu>
                                             </label>
                                         </div>
                                         
