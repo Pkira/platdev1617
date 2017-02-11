@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Pedro Salgado
+ * @author Caike
  */
 @Entity
 @Table(name = "t_auction")
@@ -41,8 +41,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Auction.findByItemstate", query = "SELECT a FROM Auction a WHERE a.itemstate = :itemstate"),
     @NamedQuery(name = "Auction.findByStartdate", query = "SELECT a FROM Auction a WHERE a.startdate = :startdate"),
     @NamedQuery(name = "Auction.findByEnddate", query = "SELECT a FROM Auction a WHERE a.enddate = :enddate"),
-    @NamedQuery(name = "Auction.findByItem", query = "SELECT a FROM Auction a WHERE a.itemid = :itemid"),        
+    @NamedQuery(name = "Auction.findByLastuserid", query = "SELECT a FROM Auction a WHERE a.lastuserid = :lastuserid"),
+    @NamedQuery(name = "Auction.findByLastbid", query = "SELECT a FROM Auction a WHERE a.lastbid = :lastbid"),
+    @NamedQuery(name = "Auction.findByItem", query = "SELECT a FROM Auction a WHERE a.itemid = :itemid"),
 })
+
 public class Auction implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,27 +72,32 @@ public class Auction implements Serializable {
     @Column(name = "enddate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date enddate;
+    @Column(name = "lastuserid")
+    private Long lastuserid;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "lastbid")
+    private double lastbid;
     @JoinColumn(name = "itemid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Item itemid;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "auctionid")
     private Collection<AuctionLog> auctionLogCollection;
-
+    
     public Auction() {
-        this.startdate = new Date();
     }
 
     public Auction(Long id) {
         this.id = id;
-        this.startdate = new Date();
     }
 
-    public Auction(Long id, int auctionstate, int itemstate, Date enddate) {
+    public Auction(Long id, int auctionstate, int itemstate, Date startdate, Date enddate, double lastbid) {
         this.id = id;
         this.auctionstate = auctionstate;
         this.itemstate = itemstate;
-        this.startdate = new Date();
+        this.startdate = startdate;
         this.enddate = enddate;
+        this.lastbid = lastbid;
     }
 
     public Long getId() {
@@ -132,6 +140,22 @@ public class Auction implements Serializable {
         this.enddate = enddate;
     }
 
+    public Long getLastuserid() {
+        return lastuserid;
+    }
+
+    public void setLastuserid(Long lastuserid) {
+        this.lastuserid = lastuserid;
+    }
+
+    public double getLastbid() {
+        return lastbid;
+    }
+
+    public void setLastbid(double lastbid) {
+        this.lastbid = lastbid;
+    }
+
     public Item getItemid() {
         return itemid;
     }
@@ -148,7 +172,7 @@ public class Auction implements Serializable {
     public void setAuctionLogCollection(Collection<AuctionLog> auctionLogCollection) {
         this.auctionLogCollection = auctionLogCollection;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;

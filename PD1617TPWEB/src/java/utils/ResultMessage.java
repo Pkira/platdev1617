@@ -49,7 +49,13 @@ public enum ResultMessage {
     CategoryAllreadyExists("An category with the name choosen allready exists"),
     CategoryErrorUpdate("Error when trying to updated category"),
     ReportSuccess("The report was sended to the administrator"),
-    ReportInsuccess("The report can't be made, please make sure that you have insert the right information");
+    ReportInsuccess("The report can't be made, please make sure that you have insert the right information"),
+    AuctionNotExist("The auction that you try access don't exist anymore."),
+    AuctionAlreadyFinish("The Auction have already finished"),
+    BidInsuccess("You could't do the bid, please verify your balance."),
+    BidSuccess("You bid the item"),
+    BuyNowSuccess("You buy the item"),
+    BuyNowInsuccess("You didn't buy the item");
     
     
     private String Message;

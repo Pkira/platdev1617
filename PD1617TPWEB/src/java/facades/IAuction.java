@@ -16,5 +16,7 @@ import utils.ResultMessage;
 public interface IAuction {
     
      ResultMessage CreateAuction(Long ItemId);
+     ResultMessage BidItem(Long UserId, Long value, Long AuctionId);
+     ResultMessage BuyNowItem(Long UserId, Long value, Long AuctionId);
      
 }
