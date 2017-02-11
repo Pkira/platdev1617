@@ -25,45 +25,41 @@ public class ItemFacade implements IItem {
     private IDAO dAO;
 
     @Override
-    public ResultMessage CreateItem(long UserId, String Name, String category, String Desc, double Price, double BuyNow, long AuctionDuration, String Image){
-       
+    public ResultMessage CreateItem(long UserId, String Name, long category, String Desc, double Price, double BuyNow, long AuctionDuration, String Image){     
+
+        if(UserId == 0 || Name.isEmpty() || category==0 || Desc.isEmpty() || Price == 0 || BuyNow == 0 || AuctionDuration == 0 || Image.isEmpty())
+            return ResultMessage.CreateItemUnsuccess;
+
+        User user = null;
+
+        try {
+            user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
+        } catch (Exception e) {
+            return ResultMessage.CreateItemUnsuccess;
+        }
+
+        Category cat = null;
         try
         {
-            if(UserId == 0 || Name.isEmpty() || category.isEmpty() || Desc.isEmpty() || Price == 0 || BuyNow == 0 || AuctionDuration == 0 || Image.isEmpty())
-                return ResultMessage.CreateItemUnsuccess;
-            
-            User user = (User)dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
-            
-            Category cat = null;
-            try
-            {
-                cat = (Category)dAO.getEntityManager().createNamedQuery("Category.findByName").setParameter("name", category).getSingleResult();
-            }
-            catch(Exception ex)
-            {
-                cat = new Category((long)-1, category);
-                dAO.getEntityManager().persist(cat);
-                cat = (Category)dAO.getEntityManager().createNamedQuery("Category.findByName").setParameter("name", category).getSingleResult();
-            }            
-            
-            Item item = new Item((long)-1,Name,Desc,Price,BuyNow,AuctionDuration, Image);
-            item.setOwnerid(user);
-            item.setCategoryid(cat);
-
-            //Newsletter.addNewsToList(new NewsLetterItem("User " + Username + " add a Item " + Item));
-
-            dAO.getEntityManager().persist(item);
-            
-            return ResultMessage.CreateItemSuccess;
-            
-        
+            cat = (Category)dAO.getEntityManager().createNamedQuery("Category.findById").setParameter("id", category).getSingleResult();
         }
         catch(Exception ex)
         {
+            return ResultMessage.CreateItemUnsuccess;
+        }            
 
+        Item item = new Item((long)-1,Name,Desc,Price,BuyNow,AuctionDuration, Image);
+        item.setOwnerid(user);
+        item.setCategoryid(cat);
+
+        try {
+            dAO.getEntityManager().persist(item);
+        } catch (Exception e) {
+            return ResultMessage.CreateItemUnsuccess;
         }
-        
-        return ResultMessage.CreateItemUnsuccess;
+
+        return ResultMessage.CreateItemSuccess;
+            
    }
     
     @Override
@@ -264,6 +260,20 @@ public class ItemFacade implements IItem {
             return item;
         }
         return item;
+    }
+
+    @Override
+    public List<Category> GetAllCategories() {
+        
+        List<Category> categories = null;
+        
+        try {
+            categories = dAO.getEntityManager().createNamedQuery("Category.findAll").getResultList();
+        } catch (Exception e) {
+            return new ArrayList<Category>();
+        }
+        
+        return categories;
     }
     
     

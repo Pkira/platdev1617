@@ -152,6 +152,18 @@ public class AdminController implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
     }
     
+    public void suspendUserAccount(){
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        ResultMessage result = adminFacade.SuspendAccount(userToEdit.getId());
+        
+        if(result != ResultMessage.AccountSuspended)
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+        else
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
+    }
+    
     public List<Category> getCategories()
     {
         FacesContext context = FacesContext.getCurrentInstance();
