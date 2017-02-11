@@ -15,7 +15,7 @@ public interface IItem {
     List<Item> SearchItem(String ItemName, String CategoryName);
     List<Item> ItemInSell(long UserId);
     List<Item> FollowItens(long UserId);
-    ResultMessage FollowItem(long ItemId, long UserId);
+    ResultMessage FollowItem(Long ItemId, Long UserId);
     ResultMessage CancelFollowItem(long ItemId, long UserId);
     List<Item> UserItems(long UserId);
     Item GetItemById(long ItemId);

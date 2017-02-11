@@ -122,6 +122,7 @@ public class UserFacade implements IUser {
         return user.getBalance();
     }
     
+    @Override
     public ResultMessage LoadBalance(double increment){
         
         if(increment > 0){

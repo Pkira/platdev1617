@@ -42,6 +42,7 @@ public class UserController implements Serializable {
     private int totaluseritemsprice;
     private List<Item> useritems;
 
+
     public UserController() {
         this.userid = 0;
         this.username = null;
@@ -68,7 +69,7 @@ public class UserController implements Serializable {
         
         ResultMessage result = userFacade.Login(username, password);
         
-        if(result.equals(ResultMessage.LoginSucess) || result.equals(ResultMessage.LoginAllreadyLogged))
+        if(result.equals(ResultMessage.LoginSucess))
             setIsLogged(true);
         else
         {
@@ -124,6 +125,18 @@ public class UserController implements Serializable {
         }
         
 
+    }
+    
+    public void FollowItem(long ItemId){
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        ResultMessage result = null;
+        try {
+            result = itemFacade.FollowItem( ItemId, userid);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR ", null));
+        }
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
     }
 
     public long getUserid() {

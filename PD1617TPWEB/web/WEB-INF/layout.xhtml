@@ -141,7 +141,7 @@
                                             <h:commandLink action="#{userController.logoff}" value="Sign Out" />
                                          
                                             <h:panelGroup rendered="#{!userController.isAdmin}"> 
-                                                <h:commandLink action="UserProfile" value="Profile" style="padding-left: 30px;"/>
+                                                <h:commandLink action="UserMessages" value="Messages" style="padding-left: 30px;"/>
                                             </h:panelGroup>
                                             
                                             <h:panelGroup rendered="#{userController.isAdmin}"> 
@@ -158,7 +158,7 @@
                                 <h:panelGroup rendered="#{!userController.isAdmin}"> 
                                     <div class="create_btn">
                                         <h:form>
-                                            <h:commandLink action="UserAuctions" value="MyAuctions" style="margin-left: 175px;"/>
+                                            <h:commandLink action="UserProfile" value="Profile" style="margin-left: 207px;"/>
                                         </h:form>
                                     </div>  
                                 </h:panelGroup>
@@ -190,34 +190,49 @@
                     </div>
                     
                     <h:panelGroup rendered="#{userController.isLogged}">
+                        
                         <ul class="megamenu skyblue">
                             <li class="active grid">
-
                                     <h:link outcome="index" value="HOME" styleClass="color1"/>
-
                             </li>
                             <li class="grid">
                                 <h:link outcome="AuctionList" styleClass="color2">
                                     Auctions
                                 </h:link>
-                            </li>	
-                            <li class="grid">
-                                <h:link outcome="UserItemsFollowing" styleClass="color3">
-                                    Items Following
-                                </h:link>
                             </li>
-                            <li class="grid">        
-                                <h:link outcome="UserItems" styleClass="color6">
-                                    My Items (<span>#{userController.totaluseritems}</span>)
-                                </h:link>                          
-                            </li>
-                            <li class="grid">
-                                <h:link outcome="UserItemsInAuction" styleClass="color5">
-                                    My Items in Auction
-                                </h:link>
-                            </li>
-
+                            
+                            <h:panelGroup rendered="#{!userController.isAdmin}">
+                                <li class="grid">
+                                    <h:link outcome="UserAuctions" styleClass="color7">
+                                        My Auctions
+                                    </h:link>
+                                </li>
+                                <li class="grid">
+                                    <h:link outcome="UserItemsFollowing" styleClass="color3">
+                                        Items Following
+                                    </h:link>
+                                </li>
+                                <li class="grid">        
+                                    <h:link outcome="UserItems" styleClass="color6">
+                                        My Items (<span>#{userController.totaluseritems}</span>)
+                                    </h:link>                          
+                                </li>
+                                <li class="grid">
+                                    <h:link outcome="UserItemsInAuction" styleClass="color5">
+                                        My Items in Auction
+                                    </h:link>
+                                </li>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup rendered="#{userController.isAdmin}">
+                                <li class="grid">
+                                    <h:link outcome="AdminCategories" styleClass="color3">
+                                        Categories
+                                    </h:link>
+                                </li>
+                            </h:panelGroup>
                         </ul> 
+                        
                     </h:panelGroup>
                 </div>
             </div>
@@ -241,6 +256,21 @@
         
         <div class="foot-top">
             <div class="container">
+                 <div class="col-md-6 s-c">
+                    <div class="stay">
+                       <!-- <div class="stay-left">
+                            <form>
+                                <input type="text" placeholder="Enter your email to join our newsletter" required="" />
+                            </form>
+                        </div>-->
+                        <div class="btn-1">
+                            <h:form>
+                                <h:commandButton action="Newsletter" value="Newsletter"/>
+                            </h:form>                            
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                </div>
                 <div class="col-md-6 s-c">
                     <li>
                         <div class="fooll">
@@ -261,21 +291,7 @@
                     </li>
                     <div class="clearfix"> </div>
                 </div>
-                <div class="col-md-6 s-c">
-                    <div class="stay">
-                        <div class="stay-left">
-                            <form>
-                                <input type="text" placeholder="Enter your email to join our newsletter" required="" />
-                            </form>
-                        </div>
-                        <div class="btn-1">
-                            <form>
-                                <input type="submit" value="join" />
-                            </form>
-                        </div>
-                        <div class="clearfix"> </div>
-                    </div>
-                </div>
+               
                 <div class="clearfix"> </div>
             </div>
         </div>

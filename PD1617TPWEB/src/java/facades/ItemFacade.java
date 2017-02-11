@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityTransaction;
 import utils.ResultMessage;
 
 
@@ -140,43 +141,53 @@ public class ItemFacade implements IItem {
     }
 
     @Override
-    public ResultMessage FollowItem(long ItemId, long UserId) {
+    public ResultMessage FollowItem(Long ItemId, Long UserId) {
         
         Item item = new Item();
         UserItem follow = new UserItem();
-        List<Item> following = FollowItens(UserId);
-        User user = new User();
+        User user = null;
         
-        if(!following.contains(ItemId))
+        try {
+            user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
+        } catch (Exception e) {
+            return ResultMessage.UserNotExist;
+        }
+        
+        List<UserItem> followingItens;
+        
+        try {
+            
+            followingItens = (List<UserItem>) dAO.getEntityManager().createNamedQuery("UserItem.findFolloingByUserId").setParameter("userid", UserId).getResultList();
+            
+        } catch (Exception e) {
+            followingItens = new ArrayList<UserItem>();
+        }
+        
+        if(followingItens.contains(ItemId))
         {
-            try{
-                user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
-            }catch(Exception e){
-                return ResultMessage.UserNotExist;
-            }
-            
-            try{
-                item = (Item)dAO.getEntityManager().createNamedQuery("Item.findById").setParameter("id", ItemId).getSingleResult();
-            }catch(Exception e){
-                return ResultMessage.ItemNotExist;
-            }
-            
-            if((item = GetItemById(ItemId)).getId() != null)
-            {
-                follow.setId((long)-1);
-                follow.setIsbuying(false);
-                follow.setIsfollowing(true);
-                follow.setIsselling(false);
-                follow.setItemid(item);
-                follow.setUserid(user);
-                dAO.getEntityManager().persist(follow);
-                return ResultMessage.FollowItemSucess;
-            }
-            else
-                return ResultMessage.ItemNotExist;
+            return ResultMessage.FollowItemAlreadyFollow;
+        }
+        
+        try{
+            item = (Item)dAO.getEntityManager().createNamedQuery("Item.findById").setParameter("id", ItemId).getSingleResult();
+        }catch(Exception e){
+            return ResultMessage.ItemNotExist;
+        }
+
+        if((item = GetItemById(ItemId)).getId() != null)
+        {
+            follow.setId((long)-1);
+            follow.setIsbuying(false);
+            follow.setIsfollowing(true);
+            follow.setIsselling(false);
+            follow.setItemid(item);
+            follow.setUserid(user);
+            dAO.getEntityManager().persist(follow);
+            return ResultMessage.FollowItemSucess;
         }
         else
-            return ResultMessage.FollowItemAlreadyFollow;
+            return ResultMessage.ItemNotExist;
+       
 
     }
     

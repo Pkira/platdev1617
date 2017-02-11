@@ -149,17 +149,6 @@ public class ItemController {
     public void setAuctionduration(long auctionduration) {
         this.auctionduration = auctionduration;
     }
-    
-    public void followItem(){
-        FacesContext context = FacesContext.getCurrentInstance();
-        ResultMessage result = null;
-        try {
-            result = itemFacade.FollowItem((long) 3, (long) 1);
-        } catch (Exception e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR ", null));
-        }
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
-    }
 
     
 }
