@@ -2,6 +2,7 @@
 package controllers;
 import entities.Category;
 import entities.Item;
+import facades.IAuction;
 import facades.IItem;
 import java.util.List;
 import javax.ejb.EJB;
@@ -18,6 +19,9 @@ public class ItemController {
 
     @EJB
     private IItem itemFacade;
+    
+    @EJB
+    private IAuction auctionFacade;
     
     private long id;
     private String name;
@@ -69,6 +73,24 @@ public class ItemController {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
             return;
         }
+        
+    }
+    
+     public String PutItemInAuction(long ItemId){
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        ResultMessage result = null;
+        try {
+            result = auctionFacade.CreateAuction(ItemId);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR ", null));
+        }
+        if(result == ResultMessage.AuctionCreated)
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
+        else
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+        
+        return "UserItems.xhtml";
         
     }
     

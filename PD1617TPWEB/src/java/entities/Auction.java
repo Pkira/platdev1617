@@ -40,7 +40,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Auction.findByAuctionstate", query = "SELECT a FROM Auction a WHERE a.auctionstate = :auctionstate"),
     @NamedQuery(name = "Auction.findByItemstate", query = "SELECT a FROM Auction a WHERE a.itemstate = :itemstate"),
     @NamedQuery(name = "Auction.findByStartdate", query = "SELECT a FROM Auction a WHERE a.startdate = :startdate"),
-    @NamedQuery(name = "Auction.findByEnddate", query = "SELECT a FROM Auction a WHERE a.enddate = :enddate")})
+    @NamedQuery(name = "Auction.findByEnddate", query = "SELECT a FROM Auction a WHERE a.enddate = :enddate"),
+    @NamedQuery(name = "Auction.findByItem", query = "SELECT a FROM Auction a WHERE a.itemid = :itemid"),        
+})
 public class Auction implements Serializable {
 
     private static final long serialVersionUID = 1L;
