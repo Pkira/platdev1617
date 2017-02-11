@@ -211,25 +211,45 @@ public class ItemFacade implements IItem {
     
     @Override
     public ResultMessage CancelFollowItem(long ItemId, long UserId) {
-        UserItem follow = new UserItem();
-        List<Item> following = FollowItens(UserId);
         
-        if(!following.contains(ItemId))
-        {
-            try{
-                follow = (UserItem) dAO.getEntityManager().createNamedQuery("UserItem.findFolloingByUserId").setParameter("userid", UserId).getSingleResult();
-            }catch(Exception e){
-                return ResultMessage.CancelFollowItemError;
-            }
-            
-            if(follow.getIsbuying() == true || follow.getIsselling() == true)
-                follow.setIsfollowing(false);
-            else
-                dAO.getEntityManager().remove(follow);
-            
-            return ResultMessage.CancelFollowItemSucess;
+        Item item = new Item();
+        UserItem follow = new UserItem();
+        User user = null;
+        
+        try {
+
+            user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
+    
+        } catch (Exception e) {
+            return ResultMessage.UserNotExist;
         }
         
+        List<UserItem> followingItens;
+        
+        try {
+            
+            followingItens = (List<UserItem>) dAO.getEntityManager().createNamedQuery("UserItem.findFolloingByUserId").setParameter("userid", user).getResultList();
+            
+        } catch (Exception e) {
+            followingItens = new ArrayList<UserItem>();
+        }
+        
+        for(UserItem i : followingItens)
+        {
+            if(i.getItemid().getId() == ItemId && i.getIsfollowing())
+            {
+                if(i.getIsbuying() || i.getIsselling())
+                {
+                    i.setIsfollowing(false);
+                    dAO.getEntityManager().persist(i);
+                    return ResultMessage.CancelFollowItemSucess;
+                }
+                
+                dAO.getEntityManager().remove(i);
+                return ResultMessage.CancelFollowItemSucess;
+            }
+        }
+
         return ResultMessage.CancelFollowItemAlreadyNotFollow;
     }
 
