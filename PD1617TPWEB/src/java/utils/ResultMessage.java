@@ -22,7 +22,7 @@ public enum ResultMessage {
     CreateItemSuccess("The was created with success"),
     CreateItemUnsuccess("The item creation have fail"),
     AuctionCreated("Auction created with success"),
-    AuctionNotCreated("You don´t have this Item or the Item does't exist"),
+    AuctionAlreadyCreated("The auction for this item is already occurring"),
     AccountActivated("Account successfully activated"),
     AccountAllreadyActivated("Account as allready Activated"),
     AccountNotActivated("Account not activated yet"),
