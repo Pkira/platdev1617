@@ -1,6 +1,7 @@
 
 package facades;
 
+import entities.Category;
 import entities.Notification;
 import entities.User;
 import java.util.ArrayList;
@@ -21,4 +22,8 @@ public interface IAdmin {
      User SeeUserProfile(long UserId);
      List<User> GetAllUsersToActivate();
      List<User> GetAllUsersSuspended();
+     List<Category> GetAllCategories();
+     ResultMessage UpdateCategory(long CategoryId, String CategoryName, String Description);
+     ResultMessage AddCategory(String CategoryName, String Description);
+     Category GetCategoryInfo(long CategoryId);
 }

@@ -140,15 +140,10 @@
                                         <h:form>                                         
                                             <h:commandLink action="#{userController.logoff}" value="Sign Out" />
                                          
-                                            <h:panelGroup rendered="#{!userController.isAdmin}"> 
+                                            
                                                 <h:commandLink action="UserMessages" value="Messages" style="padding-left: 30px;"/>
-                                            </h:panelGroup>
-                                            
-                                            <h:panelGroup rendered="#{userController.isAdmin}"> 
-                                                <h:commandLink action="AdminOptions" value="Admin Page" style="padding-left: 30px;"/>
-                                            </h:panelGroup>
-                                            
-                                            
+                                        
+                                                                               
                                         </h:form>                 
                                     </div>
                                         
@@ -228,6 +223,11 @@
                                 <li class="grid">
                                     <h:link outcome="AdminCategories" styleClass="color3">
                                         Categories
+                                    </h:link>
+                                </li>
+                                <li class="grid">
+                                    <h:link outcome="AdminOptions" styleClass="color5">
+                                        Users
                                     </h:link>
                                 </li>
                             </h:panelGroup>

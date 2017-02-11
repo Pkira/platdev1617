@@ -32,18 +32,24 @@ public enum ResultMessage {
     AccountReActivated("Account re-activated"),
     AccountPasswordChanged("Password changed successfully"),
     AccountPasswordNotChanged("An error occur, password not changed"),
-    AccountReactivation("The request for the account reactivation was sent to the Admin, please wait a while."),
+    AccountReactivation("The request for the account reactivation was sent to the Admin, please wait a while"),
     AccountReactivationFail("This accout is not suspend"),
     AccountReactivationNoUser("This account doesn't exist"),
     FollowItemSucess("Item added to the follow list with sucess!"),
-    FollowItemAlreadyFollow("You already follow this Item or this Item is yours."),
-    ItemNotExist("The indicated item does not exist."),
-    UserNotExist("The indicated user does not exist."),
-    CancelFollowItemSucess("The item was successfuly removed from the follow list."),
-    CancelFollowItemAlreadyNotFollow("You don't follow the indicated Item."),
-    CancelFollowItemError("Some error have ocurred during the procedure, please try again later."),
-    ReportSuccess("The report was sended to the administrator."),
-    ReportInsuccess("The report can't be made, please make sure that you have insert the right information.");
+    FollowItemAlreadyFollow("You already follow this Item or this Item is yours"),
+    ItemNotExist("The indicated item does not exist"),
+    UserNotExist("The indicated user does not exist"),
+    CancelFollowItemSucess("The item was successfuly removed from the follow list"),
+    CancelFollowItemAlreadyNotFollow("You don't follow the indicated Item"),
+    CancelFollowItemError("Some error have ocurred during the procedure, please try again later"),
+    CategoriesNotFound("Unable to get categories info"),
+    CategoryAdded("New category added with sucess"),
+    CategoryUpdated("Category updated with sucess"),
+    CategoryErrorAdd("Error when trying to add new category"),
+    CategoryAllreadyExists("An category with the name choosen allready exists"),
+    CategoryErrorUpdate("Error when trying to updated category"),
+    ReportSuccess("The report was sended to the administrator"),
+    ReportInsuccess("The report can't be made, please make sure that you have insert the right information");
     
     
     private String Message;

@@ -1,6 +1,7 @@
 
 package controllers;
 
+import entities.Category;
 import entities.Notification;
 import entities.User;
 import facades.IAdmin;
@@ -30,6 +31,10 @@ public class AdminController implements Serializable {
     private IUser userFacade;
     
     private User userToEdit;
+    
+    private long categoryid;
+    private String categoryname;
+    private String categorydescription;
 
     public AdminController() {       
         
@@ -124,6 +129,17 @@ public class AdminController implements Serializable {
         return "AdminChangeUserInfo.xhtml";
     }
     
+    public String changeCategoryInfo(long CategoryId){
+        
+        Category category = adminFacade.GetCategoryInfo(CategoryId);
+        
+        this.categoryid = category.getId();
+        this.categoryname = category.getName();
+        this.categorydescription = category.getDescription();
+        
+        return "AdminCategoryDetails.xhtml";
+    }
+    
     public void updateUserProfile(){
         
         FacesContext context = FacesContext.getCurrentInstance();
@@ -135,6 +151,71 @@ public class AdminController implements Serializable {
         else
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
     }
+    
+    public List<Category> getCategories()
+    {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        List<Category> categories = null;
+        
+        try {
+            categories = adminFacade.GetAllCategories();
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ResultMessage.CategoriesNotFound.Message(), null));
+        }
+        
+        return categories;
+    }
+    
+    public void addNewCategory(){
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        try {
+            
+            ResultMessage result = adminFacade.AddCategory(categoryname, categorydescription);
+            
+            if(result != ResultMessage.CategoryAdded)
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+            
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ResultMessage.CategoryErrorAdd.Message(), null));
+        }
+        
+        this.categoryid = 0;
+        this.categoryname = null;
+        this.categorydescription = null;
+
+    }
+    
+     public String updateCategory(){
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        try {
+            
+            ResultMessage result = adminFacade.UpdateCategory(categoryid,categoryname, categorydescription);
+            
+            if(result != ResultMessage.CategoryUpdated)
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+            else
+            {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));                
+            }
+                
+            
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ResultMessage.CategoryAllreadyExists.Message(), null));
+        }
+        
+        this.categoryid = 0;
+        this.categoryname = null;
+        this.categorydescription = null;
+        
+        
+        return "AdminCategories.xhtml";
+
+    }
 
     public User getUserToEdit() {
         return userToEdit;
@@ -142,6 +223,30 @@ public class AdminController implements Serializable {
 
     public void setUserToEdit(User userToEdit) {
         this.userToEdit = userToEdit;
+    }
+
+    public long getCategoryid() {
+        return categoryid;
+    }
+
+    public void setCategoryid(long categoryid) {
+        this.categoryid = categoryid;
+    }
+
+    public String getCategoryname() {
+        return categoryname;
+    }
+
+    public void setCategoryname(String categoryname) {
+        this.categoryname = categoryname;
+    }
+
+    public String getCategorydescription() {
+        return categorydescription;
+    }
+
+    public void setCategorydescription(String categorydescription) {
+        this.categorydescription = categorydescription;
     }
     
     

@@ -1,6 +1,7 @@
 package facades;
 
 import controllers.IDAO;
+import entities.Category;
 import entities.Notification;
 import entities.User;
 import java.util.ArrayList;
@@ -196,6 +197,7 @@ public class AdminFacade implements IAdmin {
 
     }
     
+    @Override
     public List<User> GetAllUsersToActivate()
     {
         List<User> users = null;
@@ -209,6 +211,7 @@ public class AdminFacade implements IAdmin {
         return users;
     }
     
+    @Override
     public List<User> GetAllUsersSuspended()
     {
         
@@ -221,5 +224,95 @@ public class AdminFacade implements IAdmin {
         }
         
         return users;
+    }
+    
+    @Override
+    public List<Category> GetAllCategories(){
+    
+        List<Category> categories = null;
+        
+        try {
+            categories = dAO.getEntityManager().createNamedQuery("Category.findAll").getResultList();
+        } catch (Exception e) {
+            return new ArrayList<Category>();
+        }
+        
+        return categories;
+    }
+    
+    @Override
+    public Category GetCategoryInfo(long CategoryId){
+    
+        Category category = null;
+        
+        try {
+            category =  (Category)dAO.getEntityManager().createNamedQuery("Category.findById").setParameter("id", CategoryId).getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+        
+        return category;
+    }
+    
+    @Override
+    public ResultMessage UpdateCategory(long CategoryId, String CategoryName, String Description){
+    
+        Category category = null;
+        
+        try {
+            category = (Category) dAO.getEntityManager().createNamedQuery("Category.findById").setParameter("id", CategoryId).getSingleResult();
+        } catch (Exception e) {
+            return ResultMessage.CategoryErrorUpdate;
+        }
+        
+        List<Category> categories = null;
+        try {
+            categories = (List<Category>) dAO.getEntityManager().createNamedQuery("Category.findByName").setParameter("name", CategoryName).getResultList();
+        } catch (Exception e) {
+            return ResultMessage.CategoryErrorAdd;
+        }
+        
+        if(categories != null && categories.size() > 1)
+            return ResultMessage.CategoryAllreadyExists;
+        
+        category.setName(CategoryName);
+        category.setDescription(Description);
+        
+        try {
+            dAO.getEntityManager().persist(category);
+        } catch (Exception e) {
+            return ResultMessage.CategoryErrorUpdate;
+        }
+        
+        return ResultMessage.CategoryUpdated;
+    }
+    
+    @Override
+    public ResultMessage AddCategory(String Name, String Description){
+    
+        Category category = null;
+        
+        try {
+            category = (Category) dAO.getEntityManager().createNamedQuery("Category.findByName").setParameter("name", Name).getSingleResult();
+        } 
+        catch (Exception e) {
+            
+        }
+        
+        if(category != null)
+            return ResultMessage.CategoryAllreadyExists;
+        
+        category = new Category();
+        category.setId((long) -1);
+        category.setName(Name);
+        category.setDescription(Description);
+        
+        try {
+            dAO.getEntityManager().persist(category);
+        } catch (Exception e) {
+            return ResultMessage.CategoryErrorAdd;
+        }
+        
+        return ResultMessage.CategoryAdded;
     }
 }
