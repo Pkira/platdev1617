@@ -1,7 +1,9 @@
 
 package controllers;
+import entities.Category;
 import entities.Item;
 import facades.IItem;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -19,7 +21,7 @@ public class ItemController {
     
     private long id;
     private String name;
-    private String category;
+    private long categoryid;
     private String description;
     private double price;
     private double buynow;
@@ -38,7 +40,7 @@ public class ItemController {
         
         this.id = item.getId();
         this.name = item.getName();
-        this.category = item.getCategoryid().getName();
+        this.categoryid = 0;
         this.description = item.getDescription();
         this.price = item.getStartprice();
         this.buynow = item.getBuynowprice();
@@ -60,7 +62,7 @@ public class ItemController {
         
         FacesContext context = FacesContext.getCurrentInstance();
        
-        ResultMessage result = itemFacade.CreateItem(this.ownerid, this.name, this.category, this.description, this.price,this.buynow, this.auctionduration, this.image);
+        ResultMessage result = itemFacade.CreateItem(this.ownerid, this.name, this.categoryid, this.description, this.price,this.buynow, this.auctionduration, this.image);
         
         if(result != ResultMessage.CreateItemSuccess)
         {
@@ -68,6 +70,13 @@ public class ItemController {
             return;
         }
         
+    }
+    
+    public List<Category> getCategories(){
+        
+        List<Category> categories = itemFacade.GetAllCategories();
+        
+        return categories;
     }
     
     public long getId() {
@@ -86,12 +95,12 @@ public class ItemController {
         this.name = name;
     }
 
-    public String getCategory() {
-        return category;
+    public long getCategoryid() {
+        return categoryid;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategoryid(long category) {
+        this.categoryid = category;
     }
 
     public String getDescription() {

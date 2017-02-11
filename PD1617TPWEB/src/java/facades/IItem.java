@@ -1,6 +1,7 @@
 
 package facades;
 
+import entities.Category;
 import entities.Item;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import utils.ResultMessage;
 @LocalBean
 public interface IItem {
     
-    ResultMessage CreateItem(long UserId, String Name, String Category, String Desc, double Price, double BuyNow, long AuctionDuration, String Image);
+    ResultMessage CreateItem(long UserId, String Name, long Category, String Desc, double Price, double BuyNow, long AuctionDuration, String Image);
     List<Item> SearchItem(String ItemName, String CategoryName);
     List<Item> ItemInSell(long UserId);
     List<Item> FollowItens(long UserId);
@@ -19,4 +20,5 @@ public interface IItem {
     ResultMessage CancelFollowItem(long ItemId, long UserId);
     List<Item> UserItems(long UserId);
     Item GetItemById(long ItemId);
+    List<Category> GetAllCategories();
 }

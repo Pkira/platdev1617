@@ -31,7 +31,7 @@
                                                 <h:inputText id="itemname"
                                                              value="#{itemController.name}"
                                                              required="true"
-                                                             requiredMessage="Falta o nome"/>
+                                                             requiredMessage="Write an name for the item first"/>
                                             </label>
                                         </div>
                                         
@@ -39,8 +39,8 @@
                                             <label>
                                                 <h:outputLabel value="Category:" for="category" />
                                                 
-                                                <h:selectOneMenu value="#{bean.name}">
-                                                    <f:selectItems value="#{bean.names}" />
+                                                <h:selectOneMenu value="#{itemController.categoryid}">
+                                                    <f:selectItems value="#{itemController.categories}" var="cat" itemValue="#{cat.id}" itemLabel="#{cat.name}"/>
                                                 </h:selectOneMenu>
                                             </label>
                                         </div>
@@ -51,7 +51,7 @@
                                                 <h:inputText id="description"
                                                              value="#{itemController.description}"
                                                              required="true"
-                                                             requiredMessage="Falta a description"/>
+                                                             requiredMessage="Write an description first"/>
                                             </label>
                                         </div>
                                         
@@ -61,7 +61,12 @@
                                                 <h:inputText id="price"
                                                              value="#{itemController.price}"
                                                              required="true"
-                                                             requiredMessage="Falta o price"/>
+                                                             requiredMessage="Choose one price for the item" 
+                                                             converterMessage="Please enter digits only."
+                                                             validatorMessage="The price should be higher than 1"
+                                                             >
+                                                    <f:validateLongRange minimum="1" />
+                                                </h:inputText>
                                             </label>
                                         </div>
                                         
@@ -71,7 +76,12 @@
                                                 <h:inputText id="buynow"
                                                              value="#{itemController.buynow}"
                                                              required="true"
-                                                             requiredMessage="Falta o buy now price"/>
+                                                             requiredMessage="Choose an buy now price" 
+                                                             converterMessage="Please enter digits only."
+                                                             validatorMessage="The buy now price should be higher than 1"
+                                                             >
+                                                    <f:validateLongRange minimum="1" />
+                                                </h:inputText>
                                             </label>
                                         </div>
                                         
@@ -81,7 +91,12 @@
                                                 <h:inputText id="auctionduration"
                                                              value="#{itemController.auctionduration}"
                                                              required="true"
-                                                             requiredMessage="Falta o Auction Duration"/>
+                                                             requiredMessage="Choose a Auction Duration in hours" 
+                                                             converterMessage="Please enter digits only."
+                                                             validatorMessage="The auction duration should be higher than 1"
+                                                             >
+                                                    <f:validateLongRange minimum="1"/>
+                                                </h:inputText>
                                             </label>
                                         </div>
                                         
@@ -91,7 +106,7 @@
                                                 <h:inputText id="newimage"
                                                              value="#{itemController.image}"
                                                              required="true"
-                                                             requiredMessage="Falta a image"
+                                                             requiredMessage="Please choose a image first"
                                                              onchange="GetPreview();"
                                                              />
                                                 
