@@ -136,7 +136,27 @@ public class UserController implements Serializable {
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR ", null));
         }
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
+        if(result == ResultMessage.FollowItemSucess)
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
+        else
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+        
+        return "UserItems.xhtml";
+    }
+    
+    public String CancelFollowItem(long ItemId){
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        ResultMessage result = null;
+        try {
+            result = itemFacade.CancelFollowItem( ItemId, userid);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", null));
+        }
+        if(result == ResultMessage.CancelFollowItemSucess)
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
+        else
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
         
         return "UserItems.xhtml";
     }
