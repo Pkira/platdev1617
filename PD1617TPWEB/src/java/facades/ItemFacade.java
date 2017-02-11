@@ -127,8 +127,19 @@ public class ItemFacade implements IItem {
         
         HashMap<Long,Item> items = new HashMap<>();
         List<UserItem> followingItens = new ArrayList();
+        
+        User user = null;
+        
         try {
-            followingItens = (List<UserItem>) dAO.getEntityManager().createNamedQuery("UserItem.findFolloingByUserId").setParameter("userid", UserId).getResultList();
+
+            user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
+    
+        } catch (Exception e) {
+            return new ArrayList<Item>();
+        }
+        
+        try {
+            followingItens = (List<UserItem>) dAO.getEntityManager().createNamedQuery("UserItem.findFolloingByUserId").setParameter("userid", user).getResultList();
         } catch (Exception e) {
             return new ArrayList<Item>(items.values());
         }

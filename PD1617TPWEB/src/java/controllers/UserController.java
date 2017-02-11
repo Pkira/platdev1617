@@ -140,6 +140,21 @@ public class UserController implements Serializable {
         
         return "UserItems.xhtml";
     }
+    
+    public List<Item> getFollowingItems(){
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        List<Item> items = null;
+        
+        try {
+            items = itemFacade.FollowItens(userid);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error getting following items ", null));
+        }
+        
+        return items;
+    }
 
     public long getUserid() {
         return userid;
