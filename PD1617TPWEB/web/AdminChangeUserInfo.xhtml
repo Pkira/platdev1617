@@ -41,11 +41,21 @@
                                                 <h:outputLabel id="balance"
                                                                value="#{adminController.userToEdit.balance}" />
                                             </label>
-                                        </div>
-                                        <div>                                       
-                                            <h:commandButton action="#{adminController.updateUserProfile}" value="Update Profile"/>
-                                        </div>
+                                        </div>                                     
 
+                                    </h:form>
+                                    
+                                    <h:form>
+                                        
+                                         <div class="row">    
+                                            <div class="col-md-4">
+                                                <h:commandButton action="#{adminController.updateUserProfile}" value="Update Profile"/>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h:commandButton action="#{adminController.suspendUserAccount}" value="Suspend Account"/>
+                                            </div>
+                                        </div>
+                                        
                                     </h:form>
                                     
                                 </div>
