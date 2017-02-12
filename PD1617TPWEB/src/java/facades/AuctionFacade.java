@@ -163,6 +163,8 @@ public class AuctionFacade implements IAuction {
             String text = "The item "  + item.getId() + " - " + item.getName() + " has been binding";
             InsertLog(auction, text);
           
+            UpdateUseritemBid(item);
+            
             return ResultMessage.BidSuccess;
           }
           
@@ -191,6 +193,11 @@ public class AuctionFacade implements IAuction {
               return ResultMessage.UserNotExist;
           }
           Item item = auction.getItemid();
+          
+          User seller = new User();
+          
+          seller = item.getOwnerid();
+          
           // Fazer verificação se o valor licitado é superior ao atual
           if(item.getBuynowprice() <= value && value <= user.getBalance()){
             
@@ -202,18 +209,23 @@ public class AuctionFacade implements IAuction {
           
             WarningItemChanges(item, "The item " + item.getId() + " - " + item.getName() + " have been selled.");
             dAO.getEntityManager().persist(auction);
-          
+            
             item.setOwnerid(user);
             dAO.getEntityManager().persist(item);
             
             user.setBalance(user.getBalance() - value);
             dAO.getEntityManager().persist(user);
             
+            seller.setBalance(seller.getBalance() + value);
+            dAO.getEntityManager().persist(seller);
+            
             String text = "The item "  + item.getId() + " - " + item.getName() + " has been selled";
             InsertLog(auction, text);
           
             text = "The auction "  + auction.getId() + " have finished";
             InsertLog(auction, text);
+            
+            UpdateUseritemBuy(item);
           
             return ResultMessage.BuyNowSuccess;
           }
@@ -263,6 +275,83 @@ public class AuctionFacade implements IAuction {
               }
           }
           
+          
+      }
+    
+    private void UpdateUseritemBuy(Item item){
+          
+        List<UserItem> userItem = new ArrayList();
+        UserItem seller = new UserItem();
+        
+        try{
+            userItem = dAO.getEntityManager().createNamedQuery("UserItem.findByIsbuyingAndItemId").setParameter("itemid", item).getResultList();
+        }catch(Exception e){
+            
+        }
+        
+        for(UserItem i : userItem){
+            
+            if(i.getIsfollowing()){
+                i.setIsbuying(false);
+                dAO.getEntityManager().persist(i);
+            }
+            
+            if(!i.getIsfollowing()){
+                dAO.getEntityManager().remove(i);
+            }                
+        }
+        
+        try{
+            seller = (UserItem) dAO.getEntityManager().createNamedQuery("UserItem.findSellingByUserId").setParameter("itemid", item).getSingleResult();
+        }catch(Exception ex){
+            
+        }
+        
+        seller.setIsselling(false);
+        
+        dAO.getEntityManager().persist(seller);
+          
+      }
+    
+    private void UpdateUseritemBid(Item item){
+          
+        List<UserItem> userItem = new ArrayList();
+        User buying = new User();
+        boolean flag = false;
+        
+        try{
+            userItem = dAO.getEntityManager().createNamedQuery("UserItem.findByItemId").setParameter("itemid", item).getResultList();
+        }catch(Exception e){
+            
+        }
+        
+        for(UserItem i : userItem){
+            
+            if(i.getUserid() == buying){
+                if(!i.getIsbuying()){
+                    i.setIsbuying(true);
+                    dAO.getEntityManager().persist(i);
+                }
+                flag = true;
+            }               
+        }
+        
+        
+        
+        if(!flag){
+            
+            UserItem isBuy = new UserItem();
+            
+            isBuy.setCreationdate(new Date());
+            isBuy.setId((long)-1);
+            isBuy.setIsbuying(true);
+            isBuy.setIsfollowing(false);
+            isBuy.setIsselling(false);
+            isBuy.setItemid(item);
+            isBuy.setUserid(buying);
+            
+            dAO.getEntityManager().persist(isBuy);
+        }
           
       }
 }
