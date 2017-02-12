@@ -62,14 +62,14 @@
                                             </div>
 
                                             <div class="btn_form">
-                                                <a href="#">Start new Auction</a>
+                                                <h:commandLink action="#{userController.FollowItem(itemController.id)}" value="Add to favorites">
+                                                    <f:param name="ItemId" value="#{itemController.id}" />
+                                                </h:commandLink>
                                             </div>
                                             
                                             <h:inputHidden id="ItemId" value="#{itemController.id}" />
                                             
-                                            <h:commandLink action="#{userController.FollowItem(itemController.id)}" value="Add to favorites">
-                                                <f:param name="ItemId" value="#{itemController.id}" />
-                                            </h:commandLink>
+                                            
                                      
 
                                         </div>

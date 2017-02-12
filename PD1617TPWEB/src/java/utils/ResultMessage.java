@@ -37,7 +37,7 @@ public enum ResultMessage {
     AccountReactivationFail("This accout is not suspend"),
     AccountReactivationNoUser("This account doesn't exist"),
     FollowItemSucess("Item added to the follow list with sucess!"),
-    FollowItemAlreadyFollow("You already follow this Item or this Item is yours"),
+    FollowItemAlreadyFollow("You already follow this Item"),
     ItemNotExist("The indicated item does not exist"),
     UserNotExist("The indicated user does not exist"),
     CancelFollowItemSucess("The item was successfuly removed from the follow list"),

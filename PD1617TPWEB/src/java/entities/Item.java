@@ -39,7 +39,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Item.findByImage", query = "SELECT i FROM Item i WHERE i.image = :image"),
     @NamedQuery(name = "Item.findByCategory", query = "SELECT i FROM Item i INNER JOIN i.categoryid c WHERE c.name like :name"),
     @NamedQuery(name = "Item.findByOwnerId", query = "SELECT i FROM Item i WHERE i.ownerid = :ownerid"),
-    @NamedQuery(name = "Item.findByOwnerAndId", query = "SELECT i FROM Item i WHERE i.ownerid = :ownerid and i.id = :id")
+    @NamedQuery(name = "Item.findByOwnerAndId", query = "SELECT i FROM Item i WHERE i.ownerid = :ownerid and i.id = :id"),
+    @NamedQuery(name = "Item.findByOwnerIdNotInSell", query = "SELECT i FROM Item i WHERE i.ownerid = :ownerid AND i NOT in ( SELECT ui.itemid FROM UserItem ui WHERE ui.itemid = i)"),
 })
 public class Item implements Serializable {
 

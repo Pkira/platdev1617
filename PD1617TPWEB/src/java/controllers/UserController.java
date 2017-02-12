@@ -142,7 +142,7 @@ public class UserController implements Serializable {
         else
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
         
-        return "UserItems.xhtml";
+        return "UserItemsFollowing.xhtml";
     }
     
     public String CancelFollowItem(long ItemId){

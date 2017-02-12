@@ -1,7 +1,9 @@
 
 package controllers;
 
+import entities.Auction;
 import facades.IAuction;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -20,6 +22,11 @@ public class AuctionController {
 
     public AuctionController() {
         
+    }
+    
+    public List<Auction> getAll()
+    {
+        return null;
     }
     
     public String BidItem (){
