@@ -14,6 +14,7 @@ import java.util.List;
 import entities.User;
 import facades.IItem;
 import facades.IUser;
+import java.util.ArrayList;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import utils.ResultMessage;
@@ -171,6 +172,21 @@ public class UserController implements Serializable {
             items = itemFacade.FollowItens(userid);
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error getting following items ", null));
+        }
+        
+        return items;
+    }
+    
+    public List<Item> getOnAuctionItems(){
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        List<Item> items = new ArrayList<Item>();
+        
+        try {
+            items = itemFacade.ItemInSell(userid);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error getting in sell items ", null));
         }
         
         return items;

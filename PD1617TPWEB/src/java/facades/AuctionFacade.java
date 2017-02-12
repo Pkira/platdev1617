@@ -45,7 +45,7 @@ public class AuctionFacade implements IAuction {
     }
     
     @Override
-    public ResultMessage CreateAuction(Long ItemId){
+    public ResultMessage CreateAuction(long ItemId){
        
         //get Item from BD
 
@@ -57,78 +57,92 @@ public class AuctionFacade implements IAuction {
         }catch(Exception e){
             return ResultMessage.ItemNotExist;
         }
-        
-        Auction auction = new Auction();
-        
-        //verify if already exist a auction for this item
+
+        List<Auction> allreadyexists = null;
         try{
-            auction = (Auction) dAO.getEntityManager().createNamedQuery("Auction.findByItem").setParameter("itemid", item).getSingleResult();
+            allreadyexists = dAO.getEntityManager().createNamedQuery("Auction.findByItem").setParameter("itemid", item).getResultList();
         }catch(Exception e){
+            return ResultMessage.AuctionNotCreated; 
         }
-        if(auction.getId() == null || (auction.getEnddate().before(new Date()))){
-            // if not create the auction.
-            auction.setId((long)-1);
-            auction.setItemid(item);
-            auction.setItemstate(0);
-            auction.setAuctionstate(1);
-            auction.setLastbid(item.getStartprice());
+        
+        if(!allreadyexists.isEmpty())
+            return ResultMessage.AuctionAlreadyCreated;
 
-            Date enddate = new Date();        
-            Calendar c = Calendar.getInstance();
-            c.setTime(enddate);
-            c.add(Calendar.DATE, (int) item.getAuctionduration());
-            enddate = c.getTime();
-            auction.setEnddate(enddate);
-            
-            User user = null;
-            
-            try {
 
-                user = item.getOwnerid();
+        Auction auction = new Auction();
+        auction.setId((long)-1);
+        auction.setItemid(item);
+        auction.setItemstate(0);
+        auction.setAuctionstate(1);
+        auction.setLastbid(item.getStartprice());
+        auction.setLastuserid(null);
+        auction.setStartdate(new Date());
+        
+        Date enddate = new Date();        
+        Calendar c = Calendar.getInstance();
+        c.setTime(enddate);
+        c.add(Calendar.HOUR, (int) item.getAuctionduration());
+        enddate = c.getTime();
+        auction.setEnddate(enddate);
+        
 
-            } catch (Exception ex) {
-                return ResultMessage.UserNotExist;
-            }
-            
-            Newsletter.addNewsletterItem("New Auction created: Id[" + auction.getId() + "]");
+        User user = null;
 
+        try {
+
+            user = item.getOwnerid();
+
+        } catch (Exception ex) {
+            return ResultMessage.UserNotExist;
+        }
+
+        try {
+            Newsletter.addNewsletterItem("New Auction created with the item: " + item.getName());
+        } catch (Exception e) {
+            return ResultMessage.AuctionNotCreated; 
+        }
+
+        try {
             dAO.getEntityManager().persist(auction);
-            
-            WarningItemChanges(item, "The item " + item.getId() + " - " + item.getName() + " has been put to sale in a auction");
-            
-            UserItem userItem = new UserItem();
+        } catch (Exception e) {
+            return ResultMessage.AuctionNotCreated; 
+        }
 
-            try {
+        WarningItemChanges(item, "The item " + item.getId() + " - " + item.getName() + " has been put to sale in a auction");
 
-                userItem = (UserItem) dAO.getEntityManager().createNamedQuery("UserItem.findByUserIdAndItemId").setParameter("userid", user).setParameter("itemid", item).getSingleResult();
+        UserItem userItem = new UserItem();
 
-            } catch (Exception exc) {
-            }
-            
-            if(userItem.getId() == null){                
-                
-                userItem.setId((long) -1);
-                userItem.setIsbuying(false);
-                userItem.setIsfollowing(false);
-                userItem.setIsselling(true);
-                userItem.setItemid(item);
-                userItem.setUserid(user);
-                userItem.setCreationdate(new Date());
-                
-                dAO.getEntityManager().persist(userItem);
-                return ResultMessage.AuctionCreated;
-            }
+        try {
 
+            userItem = (UserItem) dAO.getEntityManager().createNamedQuery("UserItem.findByUserIdAndItemId").setParameter("userid", user).setParameter("itemid", item).getSingleResult();
+
+        } catch (Exception exc) {
+        }
+
+        if(userItem.getId() == null){                
+
+            userItem.setId((long) -1);
+            userItem.setIsbuying(false);
+            userItem.setIsfollowing(false);
             userItem.setIsselling(true);
+            userItem.setItemid(item);
+            userItem.setUserid(user);
+            userItem.setCreationdate(new Date());
+
             dAO.getEntityManager().persist(userItem);
             return ResultMessage.AuctionCreated;
         }
-                
-        return ResultMessage.AuctionAlreadyCreated;
+
+        userItem.setIsselling(true);
+        dAO.getEntityManager().persist(userItem);
+        return ResultMessage.AuctionCreated;
+
+
+        
     }
       
     @Override
-    public ResultMessage BidItem(Long UserId, Long value, Long AuctionId){
+    public ResultMessage BidItem(long UserId, long value, long AuctionId){
           
           Auction auction = new Auction();
           
@@ -172,7 +186,7 @@ public class AuctionFacade implements IAuction {
       }
     
     @Override
-    public ResultMessage BuyNowItem(Long UserId, Long value, Long AuctionId){
+    public ResultMessage BuyNowItem(long UserId, long value, long AuctionId){
           
           Auction auction = new Auction();
           

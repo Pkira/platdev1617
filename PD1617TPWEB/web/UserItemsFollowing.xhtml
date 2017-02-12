@@ -26,28 +26,36 @@
                                 
                            
                                     <h:form>
-                                        <h:commandLink action="#{userController.CancelFollowItem(item.id)}">
+                                        
+                                        <h:commandLink action="#{userController.CancelFollowItem(item.id)}" title="Remove from favorites">
                                             <div class="close1"> </div>
                                         </h:commandLink>
-                                    </h:form>
 
+                                        <div class="cart-sec simpleCart_shelfItem">
 
-                                    <div class="cart-sec simpleCart_shelfItem">
+                                                <div class="cart-item cyc">
+                                                    <h:commandLink action="#{itemController.ShowDetails(item.id)}">
+                                                        <img src="#{item.image}" class="img-responsive" alt=""/>
+                                                    </h:commandLink>
+                                                </div>
+                                                <div class="cart-item-info">
+                                                    <h3>
+                                                        <h:commandLink action="#{itemController.ShowDetails(item.id)}">
+                                                            #{item.name}
+                                                        </h:commandLink>
+                                                        <span>Category: #{item.categoryid.name}</span>
+                                                    </h3>
 
-                                            <div class="cart-item cyc">
-                                                <img src="#{item.image}" class="img-responsive" alt=""/>
-                                            </div>
-                                            <div class="cart-item-info">
-                                                <h3><a href="#">#{item.name}</a><span>Category: #{item.categoryid.name}</span></h3>
+                                                     <div class="delivery">
+                                                         <p>Price : #{item.startprice}</p>
+                                                     <div class="clearfix"></div>
+                                                     </div>	
+                                                </div>
+                                                <div class="clearfix"></div>
 
-                                                 <div class="delivery">
-                                                     <p>Price : #{item.startprice}</p>
-                                                 <div class="clearfix"></div>
-                                                 </div>	
-                                            </div>
-                                            <div class="clearfix"></div>
-
-                                     </div>
+                                         </div>
+                                        
+                                     </h:form>
                                 </div>
                                 
                             </c:forEach>

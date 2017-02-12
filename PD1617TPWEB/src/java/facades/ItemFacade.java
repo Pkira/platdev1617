@@ -106,13 +106,28 @@ public class ItemFacade implements IItem {
     
     @Override
     public List<Item> ItemInSell(long UserId){
+       
+        User user = null;
+        
+        try {
+            user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
         
         HashMap<Long,Item> items = new HashMap<>();
         
-        for(Item i : (List<Item>)dAO.getEntityManager().createNamedQuery("Item.findSellingItems").setParameter("userid", UserId).getResultList())
+        List<UserItem> itemsBD = null;
+        try {
+            itemsBD = (List<UserItem>) dAO.getEntityManager().createNamedQuery("UserItem.findSellingByUserId").setParameter("userid", user).getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+        
+        for(UserItem i : itemsBD)
         {
-            if(!items.containsKey(i.getId()))
-                items.put(i.getId(), i);
+            if(!items.containsKey(i.getItemid().getId()))
+                items.put(i.getItemid().getId(), i.getItemid());
         }
         
         return new ArrayList<Item>(items.values());

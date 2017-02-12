@@ -76,7 +76,7 @@ public class ItemController {
         
     }
     
-     public String PutItemInAuction(long ItemId){
+     public String AddItemToAuction(long ItemId){
         
         FacesContext context = FacesContext.getCurrentInstance();
         ResultMessage result = null;
@@ -86,11 +86,16 @@ public class ItemController {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR ", null));
         }
         if(result == ResultMessage.AuctionCreated)
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
+        {
+            return "UserItemsInAuction.xhtml";
+        }
         else
+        {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+            return null;
+        }
         
-        return "UserItems.xhtml";
+        
         
     }
     

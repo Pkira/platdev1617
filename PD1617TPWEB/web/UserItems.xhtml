@@ -14,7 +14,7 @@
                 
                 <div class="container">
                     <div class="women_main">
-                   
+                        
                         <div class="col-md-3 s-d">
                             <h:form>
                                 <h:commandLink styleClass="continue" action="#{itemController.AddNewItem(userController.userid)}">
@@ -23,21 +23,21 @@
                                 </h:commandLink>
                             </h:form>
                             <div class="price-details">
-                                    <h3>Items Details</h3>
-                                    <span>Items</span>
-                                    <span class="total1">#{userController.totaluseritems}</span>
-                                    <div class="clearfix"></div>				 
+                                <h3>Items Details</h3>
+                                <span>Items</span>
+                                <span class="total1">#{userController.totaluseritems}</span>
+                                <div class="clearfix"></div>				 
                             </div>	
                             <ul class="total_price">
-                              <li class="last_price"> <h4>TOTAL</h4></li>	
-                              <li class="last_price"><span>#{userController.totaluseritemsprice} $</span></li>
-                              <div class="clearfix"> </div>
+                                <li class="last_price"> <h4>TOTAL</h4></li>	
+                                <li class="last_price"><span>#{userController.totaluseritemsprice} $</span></li>
+                                <div class="clearfix"> </div>
                             </ul>
-
-
+                            
+                            
                             <div class="clearfix"></div>
                         </div>
-                      
+                        
                         <div class="col-md-9 w_content">
                             <div class="women">
                                 <a href="#"><h4><span>My Items</span> </h4></a>
@@ -50,55 +50,75 @@
                                 
                                 <c:forEach var="item" items="#{userController.useritems}">
                                     
-                                  <c:set var="count" value="${count + 1}" scope="view"/>
-                                  
-                                  <c:choose>
-                                      
-                                    <c:when test="#{count % 4 eq 0}">
+                                    <c:set var="count" value="${count + 1}" scope="view"/>
+                                    
+                                    <c:choose>
                                         
-                                     <div class="grids_of_4">
-                                        <div class="grid1_of_4">
-                                          <div class="content_box">
+                                        <c:when test="#{count % 4 eq 0}">
                                             
-                                              
-                                                <h:commandLink action="#{itemController.ShowDetails(item.id)}">
-                                                    <f:param name="id" value="#{item.id}" />
-                                                    <img src="#{item.image}" class="img-responsive" alt=""/>
-                                                    <h4>#{item.name}</h4>
-                                                </h:commandLink>
-                                         
-                                          
-
-                                              <div class="grid_1 simpleCart_shelfItem">
-
-                                                  <div class="item_add"><span class="item_price"><h6>#{item.startprice} $</h6></span></div>
-                                                  <div class="item_add"><span class="item_price"><a href="#">Start new Auction</a></span></div>
-                                                  
-                                              </div>
-                                          </div>
-                                      </div>
-                                    </div>
-                                  </c:when>
-                                  <c:otherwise>
-                                    <div class="grid1_of_4">
-                                        <div class="content_box">
                                            
-                                                <h:commandLink action="#{itemController.ShowDetails(item.id)}">
-                                                    <f:param name="id" value="#{item.id}" />
-                                                    <img src="#{item.image}" class="img-responsive" alt=""/>
-                                                    <h4>#{item.name}</h4>
-                                                </h:commandLink>
-                                         
-
-                                            <div class="grid_1 simpleCart_shelfItem">
-
-                                                <div class="item_add"><span class="item_price"><h6>#{item.startprice} $</h6></span></div>
-                                                <div class="item_add"><span class="item_price"><a href="#">Start new Auction</a></span></div>
+                                            <div class="grids_of_4">
+                                                    
+                                                    <div class="grid1_of_4" style="height:400px;margin-top: 50px">
+                                                        <div class="content_box">
+                                                            
+                                                            
+                                                            <h:commandLink action="#{itemController.ShowDetails(item.id)}">
+                                                                <f:param name="id" value="#{item.id}" />
+                                                                <img src="#{item.image}" class="img-responsive" alt=""/>
+                                                                <h4>#{item.name}</h4>
+                                                            </h:commandLink>
+                                                            
+                                                            
+                                                            
+                                                            <div class="grid_1 simpleCart_shelfItem">
+                                                                
+                                                                <div class="item_add"><span class="item_price"><h6>#{item.startprice} $</h6></span></div>
+                                                                <div class="item_add">
+                                                                    <span class="item_price">
+                                                                        
+                                                                        <h:commandLink action="#{itemController.AddItemToAuction(item.id)}" value="Start new Auction">
+                                                                            <f:param name="ItemId" value="#{item.id}" />
+                                                                        </h:commandLink>
+                                                                        
+                                                                    </span>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            
+                                        </c:when>
+                                        <c:otherwise>
+                                            
+                                            <div class="grid1_of_4" style="height:400px;margin-top: 50px">
+                                                <div class="content_box">
+                                                    
+                                                    <h:commandLink action="#{itemController.ShowDetails(item.id)}">
+                                                        <f:param name="id" value="#{item.id}" />
+                                                        <img src="#{item.image}" class="img-responsive" alt=""/>
+                                                        <h4>#{item.name}</h4>
+                                                    </h:commandLink>
+                                                    
+                                                    
+                                                    <div class="grid_1 simpleCart_shelfItem">
+                                                        
+                                                        <div class="item_add"><span class="item_price"><h6>#{item.startprice} $</h6></span></div>
+                                                        <div class="item_add">
+                                                            <span class="item_price">
+                                                                <h:commandLink action="#{itemController.AddItemToAuction(item.id)}" value="Start new Auction">
+                                                                    <f:param name="ItemId" value="#{item.id}" />
+                                                                </h:commandLink>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                  </c:otherwise>
-                                </c:choose>
+                                            
+                                        </c:otherwise>
+                                    </c:choose>
                                     
                                 </c:forEach>
                             </h:form>                       
