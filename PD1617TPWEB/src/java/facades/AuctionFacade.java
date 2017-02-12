@@ -198,6 +198,7 @@ public class AuctionFacade implements IAuction {
             auction.setLastuserid(user.getId());
             auction.setAuctionstate(0);
             auction.setItemstate(1);
+            auction.setEnddate(new Date());
           
             WarningItemChanges(item, "The item " + item.getId() + " - " + item.getName() + " have been selled.");
             dAO.getEntityManager().persist(auction);
