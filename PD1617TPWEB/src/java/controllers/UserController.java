@@ -133,6 +133,21 @@ public class UserController implements Serializable {
 
     }
     
+    public String HistoricBuy(){ 
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        ArrayList<Item> HistoricBuy = new ArrayList();
+        try {
+            HistoricBuy = (ArrayList<Item>) userFacade.ItensBuyHistoric(userid);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR ", null));
+        }
+        
+        //Falta a parte de mostrar os itens
+        
+        return "UserItemsFollowing.xhtml";
+    }
+    
     public String FollowItem(long ItemId){
         
         FacesContext context = FacesContext.getCurrentInstance();
