@@ -152,7 +152,7 @@ public class ItemFacade implements IItem {
         }
         
         try {
-            followingItens = (List<UserItem>) dAO.getEntityManager().createNamedQuery("UserItem.findFolloingByUserId").setParameter("userid", user).getResultList();
+            followingItens = (List<UserItem>) dAO.getEntityManager().createNamedQuery("UserItem.findByIsfollowingANDUserId").setParameter("userid", user).getResultList();
         } catch (Exception e) {
             return new ArrayList<Item>(items.values());
         }
@@ -185,7 +185,7 @@ public class ItemFacade implements IItem {
         
         try {
             
-            followingItens = (List<UserItem>) dAO.getEntityManager().createNamedQuery("UserItem.findFolloingByUserId").setParameter("userid", user).getResultList();
+            followingItens = (List<UserItem>) dAO.getEntityManager().createNamedQuery("UserItem.findByUserId").setParameter("userid", user).getResultList();
             
         } catch (Exception e) {
             followingItens = new ArrayList<UserItem>();
@@ -199,7 +199,7 @@ public class ItemFacade implements IItem {
             if(i.getItemid().getId() == ItemId && !i.getIsfollowing())
             {
                 i.setIsfollowing(true);
-                dAO.getEntityManager().persist(i);
+                dAO.getEntityManager().merge(i);
                 return ResultMessage.FollowItemSucess;
             }
         }
@@ -241,7 +241,7 @@ public class ItemFacade implements IItem {
         
         try {
             
-            followingItens = (List<UserItem>) dAO.getEntityManager().createNamedQuery("UserItem.findFolloingByUserId").setParameter("userid", user).getResultList();
+            followingItens = (List<UserItem>) dAO.getEntityManager().createNamedQuery("UserItem.findByIsfollowingANDUserId").setParameter("userid", user).getResultList();
             
         } catch (Exception e) {
             followingItens = new ArrayList<UserItem>();
