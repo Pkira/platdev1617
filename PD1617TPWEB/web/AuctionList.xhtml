@@ -5,76 +5,89 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
+    
     <body>
-
+        
         <ui:composition template="/WEB-INF/layout.xhtml">
-
+            
             <ui:define name="content">
-
+                
                 <div class="container">
                     
                     <div class="check">	 
                         
-
+                        
                         <div class="col-md-9 cart-items">
                             
                             <h1>Auctions</h1>  
                             
-                             <c:forEach var="auction" items="#{auctionController.all}">
-                            
-                                <div class="cart-header">
-
-                                    <div class="cart-sec simpleCart_shelfItem">
-
+                            <c:forEach var="auction" items="#{auctionController.all}">
+                                
+                                <h:form>
+                                    
+                                    
+                                    <div class="cart-header">
+                                        
+                                        <div class="cart-sec simpleCart_shelfItem">
+                                            
                                             <div class="cart-item cyc">
-                                                <img src="#{auction.itemid.image}" class="img-responsive" alt=""/>
-                                                <h:form style="margin-top:5px;">
+                                                
+                                                <h:commandLink action="#{itemController.ShowDetails(auction.itemid.id)}">
+                                                    <img src="#{auction.itemid.image}" class="img-responsive" alt=""/>
+                                                </h:commandLink>
+                                                
+                                                <div style="margin-top:5px;">
                                                     <h:commandLink styleClass="continue" action="#{auctionController.bidItemRedirect(auction.id)}">
-                                                         <f:param name="auctionid" value="#{auction.id}" />
-                                                       Bid Item
+                                                        <f:param name="auctionid" value="#{auction.id}" />
+                                                        Open Auction
                                                     </h:commandLink>
-                                                </h:form>
+                                                </div>
                                             </div>
                                             <div class="cart-item-info">
                                                 
-                                                <h3><a href="#">#{auction.itemid.name}</a></h3>
+                                                <h3>
+                                                    <h:commandLink action="#{itemController.ShowDetails(auction.itemid.id)}">
+                                                        #{auction.itemid.name}
+                                                    </h:commandLink>
+                                                </h3>
                                                 <ul class="qty">
                                                     <li><p><span>Category: #{auction.itemid.categoryid.name}</span></p></li>
                                                 </ul>
                                                 
-                                                 <div class="delivery">
-                                                     <p>Current Price : #{auction.lastbid}$</p>
-                                                     
-                                                     <c:choose>
-                                                         <c:when test="#{auction.hoursLeft eq 0}">
-                                                             <span>Ends in less than 1 hour</span>
-                                                             </c:when>
-                                                         <c:otherwise>
-                                                             <span>Ends in #{auction.hoursLeft} hours</span>
-                                                         </c:otherwise>
-                                                     </c:choose>
-
-                                                 <div class="clearfix"></div>
-                                                 </div>	
+                                                <div class="delivery">
+                                                    <p>Current Price : #{auction.lastbid}$</p>
+                                                    
+                                                    <c:choose>
+                                                        <c:when test="#{auction.hoursLeft eq 0}">
+                                                            <span>Ends in less than 1 hour</span>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <span>Ends in #{auction.hoursLeft} hours</span>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    
+                                                    <div class="clearfix"></div>
+                                                </div>	
                                             </div>
                                             <div class="clearfix"></div>
-
-                                     </div>
-                                </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                </h:form>
                                 
                             </c:forEach>
-		
+                            
                         </div>
-
-
+                        
+                        
                         <div class="clearfix"> </div>
                     </div>
                 </div>
                 
             </ui:define>
-
+            
         </ui:composition>
-
+        
     </body>
 </html>
