@@ -212,6 +212,7 @@ public class UserController implements Serializable {
         return auctions;
     }  
 
+
     public long getUserid() {
         return userid;
     }

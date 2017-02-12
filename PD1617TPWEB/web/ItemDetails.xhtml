@@ -60,6 +60,10 @@
                                                 <span class="text">Price:</span>
                                                 <span class="price-new">#{itemController.price} $</span> 
                                             </div>
+                                            <div class="price">
+                                                <span class="text">Buy Now Price:</span>
+                                                <span class="price-new">#{itemController.buynow} $</span> 
+                                            </div>
 
                                             <div class="btn_form">
                                                 <h:commandLink action="#{userController.FollowItem(itemController.id)}" value="Add to favorites">

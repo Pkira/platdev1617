@@ -22,6 +22,7 @@ public enum ResultMessage {
     CreateItemSuccess("The was created with success"),
     CreateItemUnsuccess("The item creation have fail"),
     AuctionCreated("Auction created with success"),
+    AuctionNotFound("The specified auction cannot be found"),
     AuctionNotCreated("An error have occur when trying to create a new auction"),
     AuctionAlreadyCreated("The auction for this item is already occurring"),
     AccountActivated("Account successfully activated"),
