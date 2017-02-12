@@ -46,6 +46,19 @@ public class AuctionFacade implements IAuction {
     }
     
     @Override
+    public Auction GetAuctionById(long AuctionId){
+    
+        Auction auction = null;
+        try {
+            auction = (Auction) dAO.getEntityManager().createNamedQuery("Auction.findById").setParameter("id", AuctionId).getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+        
+        return auction;
+    }
+    
+    @Override
     public List<Auction> GetUserBuyingAuctions(long UserId){
     
         List<Auction> auctions = new ArrayList<Auction>();

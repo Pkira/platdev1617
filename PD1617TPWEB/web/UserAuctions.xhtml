@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -28,13 +29,19 @@
 
                                             <div class="cart-item cyc">
                                                 <img src="#{auction.itemid.image}" class="img-responsive" alt=""/>
+                                                 <h:form style="margin-top:5px;">
+                                                    <h:commandLink styleClass="continue" action="#{auctionController.bidItemRedirect(auction.id)}">
+                                                         <f:param name="auctionid" value="#{auction.id}" />
+                                                       Bid Item
+                                                    </h:commandLink>
+                                                </h:form>
                                             </div>
                                             <div class="cart-item-info">
                                                 
                                                 <h3><a href="#">#{auction.itemid.name}</a></h3>
                                                 <ul class="qty">
                                                     <li><p><span>Category: #{auction.itemid.categoryid.name}</span></p></li>
-                                                </ul>
+                                                </ul>                                               
                                                 
                                                  <div class="delivery">
                                                      <p>Current Price : #{auction.lastbid}$</p>
@@ -46,10 +53,11 @@
                                                          <c:otherwise>
                                                              <span>Ends in #{auction.hoursLeft} hours</span>
                                                          </c:otherwise>
-                                                     </c:choose>
+                                                     </c:choose>                                                   
 
                                                  <div class="clearfix"></div>
                                                  </div>	
+
                                             </div>
                                             <div class="clearfix"></div>
 

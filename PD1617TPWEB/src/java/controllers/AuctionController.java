@@ -3,6 +3,7 @@ package controllers;
 
 import entities.Auction;
 import facades.IAuction;
+import facades.IUser;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -16,9 +17,13 @@ import utils.ResultMessage;
 @RequestScoped
 public class AuctionController {
 
-    
     @EJB
     private IAuction auctionFacade;
+    
+    private long auctionid;
+    private long bidvalue;
+    
+    private Auction auction;
 
     public AuctionController() {
         
@@ -39,13 +44,38 @@ public class AuctionController {
         return auctions;
     }
     
-    public String BidItem (){
-          //variaveis a receber se possível (Long UserId, Long value, Long AuctionId)
+    public String bidItemRedirect(long auctionid)
+    {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        this.auctionid = auctionid;
+        
+        Auction auctionDB = null;
+                
+        try {
+            auctionDB = auctionFacade.GetAuctionById(auctionid);
+            
+            if(auctionDB == null)
+            {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ResultMessage.AuctionNotFound.Message(), null));
+                return "AuctionList.xhtml";
+            }
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ResultMessage.AuctionNotFound.Message(), null));
+            return "AuctionList.xhtml";
+        }
+        
+        this.auction = auctionDB;
+        
+        return "AuctionBidItem.xhtml";
+    }
+    
+    public String bidItem(long userid){
+
         FacesContext context = FacesContext.getCurrentInstance();
         ResultMessage result = null;
         try {
-            //variaveis a enviar (Long UserId, Long value, Long AuctionId)
-            result = auctionFacade.BidItem((long)1,(long)1,(long)7);
+            result = auctionFacade.BidItem(userid,bidvalue,auctionid);
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR ", null));
         }
@@ -58,13 +88,12 @@ public class AuctionController {
         
     }
     
-    public String BuyNowItem (){
-          //variaveis a receber se possível (Long UserId, Long value, Long AuctionId)
+    public String buyNowItem(long userid){
+
         FacesContext context = FacesContext.getCurrentInstance();
         ResultMessage result = null;
         try {
-              //variaveis a enviar (Long UserId, Long value, Long AuctionId)
-            result = auctionFacade.BuyNowItem((long)2,(long)1,(long)8);
+            result = auctionFacade.BuyNowItem(userid,bidvalue,auctionid);
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR ", null));
         }
@@ -76,4 +105,30 @@ public class AuctionController {
         return "AuctionList.xhtml";
         
     }
+
+    public long getAuctionid() {
+        return auctionid;
+    }
+
+    public void setAuctionid(long auctionid) {
+        this.auctionid = auctionid;
+    }
+
+    public long getBidvalue() {
+        return bidvalue;
+    }
+
+    public void setBidvalue(long bidvalue) {
+        this.bidvalue = bidvalue;
+    }
+
+    public Auction getAuction() {
+        return auction;
+    }
+
+    public void setAuction(Auction auction) {
+        this.auction = auction;
+    }
+    
+    
 }

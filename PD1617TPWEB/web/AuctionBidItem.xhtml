@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <body>
+        
+        <ui:composition template="/WEB-INF/layout.xhtml">
+            
+            <ui:define name="content">
+                
+                <div class="container">
+                    
+                    <div class="women_main">
+                        
+                        <div class="row single">
+                            
+                            <div class="col-md-9 det">
+                                
+                                <h:form>
+                                    
+                                    <h:inputHidden id="auctionid" value="#{auctionController.auctionid}" />    
+                                     
+                                    <div class="single_left">
+                                        
+                                        <div class="grid Images_3_of_2">
+                                            <ul id="etalage">
+                                                <li>
+                                                    <a href="#">
+                                                        <img class="img-responsive etalage_thumb_image" src="#{auctionController.auction.itemid.image}" />
+                                                        <img class="img-responsive etalage_source_image" src="#{auctionController.auction.itemid.image}" />
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <img class="img-responsive etalage_thumb_image" src="#{auctionController.auction.itemid.image}" />
+                                                    <img class="img-responsive etalage_source_image" src="#{auctionController.auction.itemid.image}" />
+                                                </li>
+                                                <li>
+                                                    <img class="img-responsive etalage_thumb_image" src="#{auctionController.auction.itemid.image}" />
+                                                    <img class="img-responsive etalage_source_image" src="#{auctionController.auction.itemid.image}" />
+                                                </li>
+                                                <li>
+                                                    <img class="img-responsive etalage_thumb_image" src="#{auctionController.auction.itemid.image}" />
+                                                    <img class="img-responsive etalage_source_image" src="#{auctionController.auction.itemid.image}" />
+                                                </li>
+                                            </ul>
+                                            
+                                        </div>
+                                        
+                                        <div class="desc1 span_3_of_2">
+                                            
+                                            <h3>#{auctionController.auction.itemid.name}</h3>                                       
+                                            
+                                            <span class="code">Product Id: #{auctionController.auction.itemid.id}</span>
+                                            
+                                            <p><span class="code">Category: #{auctionController.auction.itemid.categoryid.name}</span></p>
+                                            
+                                            <p><span class="brand">Description: <a href="#">#{auctionController.auction.itemid.description}</a></span></p>
+                                            <div class="price">
+                                                <span class="text">Price:</span>
+                                                <span class="price-new">#{auctionController.auction.itemid.startprice} $</span> 
+                                            </div>
+                                            <div class="price">
+                                                <span class="text">Buy Now Price:</span>
+                                                <span class="price-new">#{auctionController.auction.itemid.buynowprice} $</span> 
+                                            </div>
+                                            <div class="price">
+                                                <span class="text">Auction Duration:</span>
+                                                <span class="price-new">
+                                                    <c:choose>
+                                                         <c:when test="#{auctionController.auction.hoursLeft eq 0}">
+                                                             Ends in less than 1 hour
+                                                             </c:when>
+                                                         <c:otherwise>
+                                                             Ends in #{auctionController.auction.hoursLeft} hours
+                                                         </c:otherwise>
+                                                     </c:choose>
+                                                </span> 
+                                            </div>
+                                            
+                                            <div class="btn_form">
+                                                <h:commandLink action="#{userController.FollowItem(auctionController.auction.itemid.id)}" value="Add to favorites">
+                                                    <f:param name="ItemId" value="#{auctionController.auction.itemid.id}" />
+                                                </h:commandLink>
+                                            </div>
+                                            
+                                            
+                                            
+                                        </div>
+                                        
+                                        <div class="desc1 span_3_of_2">
+                                            
+                                            <div class="row">
+                                                
+                                                <div class="col-md-5">
+                                                    <div class="btn_form">
+                                                        <h:commandLink action="#{auctionController.buyNowItem(userController.userid)}" value="Buy Now" />
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                        <div class="desc1 span_3_of_2">
+                                            
+                                            <div class="row">
+                                                
+                                                <div class="col-md-5">
+                                                    <div class="btn_form">
+                                                        <h:inputText  id="bidvalue" value="#{auctionController.bidvalue}"  style="width:228px;height: 42px;"/>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-md-4">
+                                                    <div class="btn_form" style="padding-left: 10px;">
+                                                        <h:commandLink action="#{auctionController.bidItem(userController.userid)}" value="Bid" style="margin-top:4px;" />
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                        </div>
+
+                                    <div class="clearfix"></div>
+                                        
+                                    </div>
+                                    
+                                    <div class="single-bottom1">
+                                        <h6>Details</h6>
+                                        <p class="prod-desc">#{auctionController.auction.itemid.description}</p>
+                                    </div>
+                                    
+                                </h:form>
+                                
+                            </div>
+                            
+                            <div class="clearfix"></div>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+            </ui:define>
+            
+        </ui:composition>
+        
+    </body>
+</html>
