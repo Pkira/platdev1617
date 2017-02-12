@@ -45,6 +45,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "UserItem.findSellingByItemId", query = "SELECT u FROM UserItem u WHERE u.itemid = :itemid AND u.isselling = true"),
     @NamedQuery(name = "UserItem.findByItemId", query = "SELECT u FROM UserItem u WHERE u.itemid = :itemid"),
     @NamedQuery(name = "UserItem.findByIsfollowingANDUserId", query = "SELECT u FROM UserItem u WHERE u.userid = :userid AND u.isfollowing = true"),
+    @NamedQuery(name = "UserItem.findByIsbuyingANDUserId", query = "SELECT u FROM UserItem u WHERE u.userid = :userid AND u.isbuying = true"),
 })
 public class UserItem implements Serializable {
 

@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import entities.Auction;
 import entities.Item;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import java.util.List;
 import entities.User;
+import facades.IAuction;
 import facades.IItem;
 import facades.IUser;
 import java.util.ArrayList;
@@ -23,6 +25,9 @@ import utils.ResultMessage;
 @Named(value = "userController")
 @SessionScoped
 public class UserController implements Serializable {
+
+    @EJB
+    private IAuction auctionFacade;
 
     @EJB
     private IItem itemFacade;
@@ -191,6 +196,22 @@ public class UserController implements Serializable {
         
         return items;
     }
+    
+     public List<Auction> getUserAuctions()
+    {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        List<Auction> auctions = null;
+        
+        try {
+            auctions = auctionFacade.GetUserBuyingAuctions(userid);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error getting auctions list", null));
+        }
+        
+        return auctions;
+    }
+    
 
     public long getUserid() {
         return userid;

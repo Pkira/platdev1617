@@ -46,6 +46,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Auction.findByLastuserid", query = "SELECT a FROM Auction a WHERE a.lastuserid = :lastuserid"),
     @NamedQuery(name = "Auction.findByLastbid", query = "SELECT a FROM Auction a WHERE a.lastbid = :lastbid"),
     @NamedQuery(name = "Auction.findByItem", query = "SELECT a FROM Auction a WHERE a.itemid = :itemid"),
+
 })
 
 public class Auction implements Serializable {
