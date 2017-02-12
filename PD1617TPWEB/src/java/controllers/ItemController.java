@@ -4,6 +4,7 @@ import entities.Category;
 import entities.Item;
 import facades.IAuction;
 import facades.IItem;
+import facades.IVisitor;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -22,6 +23,9 @@ public class ItemController {
     
     @EJB
     private IAuction auctionFacade;
+    
+    @EJB
+    private IVisitor visitorFacade;
     
     private long id;
     private String name;
@@ -76,7 +80,20 @@ public class ItemController {
         
     }
     
-     public String AddItemToAuction(long ItemId){
+    public String LastItensSell(){
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        List<Item> test = visitorFacade.SeeLastSellItens();
+        
+        if(test.isEmpty())
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Don't have been sell any Item", null));
+        
+        //mudar o return
+        return "Newsletter.xhtml";
+    }    
+    
+    public String AddItemToAuction(long ItemId){
         
         FacesContext context = FacesContext.getCurrentInstance();
         ResultMessage result = null;

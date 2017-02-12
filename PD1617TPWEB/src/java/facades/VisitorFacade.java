@@ -2,8 +2,12 @@
 package facades;
 
 import controllers.IDAO;
+import entities.Auction;
+import entities.Item;
 import entities.Notification;
 import entities.User;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import utils.ResultMessage;
@@ -32,5 +36,28 @@ public class VisitorFacade implements IVisitor {
          dAO.getEntityManager().persist(notification);
          
         return ResultMessage.AccountReactivationNoUser;
+    }
+    
+    @Override
+    public List<Item> SeeLastSellItens(){
+        
+        List<Auction> LastAuctions = new ArrayList();        
+        List<Item> LastSells = new ArrayList();
+        
+        
+        try{
+           LastAuctions = dAO.getEntityManager().createNamedQuery("Auction.findLastItemSell").setMaxResults(3).getResultList();
+        }catch(Exception e){
+            return LastSells;
+        }
+        
+        for(Auction i : LastAuctions)
+            LastSells.add(i.getItemid());
+        
+        return LastSells;
+    }
+
+    private Object setMaxResults(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
