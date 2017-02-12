@@ -26,7 +26,17 @@ public class AuctionController {
     
     public List<Auction> getAll()
     {
-        return null;
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        List<Auction> auctions = null;
+        
+        try {
+            auctions = auctionFacade.GetAll();
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error getting auctions list", null));
+        }
+        
+        return auctions;
     }
     
     public String BidItem (){

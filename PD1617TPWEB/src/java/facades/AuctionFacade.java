@@ -32,6 +32,7 @@ public class AuctionFacade implements IAuction {
     @EJB
     private ISystem AServer;
     
+    @Override
     public List<Auction> GetAll(){
     
         List<Auction> auctions = null;

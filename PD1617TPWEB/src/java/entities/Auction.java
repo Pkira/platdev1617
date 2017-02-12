@@ -8,6 +8,7 @@ package entities;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -83,6 +85,9 @@ public class Auction implements Serializable {
     private Item itemid;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "auctionid")
     private Collection<AuctionLog> auctionLogCollection;
+    
+    @Transient 
+    private long HoursLeft;
     
     public Auction() {
     }
@@ -197,5 +202,21 @@ public class Auction implements Serializable {
     public String toString() {
         return "entities.Auction[ id=" + id + " ]";
     }
+
+    public long getHoursLeft() {
+        
+         long now = new Date().getTime();
+         long end = this.enddate.getTime();
+         long dif = TimeUnit.MILLISECONDS.toHours((end - now));
+         
+         return dif;
+    }
+
+    public void setHoursLeft(long HoursLeft) {
+        this.HoursLeft = HoursLeft;
+    }
+    
+    
+    
     
 }

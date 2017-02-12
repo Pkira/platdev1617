@@ -5,6 +5,8 @@
  */
 package facades;
 
+import entities.Auction;
+import java.util.List;
 import javax.ejb.LocalBean;
 import utils.ResultMessage;
 
@@ -15,8 +17,9 @@ import utils.ResultMessage;
 @LocalBean
 public interface IAuction {
     
-     ResultMessage CreateAuction(long ItemId);
-     ResultMessage BidItem(long UserId, long value, long AuctionId);
-     ResultMessage BuyNowItem(long UserId, long value, long AuctionId);
+    List<Auction> GetAll();
+    ResultMessage CreateAuction(long ItemId);
+    ResultMessage BidItem(long UserId, long value, long AuctionId);
+    ResultMessage BuyNowItem(long UserId, long value, long AuctionId);
      
 }

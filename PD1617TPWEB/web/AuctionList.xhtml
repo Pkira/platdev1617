@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
 
@@ -16,56 +17,46 @@
 
                         <div class="col-md-9 cart-items">
                             
-                            <h1>Auctions</h1>                        
+                            <h1>Auctions</h1>  
                             
-                            <div class="cart-header">
-                                
-                                    <div class="close1"> </div>
+                             <c:forEach var="auction" items="#{auctionController.all}">
+                            
+                                <div class="cart-header">
+
                                     <div class="cart-sec simpleCart_shelfItem">
-                                        
+
                                             <div class="cart-item cyc">
-                                                     <img src="Images/9.jpg" class="img-responsive" alt=""/>
+                                                <img src="#{auction.itemid.image}" class="img-responsive" alt=""/>
                                             </div>
                                             <div class="cart-item-info">
-                                                <h3><a href="#">Item1</a><span>Category: X</span></h3>
+                                                
+                                                <h3><a href="#">#{auction.itemid.name}</a></h3>
                                                 <ul class="qty">
-                                                        <li><p>Users in auction : 5</p></li>
+                                                    <li><p><span>Category: #{auction.itemid.categoryid.name}</span></p></li>
                                                 </ul>
-
+                                                
                                                  <div class="delivery">
-                                                 <p>Current Price : 100.00$</p>
-                                                 <span>Ends in 13 hours</span>
+                                                     <p>Current Price : #{auction.lastbid}$</p>
+                                                     
+                                                     <c:choose>
+                                                         <c:when test="#{auction.hoursLeft eq 0}">
+                                                             <span>Ends in less than 1 hour</span>
+                                                             </c:when>
+                                                         <c:otherwise>
+                                                             <span>Ends in #{auction.hoursLeft} hours</span>
+                                                         </c:otherwise>
+                                                     </c:choose>
+
                                                  <div class="clearfix"></div>
                                                  </div>	
                                             </div>
                                             <div class="clearfix"></div>
 
                                      </div>
-                            </div>
-
-                            <div class="cart-header">
-                                <div class="close1"> </div>
-                                <div class="cart-sec simpleCart_shelfItem">
-                                        
-                                            <div class="cart-item cyc">
-                                                     <img src="Images/10.jpg" class="img-responsive" alt=""/>
-                                            </div>
-                                            <div class="cart-item-info">
-                                                <h3><a href="#">Item2</a><span>Category: Y</span></h3>
-                                                <ul class="qty">
-                                                        <li><p>Users in auction : 5</p></li>
-                                                </ul>
-
-                                                 <div class="delivery">
-                                                 <p>Current Price : 258.00$</p>
-                                                 <span>Ends in 2 hours</span>
-                                                 <div class="clearfix"></div>
-                                                 </div>	
-                                            </div>
-                                            <div class="clearfix"></div>
-
-                                     </div>
-                             </div>		
+                                </div>
+                                
+                            </c:forEach>
+		
                         </div>
 
 
