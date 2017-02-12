@@ -56,7 +56,9 @@ public enum ResultMessage {
     BidInsuccess("You could't do the bid, please verify your balance."),
     BidSuccess("You bid the item"),
     BuyNowSuccess("You buy the item"),
-    BuyNowInsuccess("You didn't buy the item");
+    BuyNowInsuccess("You didn't buy the item"),
+    CancelItemSucess("You have removed the item"),
+    CancelItemInsucess("You can't remove the item, please contact the administrator.");
     
     
     private String Message;
