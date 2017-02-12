@@ -5,6 +5,7 @@
  */
 package facades;
 
+import entities.Item;
 import entities.Message;
 import entities.User;
 import java.util.List;
@@ -32,5 +33,5 @@ public interface IUser {
     boolean SuspendAccount();
     ResultMessage ReportItem(long UserId, long ItemId);
     ResultMessage ReportUser(long FromUserId, long ToUserId);
-    
+    List<Item> ItensBuyHistoric(long userid);
 }

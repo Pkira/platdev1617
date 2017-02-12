@@ -6,6 +6,8 @@
 package facades;
 
 import entities.User;
+import entities.Item;
+import entities.Auction;
 import javax.ejb.EJB;
 import controllers.IDAO;
 import entities.Message;
@@ -281,5 +283,21 @@ public class UserFacade implements IUser {
         
     }
            
-   
+    @Override
+    public List<Item> ItensBuyHistoric(long userid){
+        
+        List<Auction> auctionHistoric = new ArrayList();
+        List<Item> historic = new ArrayList();
+        
+        try{
+            auctionHistoric = dAO.getEntityManager().createNamedQuery("Auction.findByLastuseridAndAuctionState").setParameter("lastuserid", userid).setParameter("auctionstate", 0).getResultList();
+        }catch(Exception e){
+            return historic;
+        }
+        
+       for(Auction i : auctionHistoric)
+           historic.add(i.getItemid());
+       
+       return historic; 
+    }
 }
