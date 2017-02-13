@@ -21,4 +21,5 @@ public interface IItem {
     List<Item> UserItems(long UserId);
     Item GetItemById(long ItemId);
     List<Category> GetAllCategories();
+    ResultMessage CancelItem(long ItemId, long UserId);
 }

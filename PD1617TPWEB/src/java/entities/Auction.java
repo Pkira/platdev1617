@@ -46,6 +46,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Auction.findByLastuserid", query = "SELECT a FROM Auction a WHERE a.lastuserid = :lastuserid"),
     @NamedQuery(name = "Auction.findByLastbid", query = "SELECT a FROM Auction a WHERE a.lastbid = :lastbid"),
     @NamedQuery(name = "Auction.findByItem", query = "SELECT a FROM Auction a WHERE a.itemid = :itemid"),
+    @NamedQuery(name = "Auction.findByItemAndAuctionState", query = "SELECT a FROM Auction a WHERE a.itemid = :itemid And a.auctionstate = :auctionstate"),
     @NamedQuery(name = "Auction.findLastItemSell", query = "SELECT a FROM Auction a WHERE a.auctionstate = 0 ORDER BY a.enddate DESC"),
 
 })

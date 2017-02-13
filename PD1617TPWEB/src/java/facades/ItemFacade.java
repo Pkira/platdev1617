@@ -51,6 +51,7 @@ public class ItemFacade implements IItem {
         Item item = new Item((long)-1,Name,Desc,Price,BuyNow,AuctionDuration, Image);
         item.setOwnerid(user);
         item.setCategoryid(cat);
+        
 
         try {
             dAO.getEntityManager().persist(item);
@@ -109,7 +110,7 @@ public class ItemFacade implements IItem {
     @Override
     public List<Item> ItemInSell(long UserId){
        
-        User user = null;
+        User user = new User();
         
         try {
             user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
@@ -119,7 +120,7 @@ public class ItemFacade implements IItem {
         
         HashMap<Long,Item> items = new HashMap<>();
         
-        List<UserItem> itemsBD = null;
+        List<UserItem> itemsBD = new ArrayList();
         try {
             itemsBD = (List<UserItem>) dAO.getEntityManager().createNamedQuery("UserItem.findSellingByUserId").setParameter("userid", user).getResultList();
         } catch (Exception e) {
@@ -291,6 +292,34 @@ public class ItemFacade implements IItem {
         }
         
         return categories;
+    }
+    
+    @Override
+    public ResultMessage CancelItem(long ItemId, long UserId){
+        
+        User user = new User();
+        
+        try {
+            user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
+        } catch (Exception e) {
+            return ResultMessage.UserNotExist;
+        }
+        
+        Item item = new Item();
+
+        try{            
+            item = (Item) dAO.getEntityManager().createNamedQuery("Item.findById").setParameter("id", ItemId).getSingleResult();
+        }catch(Exception e){
+            return ResultMessage.ItemNotExist;
+        }
+        
+        if(user == item.getOwnerid() || user.getUsername() == "admin")
+        {
+            dAO.getEntityManager().remove(item);
+            return ResultMessage.CancelItemSucess;
+        }
+        
+        return ResultMessage.CancelItemInsucess;
     }
     
     

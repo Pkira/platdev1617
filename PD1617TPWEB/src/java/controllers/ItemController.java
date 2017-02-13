@@ -91,7 +91,22 @@ public class ItemController {
         
         //mudar o return
         return "Newsletter.xhtml";
-    }    
+    }   
+    
+    public String CancelItem(long UserId){
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        ResultMessage result = null;
+        
+        result = itemFacade.CancelItem(this.id, UserId);
+        
+        if(result == ResultMessage.CancelItemSucess)
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
+        else
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+        
+        return "UserItems.xhtml";
+    }
     
     public String AddItemToAuction(long ItemId){
         
@@ -100,19 +115,18 @@ public class ItemController {
         try {
             result = auctionFacade.CreateAuction(ItemId);
         } catch (Exception e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR ", null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
         }
         if(result == ResultMessage.AuctionCreated)
         {
-            return "UserItemsInAuction.xhtml";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
         }
         else
         {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
-            return null;
         }
         
-        
+        return "UserItemsInAuction.xhtml";
         
     }
     

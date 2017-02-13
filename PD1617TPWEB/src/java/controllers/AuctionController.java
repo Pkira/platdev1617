@@ -93,7 +93,7 @@ public class AuctionController {
         FacesContext context = FacesContext.getCurrentInstance();
         ResultMessage result = null;
         try {
-            result = auctionFacade.BuyNowItem(userid,bidvalue,auctionid);
+            result = auctionFacade.BuyNowItem(userid,auctionid);
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR ", null));
         }
