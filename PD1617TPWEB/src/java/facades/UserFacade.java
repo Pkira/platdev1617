@@ -140,41 +140,6 @@ public class UserFacade implements IUser {
         else
             return ResultMessage.LoadBalanceInvalid;  
     }
-    
-    @Override
-    public List<Message> CheckMessages(){
-        
-        List<Message> messages = (List<Message>)user.getMessageCollection();
-        return messages;
-    }
-
-    @Override
-    public ResultMessage SendMessage(String Addressed, String Subject, String Message){
-        
-        User toUser = null;
-        
-        try {
-            toUser = (User) dAO.getEntityManager().createNamedQuery("User.findByUsername").setParameter("username", Addressed).getSingleResult();
-        } catch (Exception e) {
-            return ResultMessage.SendMessageNoUser;
-        }
-        
-        
-        Message newMessage = new Message();
-        newMessage.setId((long) -1);
-        newMessage.setFromid(this.user);
-        newMessage.setToid(toUser);
-        newMessage.setMessage(Message);
-        newMessage.setSubject(Subject);
-        
-        try {
-            dAO.getEntityManager().persist(newMessage);
-        } catch (Exception e) {
-            return ResultMessage.SendMessageUnsuccess;
-        }
-        
-        return ResultMessage.SendMessageSuccess;
-    }
 
     @Override
     public boolean SuspendAccount() {
