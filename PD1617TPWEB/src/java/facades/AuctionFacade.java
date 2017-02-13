@@ -332,15 +332,7 @@ public class AuctionFacade implements IAuction {
 
     private void TerminateAuction(Auction auction, Item item) {
 
-        UserItem useritem = new UserItem();
-
-        try {
-            useritem = (UserItem) dAO.getEntityManager().createNamedQuery("UserItem.findSellingByItemId").setParameter("id", item.getId()).getSingleResult();
-        } catch (Exception e) {
-        }
-
-        useritem.setIsselling(false);
-        dAO.getEntityManager().persist(useritem);
+        UpdateUseritemBuy(item);
 
         User user = new User();
 
