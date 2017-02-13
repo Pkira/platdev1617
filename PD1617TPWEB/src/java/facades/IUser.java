@@ -27,8 +27,6 @@ public interface IUser {
     ResultMessage UpdateProfile(String Address, String password, String CurretPass);
     double CheckBalance();
     ResultMessage LoadBalance(double increment);
-    List<Message> CheckMessages();
-    ResultMessage SendMessage(String Addressed, String Subject, String Message);
     String getUsername();
     boolean SuspendAccount();
     ResultMessage ReportItem(long UserId, long ItemId);

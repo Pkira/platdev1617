@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "t_newsletter")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Newsletter.findAll", query = "SELECT n FROM Newsletter n"),
+    @NamedQuery(name = "Newsletter.findAll", query = "SELECT n FROM Newsletter n ORDER BY n.id DESC"),
     @NamedQuery(name = "Newsletter.findById", query = "SELECT n FROM Newsletter n WHERE n.id = :id"),
     @NamedQuery(name = "Newsletter.findByMessage", query = "SELECT n FROM Newsletter n WHERE n.message = :message"),
     @NamedQuery(name = "Newsletter.findByCreationdate", query = "SELECT n FROM Newsletter n WHERE n.creationdate = :creationdate")})
