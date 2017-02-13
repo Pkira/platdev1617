@@ -105,7 +105,7 @@ public class AuctionFacade implements IAuction {
     }
 
     @Override
-    public ResultMessage CreateAuction(long ItemId){
+    public ResultMessage CreateAuction(long ItemId) {
 
         //get Item from BD
         Item item = new Item();
@@ -207,7 +207,10 @@ public class AuctionFacade implements IAuction {
         } catch (Exception ex) {
             return ResultMessage.AuctionNotExist;
         }
-
+        
+        if(UserId == auction.getItemid().getOwnerid().getId())
+            return ResultMessage.ItemOwner;
+        
         if (auction.getAuctionstate() == 0) {
             return ResultMessage.AuctionAlreadyFinish;
         }
@@ -257,14 +260,16 @@ public class AuctionFacade implements IAuction {
         } catch (Exception ex) {
             return ResultMessage.AuctionNotExist;
         }
+        
+        if(UserId == auction.getItemid().getOwnerid().getId())
+            return ResultMessage.ItemOwner;
 
         if (auction.getAuctionstate() == 0) {
             return ResultMessage.AuctionAlreadyFinish;
         }
 
         if (auction.getEnddate().before(new Date())) {
-            auction.setAuctionstate(0);
-            dAO.getEntityManager().persist(auction);
+            TerminateAuction(auction, auction.getItemid());
             return ResultMessage.AuctionAlreadyFinish;
         }
 
@@ -283,6 +288,16 @@ public class AuctionFacade implements IAuction {
 
         // Fazer verificação se o valor licitado é superior ao atual
         if (item.getBuynowprice() <= user.getBalance()) {
+
+            UserItem useritens = new UserItem();
+
+            try {
+                useritens = (UserItem) dAO.getEntityManager().createNamedQuery("UserItem.findSellingByItemId").setParameter("itemid", item).getSingleResult();
+            } catch (Exception ex) {
+            }
+
+            useritens.setIsselling(false);
+            dAO.getEntityManager().persist(useritens);
 
             auction.setLastbid(item.getBuynowprice());
             auction.setLastuserid(user.getId());
@@ -317,19 +332,29 @@ public class AuctionFacade implements IAuction {
 
     private void TerminateAuction(Auction auction, Item item) {
 
+        UserItem useritem = new UserItem();
+
+        try {
+            useritem = (UserItem) dAO.getEntityManager().createNamedQuery("UserItem.findSellingByItemId").setParameter("id", item.getId()).getSingleResult();
+        } catch (Exception e) {
+        }
+
+        useritem.setIsselling(false);
+        dAO.getEntityManager().persist(useritem);
+
         User user = new User();
 
         try {
             user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", auction.getLastuserid()).getSingleResult();
-        } catch (Exception e) {
+        } catch (Exception ex) {
             auction.setItemstate(0);//não foi vendido
             WarningItemChanges(item, "The item " + item.getId() + " - " + item.getName() + " doesn't have been selled.");
         }
 
         if (auction.getLastuserid() != null) {
-            
+
             User seller = item.getOwnerid();
-                
+
             auction.setItemstate(1);//vendido por bid
 
             WarningItemChanges(item, "The item " + item.getId() + " - " + item.getName() + " have been selled.");
