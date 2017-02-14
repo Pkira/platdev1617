@@ -77,6 +77,7 @@ public class ItemController {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
             return null;
         }
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
         
         return "UserItems.xhtml";
         

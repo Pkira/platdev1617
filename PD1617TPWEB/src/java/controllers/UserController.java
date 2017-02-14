@@ -71,6 +71,9 @@ public class UserController implements Serializable {
     
     public void login()
     {
+        
+       userFacade.ItensBuyHistoric(userid);
+        userFacade.ItensSellHistoric(userid);
         FacesContext context = FacesContext.getCurrentInstance();
         
         ResultMessage result = userFacade.Login(username, password);

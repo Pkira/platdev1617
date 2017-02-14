@@ -59,7 +59,8 @@ public enum ResultMessage {
     BuyNowSuccess("You buy the item"),
     BuyNowInsuccess("You didn't buy the item"),
     CancelItemSucess("You have removed the item"),
-    CancelItemInsucess("You can't remove the item, please contact the administrator.");
+    CancelItemInsucess("You can't remove the item, please contact the administrator."),
+    ItemOwner("You are the item owner");
     
     
     private String Message;

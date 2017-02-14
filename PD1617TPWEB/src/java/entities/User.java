@@ -53,6 +53,11 @@ import javax.xml.bind.annotation.XmlTransient;
 })
 public class User implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastuserid")
+    private Collection<Auction> auctionCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sellerid")
+    private Collection<Auction> auctionCollection1;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -271,6 +276,24 @@ public class User implements Serializable {
        public void setLastAction()
     {
         this.LastAction = LocalDateTime.now().toInstant(ZoneOffset.UTC).getEpochSecond();
+    }
+
+    @XmlTransient
+    public Collection<Auction> getAuctionCollection() {
+        return auctionCollection;
+    }
+
+    public void setAuctionCollection(Collection<Auction> auctionCollection) {
+        this.auctionCollection = auctionCollection;
+    }
+
+    @XmlTransient
+    public Collection<Auction> getAuctionCollection1() {
+        return auctionCollection1;
+    }
+
+    public void setAuctionCollection1(Collection<Auction> auctionCollection1) {
+        this.auctionCollection1 = auctionCollection1;
     }
     
 }

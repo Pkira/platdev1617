@@ -41,16 +41,16 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Auction.findById", query = "SELECT a FROM Auction a WHERE a.id = :id"),
     @NamedQuery(name = "Auction.findByAuctionstate", query = "SELECT a FROM Auction a WHERE a.auctionstate = :auctionstate"),
     @NamedQuery(name = "Auction.findByItemstate", query = "SELECT a FROM Auction a WHERE a.itemstate = :itemstate"),
-    @NamedQuery(name = "Auction.findByStartdate", query = "SELECT a FROM Auction a WHERE a.startdate = :startdate"),
+    @NamedQuery(name = "Auction.findByStartdate", query = "SELECT a FROM Auction a WHERE a.startdate = :startdate"), 
     @NamedQuery(name = "Auction.findByEnddate", query = "SELECT a FROM Auction a WHERE a.enddate = :enddate"),
-    @NamedQuery(name = "Auction.findByLastuserid", query = "SELECT a FROM Auction a WHERE a.lastuserid = :lastuserid"),
     @NamedQuery(name = "Auction.findByLastbid", query = "SELECT a FROM Auction a WHERE a.lastbid = :lastbid"),
     @NamedQuery(name = "Auction.findByItem", query = "SELECT a FROM Auction a WHERE a.itemid = :itemid"),
     @NamedQuery(name = "Auction.findByItemAndAuctionState", query = "SELECT a FROM Auction a WHERE a.itemid = :itemid And a.auctionstate = :auctionstate"),
     @NamedQuery(name = "Auction.findLastItemSell", query = "SELECT a FROM Auction a WHERE a.auctionstate = 0 ORDER BY a.enddate DESC"),
-
+    @NamedQuery(name = "Auction.findByLastuserid", query = "SELECT a FROM Auction a WHERE a.lastuserid = :lastuserid"),
+    @NamedQuery(name = "Auction.findByAuctionstateAndLastUserId", query = "SELECT a FROM Auction a WHERE a.auctionstate = :auctionstate AND a.lastuserid = :lastuserid"),
+    @NamedQuery(name = "Auction.findByAuctionstateAndSellerId", query = "SELECT a FROM Auction a WHERE a.auctionstate = :auctionstate AND a.sellerid = :sellerid"),
 })
-
 public class Auction implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -77,8 +77,6 @@ public class Auction implements Serializable {
     @Column(name = "enddate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date enddate;
-    @Column(name = "lastuserid")
-    private Long lastuserid;
     @Basic(optional = false)
     @NotNull
     @Column(name = "lastbid")
@@ -86,12 +84,18 @@ public class Auction implements Serializable {
     @JoinColumn(name = "itemid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Item itemid;
+    @JoinColumn(name = "lastuserid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private User lastuserid;
+    @JoinColumn(name = "sellerid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private User sellerid;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "auctionid")
     private Collection<AuctionLog> auctionLogCollection;
     
     @Transient 
     private long HoursLeft;
-    
+
     public Auction() {
     }
 
@@ -148,14 +152,6 @@ public class Auction implements Serializable {
         this.enddate = enddate;
     }
 
-    public Long getLastuserid() {
-        return lastuserid;
-    }
-
-    public void setLastuserid(Long lastuserid) {
-        this.lastuserid = lastuserid;
-    }
-
     public double getLastbid() {
         return lastbid;
     }
@@ -170,6 +166,22 @@ public class Auction implements Serializable {
 
     public void setItemid(Item itemid) {
         this.itemid = itemid;
+    }
+
+    public User getLastuserid() {
+        return lastuserid;
+    }
+
+    public void setLastuserid(User lastuserid) {
+        this.lastuserid = lastuserid;
+    }
+
+    public User getSellerid() {
+        return sellerid;
+    }
+
+    public void setSellerid(User sellerid) {
+        this.sellerid = sellerid;
     }
 
     @XmlTransient
@@ -205,8 +217,8 @@ public class Auction implements Serializable {
     public String toString() {
         return "entities.Auction[ id=" + id + " ]";
     }
-
-    public long getHoursLeft() {
+    
+     public long getHoursLeft() {
         
          long now = new Date().getTime();
          long end = this.enddate.getTime();
@@ -218,8 +230,4 @@ public class Auction implements Serializable {
     public void setHoursLeft(long HoursLeft) {
         this.HoursLeft = HoursLeft;
     }
-    
-    
-    
-    
 }
