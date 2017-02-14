@@ -13,7 +13,7 @@ import utils.ResultMessage;
 public interface IItem {
     
     ResultMessage CreateItem(long UserId, String Name, long Category, String Desc, double Price, double BuyNow, long AuctionDuration, String Image);
-    List<Item> SearchItem(String ItemName, String CategoryName);
+    List<Item> SearchItem(String ItemName, String CategoryName, long owner);
     List<Item> ItemInSell(long UserId);
     List<Item> FollowItens(long UserId);
     ResultMessage FollowItem(Long ItemId, Long UserId);

@@ -6,7 +6,9 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,10 +18,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -43,6 +47,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Item.findByOwnerIdNotInSell", query = "SELECT i FROM Item i WHERE i.ownerid = :ownerid AND i NOT in ( SELECT ui.itemid FROM UserItem ui WHERE ui.itemid = i AND ui.isselling = true)"),
 })
 public class Item implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "itemid")
+    private Collection<Auction> tAuctionCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -194,6 +201,15 @@ public class Item implements Serializable {
     @Override
     public String toString() {
         return "entities.Item[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Auction> getTAuctionCollection() {
+        return tAuctionCollection;
+    }
+
+    public void setTAuctionCollection(Collection<Auction> tAuctionCollection) {
+        this.tAuctionCollection = tAuctionCollection;
     }
     
 }

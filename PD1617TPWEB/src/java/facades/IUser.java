@@ -32,4 +32,5 @@ public interface IUser {
     ResultMessage ReportItem(long UserId, long ItemId);
     ResultMessage ReportUser(long FromUserId, long ToUserId);
     List<Item> ItensBuyHistoric(long userid);
+    List<Item> ItensSellHistoric(long userid);
 }

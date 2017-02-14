@@ -1,4 +1,3 @@
-
 package facades;
 
 import controllers.IDAO;
@@ -17,7 +16,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityTransaction;
 import utils.ResultMessage;
 
-
 @Stateful
 public class ItemFacade implements IItem {
 
@@ -25,10 +23,11 @@ public class ItemFacade implements IItem {
     private IDAO dAO;
 
     @Override
-    public ResultMessage CreateItem(long UserId, String Name, long category, String Desc, double Price, double BuyNow, long AuctionDuration, String Image){     
+    public ResultMessage CreateItem(long UserId, String Name, long category, String Desc, double Price, double BuyNow, long AuctionDuration, String Image) {
 
-        if(UserId == 0 || Name.isEmpty() || category==0 || Desc.isEmpty() || Price == 0 || BuyNow == 0 || AuctionDuration == 0 || Image.isEmpty())
+        if (UserId == 0 || Name.isEmpty() || category == 0 || Desc.isEmpty() || Price == 0 || BuyNow == 0 || AuctionDuration == 0 || Image.isEmpty()) {
             return ResultMessage.CreateItemUnsuccess;
+        }
 
         User user = null;
 
@@ -39,19 +38,15 @@ public class ItemFacade implements IItem {
         }
 
         Category cat = null;
-        try
-        {
-            cat = (Category)dAO.getEntityManager().createNamedQuery("Category.findById").setParameter("id", category).getSingleResult();
-        }
-        catch(Exception ex)
-        {
+        try {
+            cat = (Category) dAO.getEntityManager().createNamedQuery("Category.findById").setParameter("id", category).getSingleResult();
+        } catch (Exception ex) {
             return ResultMessage.CreateItemUnsuccess;
-        }            
+        }
 
-        Item item = new Item((long)-1,Name,Desc,Price,BuyNow,AuctionDuration, Image);
+        Item item = new Item((long) -1, Name, Desc, Price, BuyNow, AuctionDuration, Image);
         item.setOwnerid(user);
         item.setCategoryid(cat);
-        
 
         try {
             dAO.getEntityManager().persist(item);
@@ -60,158 +55,177 @@ public class ItemFacade implements IItem {
         }
 
         return ResultMessage.CreateItemSuccess;
-            
-   }
-    
-    @Override
-    public List<Item> SearchItem(String Name, String Category){
-        
-        HashMap<Long,Item> items = new HashMap<>();
-        
-        // find by name
-        for(Item i : (List<Item>)dAO.getEntityManager().createNamedQuery("Item.findByName").setParameter("name", Name).getResultList())
-        {
-            if(!items.containsKey(i.getId()))
-                items.put(i.getId(), i);
-        }
-        
-        // find by category
-        for(Item i : (List<Item>)dAO.getEntityManager().createNamedQuery("Item.findByCategory").setParameter("name", Category).getResultList())
-        {
-            if(!items.containsKey(i.getId()))
-                items.put(i.getId(), i);
-        }
-        
-        return new ArrayList<Item>(items.values());
-        
+
     }
-   
+
     @Override
-    public List<Item> UserItems(long UserId){
-        
+    public List<Item> SearchItem(String Name, String Category, long owner) {
+
+        HashMap<Long, Item> items = new HashMap<>();
+
+        // find by name
+        if (!Name.isEmpty()) {
+            for (Item i : (List<Item>) dAO.getEntityManager().createNamedQuery("Item.findByName").setParameter("name", Name).getResultList()) {
+                if (!items.containsKey(i.getId())) {
+                    items.put(i.getId(), i);
+                }
+            }
+        }
+
+        // find by category
+        if (!Category.isEmpty()) {
+            for (Item i : (List<Item>) dAO.getEntityManager().createNamedQuery("Item.findByCategory").setParameter("name", Category).getResultList()) {
+                if (!items.containsKey(i.getId())) {
+                    items.put(i.getId(), i);
+                }
+            }
+        }
+
+        if (owner > 0) {
+            User user = new User();
+
+            try {
+                user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", user).getSingleResult();
+            } catch (Exception e) {
+
+            }
+
+            // find by owner
+            for (Item i : (List<Item>) dAO.getEntityManager().createNamedQuery("Item.findByOwnerId").setParameter("ownerid", user).getResultList()) {
+                if (!items.containsKey(i.getId())) {
+                    items.put(i.getId(), i);
+                }
+            }
+        }
+        return new ArrayList<Item>(items.values());
+
+    }
+
+    @Override
+    public List<Item> UserItems(long UserId) {
+
         User user = null;
-        
+
         try {
             user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
         } catch (Exception e) {
             return null;
         }
-        
+
         List<Item> items = null;
         try {
             items = (List<Item>) dAO.getEntityManager().createNamedQuery("Item.findByOwnerIdNotInSell").setParameter("ownerid", user).getResultList();
         } catch (Exception e) {
             return new ArrayList<Item>();
         }
-        
+
         return items;
     }
-    
+
     @Override
-    public List<Item> ItemInSell(long UserId){
-       
+    public List<Item> ItemInSell(long UserId) {
+
         User user = new User();
-        
+
         try {
             user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
         } catch (Exception e) {
             return null;
         }
-        
-        HashMap<Long,Item> items = new HashMap<>();
-        
+
+        HashMap<Long, Item> items = new HashMap<>();
+
         List<UserItem> itemsBD = new ArrayList();
         try {
             itemsBD = (List<UserItem>) dAO.getEntityManager().createNamedQuery("UserItem.findSellingByUserId").setParameter("userid", user).getResultList();
         } catch (Exception e) {
             return null;
         }
-        
-        for(UserItem i : itemsBD)
-        {
-            if(!items.containsKey(i.getItemid().getId()))
+
+        for (UserItem i : itemsBD) {
+            if (!items.containsKey(i.getItemid().getId())) {
                 items.put(i.getItemid().getId(), i.getItemid());
+            }
         }
-        
+
         return new ArrayList<Item>(items.values());
     }
-    
+
     @Override
-    public List<Item> FollowItens(long UserId){
-        
-        HashMap<Long,Item> items = new HashMap<>();
+    public List<Item> FollowItens(long UserId) {
+
+        HashMap<Long, Item> items = new HashMap<>();
         List<UserItem> followingItens = new ArrayList();
-        
+
         User user = null;
-        
+
         try {
 
             user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
-    
+
         } catch (Exception e) {
             return new ArrayList<Item>();
         }
-        
+
         try {
             followingItens = (List<UserItem>) dAO.getEntityManager().createNamedQuery("UserItem.findByIsfollowingANDUserId").setParameter("userid", user).getResultList();
         } catch (Exception e) {
             return new ArrayList<Item>(items.values());
         }
-        
-        for(UserItem i : followingItens)
-        {
-             if(!items.containsKey(i.getItemid()))
+
+        for (UserItem i : followingItens) {
+            if (!items.containsKey(i.getItemid())) {
                 items.put(i.getItemid().getId(), i.getItemid());
+            }
         }
-        
+
         return new ArrayList<Item>(items.values());
     }
 
     @Override
     public ResultMessage FollowItem(Long ItemId, Long UserId) {
-        
+
         Item item = new Item();
         UserItem follow = new UserItem();
         User user = null;
-        
+
         try {
 
             user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
-    
+
         } catch (Exception e) {
             return ResultMessage.UserNotExist;
         }
-        
+
         List<UserItem> followingItens;
-        
+
         try {
-            
+
             followingItens = (List<UserItem>) dAO.getEntityManager().createNamedQuery("UserItem.findByUserId").setParameter("userid", user).getResultList();
-            
+
         } catch (Exception e) {
             followingItens = new ArrayList<UserItem>();
         }
-        
-        for(UserItem i : followingItens)
-        {
-            if(i.getItemid().getId() == ItemId && i.getIsfollowing())
+
+        for (UserItem i : followingItens) {
+            if (i.getItemid().getId() == ItemId && i.getIsfollowing()) {
                 return ResultMessage.FollowItemAlreadyFollow;
-            
-            if(i.getItemid().getId() == ItemId && !i.getIsfollowing())
-            {
+            }
+
+            if (i.getItemid().getId() == ItemId && !i.getIsfollowing()) {
                 i.setIsfollowing(true);
                 dAO.getEntityManager().merge(i);
                 return ResultMessage.FollowItemSucess;
             }
         }
-        
-        try{
-            item = (Item)dAO.getEntityManager().createNamedQuery("Item.findById").setParameter("id", ItemId).getSingleResult();
-        }catch(Exception e){
+
+        try {
+            item = (Item) dAO.getEntityManager().createNamedQuery("Item.findById").setParameter("id", ItemId).getSingleResult();
+        } catch (Exception e) {
             return ResultMessage.ItemNotExist;
         }
 
-        follow.setId((long)-1);
+        follow.setId((long) -1);
         follow.setIsbuying(false);
         follow.setIsfollowing(true);
         follow.setIsselling(false);
@@ -222,43 +236,40 @@ public class ItemFacade implements IItem {
         return ResultMessage.FollowItemSucess;
 
     }
-    
+
     @Override
     public ResultMessage CancelFollowItem(long ItemId, long UserId) {
-        
+
         Item item = new Item();
         UserItem follow = new UserItem();
         User user = null;
-        
+
         try {
 
             user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
-    
+
         } catch (Exception e) {
             return ResultMessage.UserNotExist;
         }
-        
+
         List<UserItem> followingItens;
-        
+
         try {
-            
+
             followingItens = (List<UserItem>) dAO.getEntityManager().createNamedQuery("UserItem.findByIsfollowingANDUserId").setParameter("userid", user).getResultList();
-            
+
         } catch (Exception e) {
             followingItens = new ArrayList<UserItem>();
         }
-        
-        for(UserItem i : followingItens)
-        {
-            if(i.getItemid().getId() == ItemId && i.getIsfollowing())
-            {
-                if(i.getIsbuying() || i.getIsselling())
-                {
+
+        for (UserItem i : followingItens) {
+            if (i.getItemid().getId() == ItemId && i.getIsfollowing()) {
+                if (i.getIsbuying() || i.getIsselling()) {
                     i.setIsfollowing(false);
                     dAO.getEntityManager().persist(i);
                     return ResultMessage.CancelFollowItemSucess;
                 }
-                
+
                 dAO.getEntityManager().remove(i);
                 return ResultMessage.CancelFollowItemSucess;
             }
@@ -269,12 +280,12 @@ public class ItemFacade implements IItem {
 
     @Override
     public Item GetItemById(long ItemId) {
-        
+
         Item item = new Item();
-        
-        try{
-            item = (Item)dAO.getEntityManager().createNamedQuery("Item.findById").setParameter("id", ItemId).getSingleResult();
-        }catch(Exception e){
+
+        try {
+            item = (Item) dAO.getEntityManager().createNamedQuery("Item.findById").setParameter("id", ItemId).getSingleResult();
+        } catch (Exception e) {
             return item;
         }
         return item;
@@ -282,45 +293,43 @@ public class ItemFacade implements IItem {
 
     @Override
     public List<Category> GetAllCategories() {
-        
+
         List<Category> categories = null;
-        
+
         try {
             categories = dAO.getEntityManager().createNamedQuery("Category.findAll").getResultList();
         } catch (Exception e) {
             return new ArrayList<Category>();
         }
-        
+
         return categories;
     }
-    
+
     @Override
-    public ResultMessage CancelItem(long ItemId, long UserId){
-        
+    public ResultMessage CancelItem(long ItemId, long UserId) {
+
         User user = new User();
-        
+
         try {
             user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
         } catch (Exception e) {
             return ResultMessage.UserNotExist;
         }
-        
+
         Item item = new Item();
 
-        try{            
+        try {
             item = (Item) dAO.getEntityManager().createNamedQuery("Item.findById").setParameter("id", ItemId).getSingleResult();
-        }catch(Exception e){
+        } catch (Exception e) {
             return ResultMessage.ItemNotExist;
         }
-        
-        if(user == item.getOwnerid() || user.getUsername() == "admin")
-        {
+
+        if (user == item.getOwnerid() || user.getUsername() == "admin") {
             dAO.getEntityManager().remove(item);
             return ResultMessage.CancelItemSucess;
         }
-        
+
         return ResultMessage.CancelItemInsucess;
     }
-    
-    
+
 }

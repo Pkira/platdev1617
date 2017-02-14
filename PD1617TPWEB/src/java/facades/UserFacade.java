@@ -265,4 +265,22 @@ public class UserFacade implements IUser {
        
        return historic; 
     }
+    
+    @Override
+    public List<Item> ItensSellHistoric(long userid){
+        
+        List<Auction> auctionHistoric = new ArrayList();
+        List<Item> historic = new ArrayList();
+        
+        try{
+            auctionHistoric = dAO.getEntityManager().createNamedQuery("Auction.findBySelleridAndAuctionState").setParameter("sellerid", userid).setParameter("auctionstate", 0).getResultList();
+        }catch(Exception e){
+            return historic;
+        }
+        
+       for(Auction i : auctionHistoric)
+           historic.add(i.getItemid());
+       
+       return historic; 
+    }
 }

@@ -134,7 +134,7 @@ public class AuctionFacade implements IAuction {
         auction.setItemstate(0);
         auction.setAuctionstate(1);
         auction.setLastbid(item.getStartprice());
-        auction.setLastuserid(null);
+        auction.setSellerid(item.getOwnerid());
         auction.setStartdate(new Date());
 
         Date enddate = new Date();
@@ -179,6 +179,7 @@ public class AuctionFacade implements IAuction {
 
         if (userItem.getId() == null) {
 
+           userItem = new UserItem(); 
             userItem.setId((long) -1);
             userItem.setIsbuying(false);
             userItem.setIsfollowing(false);
@@ -187,7 +188,11 @@ public class AuctionFacade implements IAuction {
             userItem.setUserid(user);
             userItem.setCreationdate(new Date());
 
-            dAO.getEntityManager().persist(userItem);
+            try {
+                dAO.getEntityManager().persist(userItem);
+            } catch (Exception e) {
+                int V = 0;
+            }
             return ResultMessage.AuctionCreated;
         }
 
@@ -234,7 +239,7 @@ public class AuctionFacade implements IAuction {
             Item item = auction.getItemid();
 
             auction.setLastbid(value);
-            auction.setLastuserid(user.getId());
+            auction.setLastuserid(user);
 
             WarningItemChanges(item, "The item " + item.getId() + " - " + item.getName() + " have been binded.");
             dAO.getEntityManager().persist(auction);
@@ -300,7 +305,7 @@ public class AuctionFacade implements IAuction {
             dAO.getEntityManager().persist(useritens);
 
             auction.setLastbid(item.getBuynowprice());
-            auction.setLastuserid(user.getId());
+            auction.setLastuserid(user);
             auction.setAuctionstate(0);//mudar para false
             auction.setItemstate(2);//2 - vendido buyNow
             auction.setEnddate(new Date());
