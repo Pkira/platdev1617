@@ -66,7 +66,7 @@ public class ItemController {
         return "ItemAddNew.xhtml";
     }
     
-    public void insertNewItem() {
+    public String insertNewItem() {
         
         FacesContext context = FacesContext.getCurrentInstance();
        
@@ -75,8 +75,10 @@ public class ItemController {
         if(result != ResultMessage.CreateItemSuccess)
         {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
-            return;
+            return null;
         }
+        
+        return "UserItems.xhtml";
         
     }
     
