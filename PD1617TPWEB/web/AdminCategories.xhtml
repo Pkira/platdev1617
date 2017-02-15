@@ -79,7 +79,9 @@
                                            <f:facet name="header">
                                                <h:outputText value="Options"/>
                                            </f:facet>
-                                            <h:commandButton action="#{adminController.changeCategoryInfo(category.id)}" value="Edit"/>
+                                            <h:commandButton action="#{adminController.changeCategoryInfo(category.id)}" value="Edit">
+                                                <f:param name="categoryid" value="#{category.id}" />
+                                            </h:commandButton>
                                        </h:column>
                                    </h:dataTable>  
 

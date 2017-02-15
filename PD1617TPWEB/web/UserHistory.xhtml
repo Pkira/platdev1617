@@ -1,14 +1,128 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
         <ui:composition template="./WEB-INF/layout.xhtml">
 
             <ui:define name="content">
-                content
+                
+                <div class="container">
+                    
+                    <div class="main">
+                        
+                        <div class="registration">
+                            <div class="registration_left">
+                                <h2>History - User purchases</h2>                               
+                                
+                                <div class="registration_form">
+                                    
+                                    <c:forEach var="item" items="#{userController.buyHistoric}">
+                            
+                                        <h:form>
+                                    
+                                    <div class="cart-header">
+
+                                        <div class="cart-sec simpleCart_shelfItem">
+
+                                                <div class="cart-item cyc">
+                                                    
+                                                    <h:commandLink action="#{itemController.ShowDetails(item.id)}">
+                                                        <img src="#{item.image}" class="img-responsive" alt=""/>
+                                                    </h:commandLink>
+                                                    
+                                                </div>
+                                                <div class="cart-item-info">
+
+                                                    <h3>
+                                                        <h:commandLink action="#{itemController.ShowDetails(item.id)}">
+                                                        #{item.name}
+                                                        </h:commandLink>
+                                                    </h3>
+                                                    
+                                                    <ul class="qty">
+                                                        <li><p><span>Category: #{item.categoryid.name}</span></p></li>
+                                                    </ul> 
+
+                                                     <div class="delivery">
+                                                         <p>Price : #{item.startprice} €</p>                                              
+                                                         
+                                                     <div class="clearfix"></div>
+                                                     </div>	
+
+                                                </div>
+                                                <div class="clearfix"></div>
+
+                                         </div>
+                                    </div>
+                                    
+                                </h:form>
+                                
+                                    </c:forEach>
+                                    
+                                </div>
+                            </div>
+                            
+                            <div class="registration_left">
+                                <h2>History - Sales</h2>   
+                                <div class="registration_form">
+                                                                       
+                                    <c:forEach var="item" items="#{userController.sellHistoric}">
+                            
+                                        <h:form>
+                                    
+                                    <div class="cart-header">
+
+                                        <div class="cart-sec simpleCart_shelfItem">
+
+                                                <div class="cart-item cyc">
+                                                    
+                                                    <h:commandLink action="#{itemController.ShowDetails(item.id)}">
+                                                        <img src="#{item.image}" class="img-responsive" alt=""/>
+                                                    </h:commandLink>
+                                                    
+                                                </div>
+                                                <div class="cart-item-info">
+
+                                                    <h3>
+                                                        <h:commandLink action="#{itemController.ShowDetails(item.id)}">
+                                                        #{item.name}
+                                                        </h:commandLink>
+                                                    </h3>
+                                                    
+                                                    <ul class="qty">
+                                                        <li><p><span>Category: #{item.categoryid.name}</span></p></li>
+                                                    </ul> 
+
+                                                     <div class="delivery">
+                                                         <p>Price : #{item.startprice} €</p>                                              
+                                                         
+                                                     <div class="clearfix"></div>
+                                                     </div>	
+
+                                                </div>
+                                                <div class="clearfix"></div>
+
+                                         </div>
+                                    </div>
+                                    
+                                </h:form>
+                                
+                                    </c:forEach>
+                                    
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <!-- end registration -->
+                    </div>
+                </div>
+                
             </ui:define>
 
         </ui:composition>

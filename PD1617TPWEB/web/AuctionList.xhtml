@@ -50,12 +50,16 @@
                                                         #{auction.itemid.name}
                                                     </h:commandLink>
                                                 </h3>
+                                               
                                                 <ul class="qty">
                                                     <li><p><span>Category: #{auction.itemid.categoryid.name}</span></p></li>
-                                                </ul>
+                                                </ul> 
+                                                <ul class="qty">
+                                                    <li><p><span>Seller: #{auction.itemid.ownerid.username}</span></p></li>
+                                                </ul> 
                                                 
                                                 <div class="delivery">
-                                                    <p>Current Price : #{auction.lastbid}$</p>
+                                                    <p>Current Price : #{auction.lastbid} €</p>
                                                     
                                                     <c:choose>
                                                         <c:when test="#{auction.hoursLeft eq 0}">

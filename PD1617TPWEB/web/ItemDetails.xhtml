@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     
     <body>
         
@@ -53,16 +54,18 @@
 
                                             <span class="code">Product Id: #{itemController.id}</span>
                                             
-                                            <p><span class="code">Category Id: #{itemController.categoryid}</span></p>
+                                            <p><span class="code">Category: #{itemController.categoryname}</span></p>
+                                            
+                                            <p><span class="code">Owner: #{itemController.owner}</span></p>
 
                                             <p><span class="brand">Description: <a href="#">#{itemController.description}</a></span></p>
                                             <div class="price">
                                                 <span class="text">Price:</span>
-                                                <span class="price-new">#{itemController.price} $</span> 
+                                                <span class="price-new">#{itemController.price} €</span> 
                                             </div>
                                             <div class="price">
                                                 <span class="text">Buy Now Price:</span>
-                                                <span class="price-new">#{itemController.buynow} $</span> 
+                                                <span class="price-new">#{itemController.buynow} €</span> 
                                             </div>
 
                                             <div class="btn_form">
@@ -73,14 +76,19 @@
                                             
                                             <h:inputHidden id="ItemId" value="#{itemController.id}" />
                                             
-                                            <div class="btn_form">
-                                                <h:commandLink action="#{itemController.CancelItem(userController.userid)}" value="Cancel Item">
-                                                    <f:param name="ItemId" value="#{itemController.id}" />
-                                                </h:commandLink>
-                                            </div>
                                             
-                                            
-                                     
+                                            <c:choose>
+                                                <c:when test="#{userController.userid eq itemController.ownerid}">
+                                                    
+                                                    <div class="btn_form">
+                                                        <h:commandLink action="#{itemController.CancelItem(userController.userid, itemController.id)}" value="Cancel Item">
+                                                            <f:param name="UserId" value="#{userController.userid}" />
+                                                            <f:param name="ItemId" value="#{itemController.id}" />
+                                                        </h:commandLink>
+                                                    </div>
+                                                    
+                                                </c:when>
+                                            </c:choose>
 
                                         </div>
 

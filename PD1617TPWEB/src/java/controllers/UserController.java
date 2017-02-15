@@ -16,6 +16,7 @@ import entities.User;
 import facades.IAuction;
 import facades.IItem;
 import facades.IUser;
+import facades.IVisitor;
 import java.util.ArrayList;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -33,9 +34,13 @@ public class UserController implements Serializable {
 
     @EJB
     private IUser userFacade;
+    
+    @EJB
+    private IVisitor visitorFacade;
 
     private long userid;
     private String username;
+    private String visitorusername;
     private String password;
     private String newpassword;
     private String address;
@@ -207,6 +212,24 @@ public class UserController implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
         
         return "UserProfile.xhtml";
+    }
+    
+    public String askAccountReactivation (){
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        ResultMessage result = null;
+        
+        try {
+            result = visitorFacade.AskReactivation(visitorusername);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ResultMessage.AskAccountReactivationInsucess.Message(), null));
+        }
+        if(result == ResultMessage.AskAccountReactivationSucess)
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
+        else
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+        
+        return "index.xhtml";
     }
 
     public String CancelFollowItem(long ItemId) {
@@ -406,4 +429,13 @@ public class UserController implements Serializable {
         this.isAdmin = isAdmin;
     }
 
+    public String getVisitorusername() {
+        return visitorusername;
+    }
+
+    public void setVisitorusername(String visitorusername) {
+        this.visitorusername = visitorusername;
+    }
+
+    
 }

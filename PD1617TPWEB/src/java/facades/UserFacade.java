@@ -203,7 +203,7 @@ public class UserFacade implements IUser {
 
         Notification notification = new Notification();
         notification.setId((long) -1);
-        notification.setMessage("User " + user.getUsername() + "with Id: " + UserId + " have reported the Item with Id: " + ItemId);
+        notification.setMessage("User [" + user.getUsername() + "] with Id:" + UserId + " have reported the Item with Id: " + ItemId);
         notification.setStatus(0);
         notification.setUserid(user);
         notification.setCreationdate(new Date());
@@ -237,7 +237,7 @@ public class UserFacade implements IUser {
 
         Notification notification = new Notification();
         notification.setId((long) -1);
-        notification.setMessage("User " + FromUser.getUsername() + "with Id: " + FromUserId + " have reported the User " + ToUser.getUsername() + " with Id: " + ToUserId);
+        notification.setMessage("User [" + FromUser.getUsername() + "] with Id: " + FromUserId + " have reported the User " + ToUser.getUsername() + " with Id: " + ToUserId);
         notification.setStatus(0);
         notification.setUserid(FromUser);
         notification.setCreationdate(new Date());
@@ -320,7 +320,7 @@ public class UserFacade implements IUser {
 
         Notification notification = new Notification();
         notification.setId((long) -1);
-        notification.setMessage("User " + FromUser.getUsername() + "with Id:" + FromUserId + " have requested the suspencion of his account");
+        notification.setMessage("User [" + FromUser.getUsername() + "] with Id:" + FromUserId + " have requested the suspencion of his account");
         notification.setStatus(0);
         notification.setUserid(FromUser);
         notification.setCreationdate(new Date());

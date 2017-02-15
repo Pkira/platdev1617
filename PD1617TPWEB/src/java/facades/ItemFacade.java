@@ -1,6 +1,7 @@
 package facades;
 
 import controllers.IDAO;
+import entities.Auction;
 import entities.Category;
 import entities.Item;
 import entities.Newsletter;
@@ -329,7 +330,7 @@ public class ItemFacade implements IItem {
     @Override
     public ResultMessage CancelItem(long ItemId, long UserId) {
 
-        User user = new User();
+        User user = null;
 
         try {
             user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", UserId).getSingleResult();
@@ -337,7 +338,7 @@ public class ItemFacade implements IItem {
             return ResultMessage.UserNotExist;
         }
 
-        Item item = new Item();
+        Item item = null;
 
         try {
             item = (Item) dAO.getEntityManager().createNamedQuery("Item.findById").setParameter("id", ItemId).getSingleResult();
@@ -345,8 +346,38 @@ public class ItemFacade implements IItem {
             return ResultMessage.ItemNotExist;
         }
 
-        if (user == item.getOwnerid() || user.getUsername() == "admin") {
-            dAO.getEntityManager().remove(item);
+        if ( (user != null && item != null) && (item.getOwnerid().getId() == user.getId() || user.getUsername().equals("admin"))) 
+        {
+            
+            //dAO.getEntityManager().getTransaction().begin();
+            
+            
+            try {
+                    
+                //remove user items
+                List<UserItem> userItems = dAO.getEntityManager().createNamedQuery("UserItem.findByItemId").setParameter("itemid", item).getResultList();
+
+                for (UserItem ui : userItems) {
+                    dAO.getEntityManager().remove(ui);
+                }
+
+                //remove auction
+                List<Auction> auctions = dAO.getEntityManager().createNamedQuery("Auction.findByItem").setParameter("itemid", item).getResultList();
+
+                if (!auctions.isEmpty()) {
+                    dAO.getEntityManager().remove(auctions.get(0));
+                }
+
+                //remove item
+                dAO.getEntityManager().remove(item);
+            
+            } catch (Exception e) {
+                return ResultMessage.CancelItemInsucess;
+            }
+            
+            //dAO.getEntityManager().getTransaction().commit();
+            //dAO.getEntityManager().close();
+            
             return ResultMessage.CancelItemSucess;
         }
 
