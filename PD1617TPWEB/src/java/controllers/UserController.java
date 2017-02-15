@@ -153,7 +153,7 @@ public class UserController implements Serializable {
         }
 
     }
-
+    
     public String FollowItem(long ItemId) {
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -161,7 +161,7 @@ public class UserController implements Serializable {
         try {
             result = itemFacade.FollowItem(ItemId, userid);
         } catch (Exception e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR ", null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Inernal error, please try again later!", null));
         }
         if (result == ResultMessage.FollowItemSucess) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
@@ -172,12 +172,18 @@ public class UserController implements Serializable {
         return "UserItemsFollowing.xhtml";
     }
 
-    public String SearchItem(String ItemName, String Category, String owner) {
+    public String SearchItem(String ItemName, String Category, String owner, double minPrice, double maxPrice) {
+        
+        ItemName = "";
+        Category = "teste";
+        owner = "c";
+        minPrice = 2;
+        maxPrice = 1;
 
         FacesContext context = FacesContext.getCurrentInstance();
         List<Item> itens = new ArrayList();
         try {
-            itens = itemFacade.SearchItem(ItemName, Category, owner);
+            itens = itemFacade.SearchItem(ItemName, Category, owner, minPrice, maxPrice);
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Internal error searching Item, please try again later.", null));
         }

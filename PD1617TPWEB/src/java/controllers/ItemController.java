@@ -116,8 +116,7 @@ public class ItemController {
     
     public String CancelItem(long userid){
         
-        FacesContext context = FacesContext.getCurrentInstance();
-        
+        FacesContext context = FacesContext.getCurrentInstance();        
         ResultMessage result = null;
         
         try {

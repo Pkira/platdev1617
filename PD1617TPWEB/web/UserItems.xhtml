@@ -17,6 +17,9 @@
                         
                         <div class="col-md-3 s-d">
                             <h:form>
+                                <h:commandLink styleClass="continue" action="#{userController.SearchItem(ItemName, Category, owner, minPrice, maxPrice)}">
+                                    Search Item
+                                </h:commandLink>
                                 <h:commandLink styleClass="continue" action="#{itemController.AddNewItem(userController.userid)}">
                                     <f:param name="id" value="#{userController.userid}" />
                                     Add new Item

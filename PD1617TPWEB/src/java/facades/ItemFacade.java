@@ -59,46 +59,66 @@ public class ItemFacade implements IItem {
     }
 
     @Override
-    public List<Item> SearchItem(String Name, String Category, String owner) {
+    public List<Item> SearchItem(String Name, String Category, String owner, double minPrice, double maxPrice) {
 
-        HashMap<Long, Item> items = new HashMap<>();
+        List<Item> items = new ArrayList();
+        String query = "SELECT i FROM Item i";
+        boolean and = false;
 
-
-        // find by name
-        if (!Name.isEmpty()) {
-            for (Item i : (List<Item>) dAO.getEntityManager().createNamedQuery("Item.findByName").setParameter("name", Name).getResultList()) {
-                if (!items.containsKey(i.getId())) {
-                    items.put(i.getId(), i);
-                }
-            }
+        if (!Category.isEmpty()) {
+            query = query + " INNER JOIN i.categoryid c WHERE i.name like " + Category;
+            and = true;
         }
 
-        // find by category
-        if (!Category.isEmpty()) {
-            for (Item i : (List<Item>) dAO.getEntityManager().createNamedQuery("Item.findByCategory").setParameter("name", Category).getResultList()) {
-                if (!items.containsKey(i.getId())) {
-                    items.put(i.getId(), i);
-                }
+        if (!Name.isEmpty()) {
+            if (!and) {
+                query = query + " WHERE i.name like " + Name;
+                and = true;
+            } else {
+                query = query + " AND i.name like " + Name;
             }
         }
 
         if (!owner.isEmpty()) {
-            User user = new User();
+            List<User> user = new ArrayList();
 
             try {
-                user = (User) dAO.getEntityManager().createNamedQuery("User.findByUsername").setParameter("username", user).getSingleResult();
+                user = dAO.getEntityManager().createNamedQuery("User.findByUsername").setParameter("username", owner).getResultList();
             } catch (Exception e) {
-
+                return items;
             }
 
-            // find by owner
-            for (Item i : (List<Item>) dAO.getEntityManager().createNamedQuery("Item.findByOwnerId").setParameter("ownerid", user).getResultList()) {
-                if (!items.containsKey(i.getId())) {
-                    items.put(i.getId(), i);
-                }
+            if (!and) {
+                query = query + " WHERE i.ownerid = " + user.get(0);
+                and = true;
+            } else {
+                query = query + " AND i.ownerid = " + user.get(0);
             }
         }
-        return new ArrayList<Item>(items.values());
+
+        if (maxPrice == 1 || maxPrice <= minPrice) {
+            try {
+                maxPrice = (double) dAO.getEntityManager().createNamedQuery("Item.findMaxStartprice").getSingleResult();
+            } catch (Exception e) {
+                return items;
+            }
+        }
+
+        if (!and) {
+            query = query + " WHERE i.startprice >= " + minPrice + " AND i.startprice <= " + maxPrice;
+        } else {
+            query = query + " AND i.startprice >= " + minPrice + " AND i.startprice <= " + maxPrice;
+        }
+
+        try {
+            
+            items = dAO.getEntityManager().createQuery(query).getResultList();
+        } catch (Exception e) {
+            String a = e.getMessage();
+            return items;
+        }
+
+        return items;
 
     }
 
