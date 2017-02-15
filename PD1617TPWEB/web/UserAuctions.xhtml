@@ -35,12 +35,12 @@
                                                         <img src="#{auction.itemid.image}" class="img-responsive" alt=""/>
                                                     </h:commandLink>
                                                     
-                                                     <h:form style="margin-top:5px;">
+                                                     <div style="margin-top:5px;">
                                                         <h:commandLink styleClass="continue" action="#{auctionController.bidItemRedirect(auction.id)}">
                                                              <f:param name="auctionid" value="#{auction.id}" />
                                                            Open Auction
                                                         </h:commandLink>
-                                                    </h:form>
+                                                    </div>
                                                 </div>
                                                 <div class="cart-item-info">
 

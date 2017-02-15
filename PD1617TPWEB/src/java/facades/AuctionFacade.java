@@ -135,6 +135,7 @@ public class AuctionFacade implements IAuction {
         auction.setAuctionstate(1);
         auction.setLastbid(item.getStartprice());
         auction.setSellerid(item.getOwnerid());
+        auction.setLastuserid(item.getOwnerid());
         auction.setStartdate(new Date());
 
         Date enddate = new Date();
@@ -168,18 +169,19 @@ public class AuctionFacade implements IAuction {
 
         WarningItemChanges(item, "The item " + item.getId() + " - " + item.getName() + " has been put to sale in a auction");
 
-        UserItem userItem = new UserItem();
+        List<UserItem> allreadyExists = new ArrayList<UserItem>();
 
         try {
 
-            userItem = (UserItem) dAO.getEntityManager().createNamedQuery("UserItem.findByUserIdAndItemId").setParameter("userid", user).setParameter("itemid", item).getSingleResult();
+            allreadyExists = dAO.getEntityManager().createNamedQuery("UserItem.findByUserIdAndItemId").setParameter("userid", user).setParameter("itemid", item).getResultList();
 
         } catch (Exception exc) {
+            return ResultMessage.AuctionNotCreated;
         }
 
-        if (userItem.getId() == null) {
+        if (allreadyExists.isEmpty()) {
 
-           userItem = new UserItem(); 
+            UserItem userItem = new UserItem(); 
             userItem.setId((long) -1);
             userItem.setIsbuying(false);
             userItem.setIsfollowing(false);
@@ -191,11 +193,12 @@ public class AuctionFacade implements IAuction {
             try {
                 dAO.getEntityManager().persist(userItem);
             } catch (Exception e) {
-                int V = 0;
+                return ResultMessage.AuctionNotCreated;
             }
             return ResultMessage.AuctionCreated;
         }
 
+        UserItem userItem  = allreadyExists.get(0);
         userItem.setIsselling(true);
         dAO.getEntityManager().persist(userItem);
         return ResultMessage.AuctionCreated;
@@ -393,6 +396,7 @@ public class AuctionFacade implements IAuction {
         try {
             usersItem = dAO.getEntityManager().createNamedQuery("UserItem.findFolloingByItemId").setParameter("itemid", item).getResultList();
         } catch (Exception e) {
+            return;
         }
 
         if (!usersItem.isEmpty()) {
@@ -402,7 +406,7 @@ public class AuctionFacade implements IAuction {
             try {
                 user = (User) dAO.getEntityManager().createNamedQuery("User.findByUsername").setParameter("username", "admin").getSingleResult();
             } catch (Exception ex) {
-
+                return;
             }
 
             for (UserItem i : usersItem) {
