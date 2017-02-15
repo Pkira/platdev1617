@@ -83,6 +83,24 @@ public class ItemController {
         
     }
     
+    public String askAccountReactivation (String username){
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        ResultMessage result = null;
+        
+        try {
+            result = visitorFacade.AskReactivation(username);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ResultMessage.AskAccountReactivationInsucess.Message(), null));
+        }
+        if(result == ResultMessage.AskAccountReactivationSucess)
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
+        else
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+        
+        return "Newsletter.xhatml";
+    }
+    
     public String LastItensSell(){
         
         FacesContext context = FacesContext.getCurrentInstance();
@@ -94,21 +112,26 @@ public class ItemController {
         
         //mudar o return
         return "Newsletter.xhtml";
-    }   
+    }
     
-    public String CancelItem(long UserId){
+    public String CancelItem(long userid){
         
         FacesContext context = FacesContext.getCurrentInstance();
+        
         ResultMessage result = null;
         
-        result = itemFacade.CancelItem(this.id, UserId);
+        try {
+            result = itemFacade.CancelItem(this.id, userid);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+        }
         
         if(result == ResultMessage.CancelItemSucess)
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
         else
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
         
-        return "UserItems.xhtml";
+        return "AdminNotifications.xhtml";
     }
     
     public String AddItemToAuction(long ItemId){

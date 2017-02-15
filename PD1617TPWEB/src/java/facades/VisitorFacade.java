@@ -7,6 +7,7 @@ import entities.Item;
 import entities.Notification;
 import entities.User;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -25,17 +26,23 @@ public class VisitorFacade implements IVisitor {
          
          String message = "A visitor ask for the reactivation of the account with the Username: " + Username;
          
-         User user = (User)dAO.getEntityManager().createNamedQuery("User.findByUsername").setParameter("username", Username).getSingleResult();
+        User user = null;
+        try {
+            user = (User) dAO.getEntityManager().createNamedQuery("User.findByUsername").setParameter("username", Username).getSingleResult();
+        } catch (Exception e) {
+            return ResultMessage.UserNotExist;
+        }
          
          Notification notification = new Notification();
          notification.setId((long)-1);
          notification.setMessage(message);
          notification.setStatus(0);
          notification.setUserid(user);
+         notification.setCreationdate(new Date());
          
          dAO.getEntityManager().persist(notification);
          
-        return ResultMessage.AccountReactivationNoUser;
+        return ResultMessage.AskAccountReactivationSucess;
     }
     
     @Override

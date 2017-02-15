@@ -21,7 +21,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import utils.ResultMessage;
 
-
 @Named(value = "userController")
 @SessionScoped
 public class UserController implements Serializable {
@@ -34,8 +33,7 @@ public class UserController implements Serializable {
 
     @EJB
     private IUser userFacade;
-    
-    
+
     private long userid;
     private String username;
     private String password;
@@ -48,7 +46,6 @@ public class UserController implements Serializable {
     private int totaluseritemsprice;
     private List<Item> useritems;
 
-
     public UserController() {
         this.userid = 0;
         this.username = null;
@@ -58,207 +55,253 @@ public class UserController implements Serializable {
         this.balance = 0;
         this.isAdmin = false;
     }
-    
-    public List<User> getAllUsers()
-    {
+
+    public List<User> getAllUsers() {
         return userFacade.getAll();
     }
-    
-    public void createNew(){
-        
-        userFacade.RegisterUser(username, password, address);       
+
+    public void createNew() {
+
+        userFacade.RegisterUser(username, password, address);
     }
-    
-    public void login()
-    {
-       
+
+    public void login() {
+
         FacesContext context = FacesContext.getCurrentInstance();
-        
+
         ResultMessage result = userFacade.Login(username, password);
-        
-        if(result.equals(ResultMessage.LoginSucess))
+
+        if (result.equals(ResultMessage.LoginSucess)) {
             setIsLogged(true);
-        else
-        {
+        } else {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
             return;
         }
-        
+
         User user = userFacade.SeeProfile();
-        
+
         this.userid = user.getId();
         this.address = user.getAddress();
         this.balance = user.getBalance();
         this.useritems = itemFacade.UserItems(userid);
         this.isAdmin = false;
-        
-        if(this.username.equals("admin"))
-        {
+
+        if (this.username.equals("admin")) {
             this.isAdmin = true;
         }
         
     }
-    
-     public List<Item> getBuyHistoric(){
-        
+
+    public List<Item> getBuyHistoric() {
+
         FacesContext context = FacesContext.getCurrentInstance();
-        
+
         List<Item> items = null;
-        
+
         try {
             items = userFacade.ItensBuyHistoric(userid);
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error getting buy historic items ", null));
         }
-        
+
         return items;
     }
-     
-     public List<Item> getSellHistoric(){
-        
+
+    public List<Item> getSellHistoric() {
+
         FacesContext context = FacesContext.getCurrentInstance();
-        
+
         List<Item> items = null;
-        
+
         try {
             items = userFacade.ItensSellHistoric(userid);
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error getting sell historic items ", null));
         }
-        
+
         return items;
     }
-    
-    public String logoff()
-    {
+
+    public String logoff() {
         boolean result = userFacade.LogOff();
-        
-        if(result)
+
+        if (result) {
             setIsLogged(false);
-        
+        }
+
         return "index.xhtml";
     }
-    
-    public void updateProfile()
-    {
+
+    public void updateProfile() {
         FacesContext context = FacesContext.getCurrentInstance();
-        
-        if(newpassword.isEmpty())
+
+        if (newpassword.isEmpty()) {
             newpassword = password;
-        
+        }
+
         ResultMessage result = userFacade.UpdateProfile(address, newpassword, password);
-        
-        if(result != ResultMessage.UpdateProfileValid)
-        {
+
+        if (result != ResultMessage.UpdateProfileValid) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
             return;
-        }
-        else
-        {
+        } else {
             userFacade.LoadBalance(balance);
-        
+
             this.balance = userFacade.SeeProfile().getBalance();
-            
+
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
         }
-        
 
     }
-    
-    public String HistoricBuy(){ 
-        
-        FacesContext context = FacesContext.getCurrentInstance();
-        ArrayList<Item> HistoricBuy = new ArrayList();
-        try {
-            HistoricBuy = (ArrayList<Item>) userFacade.ItensBuyHistoric(userid);
-        } catch (Exception e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR ", null));
-        }
-        
-        //Falta a parte de mostrar os itens
-        
-        return "UserItemsFollowing.xhtml";
-    }
-    
-    public String FollowItem(long ItemId){
-        
+
+    public String FollowItem(long ItemId) {
+
         FacesContext context = FacesContext.getCurrentInstance();
         ResultMessage result = null;
         try {
-            result = itemFacade.FollowItem( ItemId, userid);
+            result = itemFacade.FollowItem(ItemId, userid);
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR ", null));
         }
-        if(result == ResultMessage.FollowItemSucess)
+        if (result == ResultMessage.FollowItemSucess) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
+        } else {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+        }
+
+        return "UserItemsFollowing.xhtml";
+    }
+
+    public String SearchItem(String ItemName, String Category, String owner) {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        List<Item> itens = new ArrayList();
+        try {
+            itens = itemFacade.SearchItem(ItemName, Category, owner);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Internal error searching Item, please try again later.", null));
+        }
+
+        return "UserItems.xhtml";
+    }
+    
+    public String askAccountSuspencion(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        ResultMessage result = null;
+        
+        try{
+            result = userFacade.AskAccountSuspencion(userid);
+        }catch(Exception e){
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Internal error asking the account suspencion, please try again later.", null));
+        }
+        
+        if(result == ResultMessage.AskAccountSuspencionSucess)
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
         else
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
         
-        return "UserItemsFollowing.xhtml";
+        return "UserProfile.xhtml";
     }
-    
-    public String CancelFollowItem(long ItemId){
-        
+
+    public String CancelFollowItem(long ItemId) {
+
         FacesContext context = FacesContext.getCurrentInstance();
         ResultMessage result = null;
         try {
-            result = itemFacade.CancelFollowItem( ItemId, userid);
+            result = itemFacade.CancelFollowItem(ItemId, userid);
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", null));
         }
-        if(result == ResultMessage.CancelFollowItemSucess)
+        if (result == ResultMessage.CancelFollowItemSucess) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
-        else
+        } else {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
-        
+        }
+
         return "UserItemsFollowing.xhtml";
     }
     
-    public List<Item> getFollowingItems(){
-        
+    public String ReportUser(long toUserid) {
+
         FacesContext context = FacesContext.getCurrentInstance();
+        ResultMessage result = null;
         
+        try {
+            result = userFacade.ReportUser(this.userid, toUserid);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", null));
+        }
+        if (result == ResultMessage.ReportSuccess) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
+        } else {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+        }
+
+        return "AuctionList.xhtml";
+    }
+
+    public String ReportItem(long itemid) {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        ResultMessage result = null;
+        
+        try {
+            result = userFacade.ReportItem(this.userid, itemid);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", null));
+        }
+        if (result == ResultMessage.ReportSuccess) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
+        } else {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+        }
+
+        return "AuctionList.xhtml";
+    }
+    
+    public List<Item> getFollowingItems() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
         List<Item> items = null;
-        
+
         try {
             items = itemFacade.FollowItens(userid);
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error getting following items ", null));
         }
-        
+
         return items;
     }
-    
-    public List<Item> getOnAuctionItems(){
-        
+
+    public List<Item> getOnAuctionItems() {
+
         FacesContext context = FacesContext.getCurrentInstance();
-        
+
         List<Item> items = new ArrayList<Item>();
-        
+
         try {
             items = itemFacade.ItemInSell(userid);
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error getting in sell items ", null));
         }
-        
+
         return items;
     }
-    
-     public List<Auction> getUserAuctions()
-    {
+
+    public List<Auction> getUserAuctions() {
         FacesContext context = FacesContext.getCurrentInstance();
-        
+
         List<Auction> auctions = null;
-        
+
         try {
             auctions = auctionFacade.GetUserBuyingAuctions(userid);
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error getting auctions list", null));
         }
-        
-        return auctions;
-    }  
 
+        return auctions;
+    }
 
     public long getUserid() {
         return userid;
@@ -337,10 +380,11 @@ public class UserController implements Serializable {
     public int getTotaluseritemsprice() {
         totaluseritemsprice = 0;
         this.useritems = itemFacade.UserItems(userid);
-        
-        for(Item i : this.useritems)
+
+        for (Item i : this.useritems) {
             totaluseritemsprice += i.getStartprice();
-        
+        }
+
         return totaluseritemsprice;
     }
 
@@ -355,7 +399,5 @@ public class UserController implements Serializable {
     public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
-    
-    
-    
+
 }

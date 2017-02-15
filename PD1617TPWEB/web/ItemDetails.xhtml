@@ -20,7 +20,7 @@
                             <div class="col-md-9 det">
                                 
                                 <h:form>
-                                
+                                    
                                     <div class="single_left">
 
                                         <div class="grid Images_3_of_2">
@@ -72,6 +72,12 @@
                                             </div>
                                             
                                             <h:inputHidden id="ItemId" value="#{itemController.id}" />
+                                            
+                                            <div class="btn_form">
+                                                <h:commandLink action="#{itemController.CancelItem(userController.userid)}" value="Cancel Item">
+                                                    <f:param name="ItemId" value="#{itemController.id}" />
+                                                </h:commandLink>
+                                            </div>
                                             
                                             
                                      

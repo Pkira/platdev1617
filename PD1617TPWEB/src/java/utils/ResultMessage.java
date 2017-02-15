@@ -3,6 +3,10 @@ package utils;
 
 
 public enum ResultMessage {
+    AskAccountReactivationSucess("The request to reactivate the accout has been send"),
+    AskAccountReactivationInsucess("The request to reactivate the accout has been send"),
+    AskAccountSuspencionSucess("The request to suspend account have been send to the administrator"),
+    AskAccountSuspencionInsucess("It was impossible to send he request of account suspencion, please try again later"),
     LoginSucess("Logged with sucess"),
     LoginInvalidUsername("Invalid Username specified"),
     LoginInvalid("Invalid username or password"),

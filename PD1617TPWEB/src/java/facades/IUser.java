@@ -33,4 +33,5 @@ public interface IUser {
     ResultMessage ReportUser(long FromUserId, long ToUserId);
     List<Item> ItensBuyHistoric(long userid);
     List<Item> ItensSellHistoric(long userid);
+    ResultMessage AskAccountSuspencion(long FromUserId);
 }

@@ -88,7 +88,12 @@
                                                     <f:param name="ItemId" value="#{auctionController.auction.itemid.id}" />
                                                 </h:commandLink>
                                             </div>
-                                            
+                                            <div class="btn_form">
+                                                <h:commandLink action="#{userController.ReportUser(auctionController.auction.sellerid.id)}" value="Report User"/>
+                                            </div>
+                                            <div class="btn_form">
+                                                <h:commandLink action="#{userController.ReportItem(auctionController.auction.itemid.id)}" value="Report Item"/>
+                                            </div>
                                             
                                             
                                         </div>

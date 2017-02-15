@@ -59,9 +59,10 @@ public class ItemFacade implements IItem {
     }
 
     @Override
-    public List<Item> SearchItem(String Name, String Category, long owner) {
+    public List<Item> SearchItem(String Name, String Category, String owner) {
 
         HashMap<Long, Item> items = new HashMap<>();
+
 
         // find by name
         if (!Name.isEmpty()) {
@@ -81,11 +82,11 @@ public class ItemFacade implements IItem {
             }
         }
 
-        if (owner > 0) {
+        if (!owner.isEmpty()) {
             User user = new User();
 
             try {
-                user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", user).getSingleResult();
+                user = (User) dAO.getEntityManager().createNamedQuery("User.findByUsername").setParameter("username", user).getSingleResult();
             } catch (Exception e) {
 
             }
