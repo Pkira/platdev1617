@@ -343,17 +343,13 @@ public class AuctionFacade implements IAuction {
         UpdateUseritemBuy(item);
 
         User user = new User();
+ 
+        
 
-        try {
-            user = (User) dAO.getEntityManager().createNamedQuery("User.findById").setParameter("id", auction.getLastuserid()).getSingleResult();
-        } catch (Exception ex) {
-            auction.setItemstate(0);//não foi vendido
-            WarningItemChanges(item, "The item " + item.getId() + " - " + item.getName() + " doesn't have been selled.");
-        }
+        if (auction.getLastuserid() != null && auction.getLastuserid() != auction.getSellerid()) {
 
-        if (auction.getLastuserid() != null) {
-
-            User seller = item.getOwnerid();
+            User seller = auction.getSellerid();
+            user = auction.getLastuserid();
 
             auction.setItemstate(1);//vendido por bid
 
@@ -368,11 +364,16 @@ public class AuctionFacade implements IAuction {
 
             seller.setBalance(seller.getBalance() + item.getBuynowprice());
             dAO.getEntityManager().persist(seller);
+            Newsletter.addNewsletterItem("The Auction with the item: " + item.getId() + " - " + item.getName() + " have been finished");
+        }
+        else{
+            auction.setItemstate(0);//não foi vendido
+            WarningItemChanges(item, "The item " + item.getId() + " - " + item.getName() + " doesn't have been selled.");
         }
 
         auction.setAuctionstate(0);
         dAO.getEntityManager().persist(auction);
-        Newsletter.addNewsletterItem("The Auction with the item: " + item.getId() + " - " + item.getName() + " have been finished");
+        
 
     }
 
@@ -429,7 +430,7 @@ public class AuctionFacade implements IAuction {
         try {
             userItem = dAO.getEntityManager().createNamedQuery("UserItem.findByIsbuyingAndItemId").setParameter("itemid", item).getResultList();
         } catch (Exception e) {
-
+            
         }
 
         for (UserItem i : userItem) {
