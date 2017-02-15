@@ -71,9 +71,7 @@ public class UserController implements Serializable {
     
     public void login()
     {
-        
-       userFacade.ItensBuyHistoric(userid);
-        userFacade.ItensSellHistoric(userid);
+       
         FacesContext context = FacesContext.getCurrentInstance();
         
         ResultMessage result = userFacade.Login(username, password);
@@ -98,6 +96,37 @@ public class UserController implements Serializable {
         {
             this.isAdmin = true;
         }
+        
+    }
+    
+     public List<Item> getBuyHistoric(){
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        List<Item> items = null;
+        
+        try {
+            items = userFacade.ItensBuyHistoric(userid);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error getting buy historic items ", null));
+        }
+        
+        return items;
+    }
+     
+     public List<Item> getSellHistoric(){
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        List<Item> items = null;
+        
+        try {
+            items = userFacade.ItensSellHistoric(userid);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error getting sell historic items ", null));
+        }
+        
+        return items;
     }
     
     public String logoff()
