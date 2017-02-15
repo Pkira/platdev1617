@@ -53,7 +53,7 @@ public class VisitorFacade implements IVisitor {
         
         
         try{
-           LastAuctions = dAO.getEntityManager().createNamedQuery("Auction.findLastItemSell").setMaxResults(3).getResultList();
+           LastAuctions = dAO.getEntityManager().createNamedQuery("Auction.findLastItemSell").setMaxResults(4).getResultList();
         }catch(Exception e){
             return LastSells;
         }

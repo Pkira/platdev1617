@@ -5,6 +5,7 @@ import entities.Item;
 import facades.IAuction;
 import facades.IItem;
 import facades.IVisitor;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -30,6 +31,7 @@ public class ItemController {
     private long id;
     private String name;
     private long categoryid;
+    private String categoryname;
     private String description;
     private double price;
     private double buynow;
@@ -55,6 +57,7 @@ public class ItemController {
         this.image = item.getImage();
         this.owner = item.getOwnerid().getUsername();
         this.ownerid = item.getOwnerid().getId();
+        this.categoryname = item.getCategoryid().getName();
         
         return "ItemDetails.xhtml";
     }
@@ -83,45 +86,14 @@ public class ItemController {
         
     }
     
-    public String askAccountReactivation (String username){
-        
-        FacesContext context = FacesContext.getCurrentInstance();
-        ResultMessage result = null;
-        
-        try {
-            result = visitorFacade.AskReactivation(username);
-        } catch (Exception e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ResultMessage.AskAccountReactivationInsucess.Message(), null));
-        }
-        if(result == ResultMessage.AskAccountReactivationSucess)
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
-        else
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
-        
-        return "Newsletter.xhatml";
-    }
-    
-    public String LastItensSell(){
-        
-        FacesContext context = FacesContext.getCurrentInstance();
-        
-        List<Item> test = visitorFacade.SeeLastSellItens();
-        
-        if(test.isEmpty())
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Don't have been sell any Item", null));
-        
-        //mudar o return
-        return "Newsletter.xhtml";
-    }
-    
-    public String CancelItem(long userid){
+    public String CancelItem(long UserId, long ItemId){
         
         FacesContext context = FacesContext.getCurrentInstance();
         
         ResultMessage result = null;
         
         try {
-            result = itemFacade.CancelItem(this.id, userid);
+            result = itemFacade.CancelItem(ItemId, UserId);
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
         }
@@ -131,7 +103,7 @@ public class ItemController {
         else
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
         
-        return "AdminNotifications.xhtml";
+        return "index.xhtml";
     }
     
     public String AddItemToAuction(long ItemId){
@@ -161,6 +133,24 @@ public class ItemController {
         List<Category> categories = itemFacade.GetAllCategories();
         
         return categories;
+    }
+    
+    public List<Item> getLastItensSell(){
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        List<Item> items = new ArrayList<Item>();
+        try {
+            items = visitorFacade.SeeLastSellItens();
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error getting last selled items", null));
+        }
+        
+        if(items.isEmpty())
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "There are no items sell in the past days", null));
+        
+        return items;
+        
     }
     
     public long getId() {
@@ -241,6 +231,14 @@ public class ItemController {
 
     public void setAuctionduration(long auctionduration) {
         this.auctionduration = auctionduration;
+    }
+
+    public String getCategoryname() {
+        return categoryname;
+    }
+
+    public void setCategoryname(String categoryname) {
+        this.categoryname = categoryname;
     }
 
     

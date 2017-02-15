@@ -22,6 +22,8 @@ public class AuctionController {
     
     private long auctionid;
     private long bidvalue;
+    private long sellerid;
+    private long itemid;
     
     private Auction auction;
 
@@ -66,6 +68,8 @@ public class AuctionController {
         }
         
         this.auction = auctionDB;
+        this.sellerid = auctionDB.getItemid().getOwnerid().getId();
+        this.itemid = auctionDB.getItemid().getId();
         
         return "AuctionBidItem.xhtml";
     }
@@ -128,6 +132,22 @@ public class AuctionController {
 
     public void setAuction(Auction auction) {
         this.auction = auction;
+    }
+
+    public long getSellerid() {
+        return sellerid;
+    }
+
+    public void setSellerid(long sellerid) {
+        this.sellerid = sellerid;
+    }
+
+    public long getItemid() {
+        return itemid;
+    }
+
+    public void setItemid(long itemid) {
+        this.itemid = itemid;
     }
     
     

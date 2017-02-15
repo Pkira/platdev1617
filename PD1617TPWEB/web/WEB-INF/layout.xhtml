@@ -107,14 +107,14 @@
                                                                    <h:inputText id="username"
                                                                                 value="#{userController.username}"
                                                                                 required="true"
-                                                                                requiredMessage="Falta o nome"/>
+                                                                                requiredMessage="Choose a username first"/>
                                                                </fieldset>
                                                                <fieldset>
                                                                    <h:outputLabel value="Password:" for="password" />
                                                                    <h:inputSecret id="password"
                                                                                   value="#{userController.password}"
                                                                                   required="true"
-                                                                                  requiredMessage="Falta a password" />
+                                                                                  requiredMessage="Choose a password first" />
                                                                </fieldset>
                                                                <h:commandButton action="#{userController.login}" value="Sign in" id="login"/>
                                                            </fieldset>
@@ -219,7 +219,7 @@
                                 </li>
                                 <li class="grid">
                                     <h:link outcome="UserHistory" styleClass="color5">
-                                        Auctions History
+                                        History
                                     </h:link>
                                 </li>
                             </h:panelGroup>
@@ -261,22 +261,27 @@
         
         <div class="foot-top">
             <div class="container">
-                 <div class="col-md-6 s-c">
-                    <div class="stay">
-                       <!-- <div class="stay-left">
-                            <form>
-                                <input type="text" placeholder="Enter your email to join our newsletter" required="" />
-                            </form>
-                        </div>-->
-                        <div class="btn-1">
-                            <h:form>
-                                <h:commandButton action="Newsletter" value="Newsletter"/>
-                            </h:form>                            
-                        </div>
-                        <div class="clearfix"> </div>
+                 <div class="col-md-3">
+                    
+                    <div class="btn-1">
+                        <h:form>
+                            <h:commandButton action="Newsletter" value="Newsletter" style="width: 120px;"/>
+                        </h:form>                            
                     </div>
+                    <div class="clearfix"> </div>
+                    
                 </div>
-                <div class="col-md-6 s-c">
+                <div class="col-md-3">
+                   
+                    <div class="btn-1">
+                        <h:form>
+                            <h:commandButton action="VisitorOptions" value="Contact Admin"  style="width: 150px;"/>
+                        </h:form>                            
+                    </div>
+                    <div class="clearfix"> </div>
+                  
+                </div>
+                <div class="col-md-6">
                     <li>
                         <div class="fooll">
                             <h5>follow us on</h5>

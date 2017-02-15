@@ -21,9 +21,7 @@
                             <div class="col-md-9 det">
                                 
                                 <h:form>
-                                    
-                                    <h:inputHidden id="auctionid" value="#{auctionController.auctionid}" />    
-                                     
+
                                     <div class="single_left">
                                         
                                         <div class="grid Images_3_of_2">
@@ -63,11 +61,11 @@
                                             <p><span class="brand">Description: <a href="#">#{auctionController.auction.itemid.description}</a></span></p>
                                             <div class="price">
                                                 <span class="text">Price:</span>
-                                                <span class="price-new">#{auctionController.auction.lastbid} $</span> 
+                                                <span class="price-new">#{auctionController.auction.lastbid} €</span> 
                                             </div>
                                             <div class="price">
                                                 <span class="text">Buy Now Price:</span>
-                                                <span class="price-new">#{auctionController.auction.itemid.buynowprice} $</span> 
+                                                <span class="price-new">#{auctionController.auction.itemid.buynowprice} €</span> 
                                             </div>
                                             <div class="price">
                                                 <span class="text">Auction Duration:</span>
@@ -89,10 +87,14 @@
                                                 </h:commandLink>
                                             </div>
                                             <div class="btn_form">
-                                                <h:commandLink action="#{userController.ReportUser(auctionController.auction.sellerid.id)}" value="Report User"/>
+                                                <h:commandLink action="#{userController.ReportUser(auctionController.sellerid)}" value="Report User">
+                                                    <f:param name="toUserid" value="#{auctionController.sellerid}" />
+                                                </h:commandLink>
                                             </div>
                                             <div class="btn_form">
-                                                <h:commandLink action="#{userController.ReportItem(auctionController.auction.itemid.id)}" value="Report Item"/>
+                                                <h:commandLink action="#{userController.ReportItem(auctionController.itemid)}" value="Report Item">
+                                                    <f:param name="itemid" value="#{auctionController.itemid}" />
+                                                </h:commandLink>
                                             </div>
                                             
                                             
@@ -140,6 +142,10 @@
                                         <h6>Details</h6>
                                         <p class="prod-desc">#{auctionController.auction.itemid.description}</p>
                                     </div>
+                                    
+                                    <h:inputHidden id="auctionid" value="#{auctionController.auctionid}" />
+                                    <h:inputHidden id="toUserid" value="#{auctionController.sellerid}" />
+                                    <h:inputHidden id="itemid" value="#{auctionController.itemid}" />
                                     
                                 </h:form>
                                 

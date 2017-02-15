@@ -20,41 +20,44 @@
                                 <h2>Edit Profile</h2>
                                 <div class="registration_form">
                                     
+                                    <div>
+                                        <label>
+                                            <h:outputLabel value="Address:" for="address" />
+                                            <h:outputLabel id="address"
+                                                           value="#{adminController.userToEdit.address}" />
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label>
+                                            <h:outputLabel value="Balance:" for="balance" />
+                                            <h:outputLabel id="balance"
+                                                           value="#{adminController.userToEdit.balance}" />
+                                        </label>
+                                    </div> 
+                                    
                                     <h:form>                                      
                                         <div>
                                             <label>
-                                                <h:outputLabel value="New Password:" for="password" />
+                                                <h:outputLabel value="New Password:" for="password"/>
                                                 <h:inputSecret id="password"
-                                                               value="#{adminController.userToEdit.password}"/>
+                                                               value="#{adminController.userToEdit.password}" requiredMessage="Choose a password first" required="true"/>
                                             </label>
                                         </div>						
-                                       <div>
-                                            <label>
-                                                <h:outputLabel value="Address:" for="address" />
-                                                <h:outputLabel id="address"
-                                                               value="#{adminController.userToEdit.address}" />
-                                            </label>
-                                        </div>
                                         <div>
                                             <label>
-                                                <h:outputLabel value="Balance:" for="balance" />
-                                                <h:outputLabel id="balance"
-                                                               value="#{adminController.userToEdit.balance}" />
+                                                <h:commandButton action="#{adminController.updateUserProfile}" value="Update Profile"/>
                                             </label>
-                                        </div>                                     
+                                       </div>                                  
 
                                     </h:form>
                                     
                                     <h:form>
                                         
-                                         <div class="row">    
-                                            <div class="col-md-4">
-                                                <h:commandButton action="#{adminController.updateUserProfile}" value="Update Profile"/>
-                                            </div>
-                                            <div class="col-md-3">
+                                     <div>
+                                            <label>
                                                 <h:commandButton action="#{adminController.suspendUserAccount}" value="Suspend Account"/>
-                                            </div>
-                                        </div>
+                                             </label>
+                                       </div>  
                                         
                                     </h:form>
                                     

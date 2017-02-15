@@ -126,7 +126,7 @@ public class AdminController implements Serializable {
     public String changeUserInfo(long UserId){
         
         userToEdit = adminFacade.SeeUserProfile(UserId);
-        return "AdminChangeUserInfo.xhtml";
+        return "AdminOptions.xhtml";
     }
     
     public String changeCategoryInfo(long CategoryId){
@@ -137,7 +137,7 @@ public class AdminController implements Serializable {
         this.categoryname = category.getName();
         this.categorydescription = category.getDescription();
         
-        return "AdminCategoryDetails.xhtml";
+        return "AdminCategories.xhtml";
     }
     
     public void updateUserProfile(){
@@ -152,7 +152,7 @@ public class AdminController implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
     }
     
-    public void suspendUserAccount(){
+    public String suspendUserAccount(){
         
         FacesContext context = FacesContext.getCurrentInstance();
         
@@ -162,6 +162,8 @@ public class AdminController implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
         else
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
+        
+        return "AdminOptions.xhtml";
     }
     
     public List<Category> getCategories()
