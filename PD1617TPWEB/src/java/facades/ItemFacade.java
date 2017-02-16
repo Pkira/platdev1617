@@ -71,13 +71,7 @@ public class ItemFacade implements IItem {
             query = query + " INNER JOIN i.categoryid c ON c.name ";
         }
 
-        if (!owner.isEmpty()) {            
-
-            try {
-                user = dAO.getEntityManager().createNamedQuery("User.findByUsername").setParameter("username", owner).getResultList();
-            } catch (Exception e) {
-                return items;
-            }
+        if (!owner.isEmpty()) {  
             
             query = query + " INNER JOIN i.ownerid o ON o.username like '" + owner + "'";
         }
@@ -88,6 +82,15 @@ public class ItemFacade implements IItem {
                 and = true;
             } else {
                 query = query + " AND c.name like '" + Category + "'";
+            }
+        }
+        
+        if (!owner.isEmpty()) {
+            if (!and) {
+                query = query + " WHERE o.username like '" + owner + "'";
+                and = true;
+            } else {
+                query = query + " AND o.username like '" + owner + "'";
             }
         }
         
