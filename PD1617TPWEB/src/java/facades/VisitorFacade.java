@@ -32,6 +32,8 @@ public class VisitorFacade implements IVisitor {
         } catch (Exception e) {
             return ResultMessage.UserNotExist;
         }
+        
+        if(user.getAccountSuspension()){
          
          Notification notification = new Notification();
          notification.setId((long)-1);
@@ -43,6 +45,9 @@ public class VisitorFacade implements IVisitor {
          dAO.getEntityManager().persist(notification);
          
         return ResultMessage.AskAccountReactivationSucess;
+        }
+        
+        return ResultMessage.AskAccountReactivationInsucess;
     }
     
     @Override

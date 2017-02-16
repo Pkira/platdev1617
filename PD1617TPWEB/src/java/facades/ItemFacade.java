@@ -63,37 +63,40 @@ public class ItemFacade implements IItem {
     public List<Item> SearchItem(String Name, String Category, String owner, double minPrice, double maxPrice) {
 
         List<Item> items = new ArrayList();
+        List<User> user = new ArrayList();
         String query = "SELECT i FROM Item i";
         boolean and = false;
 
         if (!Category.isEmpty()) {
-            query = query + " INNER JOIN i.categoryid c WHERE i.name like " + Category;
-            and = true;
+            query = query + " INNER JOIN i.categoryid c ON c.name ";
         }
 
-        if (!Name.isEmpty()) {
-            if (!and) {
-                query = query + " WHERE i.name like " + Name;
-                and = true;
-            } else {
-                query = query + " AND i.name like " + Name;
-            }
-        }
-
-        if (!owner.isEmpty()) {
-            List<User> user = new ArrayList();
+        if (!owner.isEmpty()) {            
 
             try {
                 user = dAO.getEntityManager().createNamedQuery("User.findByUsername").setParameter("username", owner).getResultList();
             } catch (Exception e) {
                 return items;
             }
-
+            
+            query = query + " INNER JOIN i.ownerid o ON o.username like '" + owner + "'";
+        }
+        
+        if (!Category.isEmpty()) {
             if (!and) {
-                query = query + " WHERE i.ownerid = " + user.get(0);
+                query = query + " WHERE c.name like '" + Category + "'";
                 and = true;
             } else {
-                query = query + " AND i.ownerid = " + user.get(0);
+                query = query + " AND c.name like '" + Category + "'";
+            }
+        }
+        
+        if (!Name.isEmpty()) {
+            if (!and) {
+                query = query + " WHERE i.name like '" + Name + "'";
+                and = true;
+            } else {
+                query = query + " AND i.name like '" + Name + "'";
             }
         }
 
@@ -110,9 +113,8 @@ public class ItemFacade implements IItem {
         } else {
             query = query + " AND i.startprice >= " + minPrice + " AND i.startprice <= " + maxPrice;
         }
-
-        try {
-            
+        
+        try {            
             items = dAO.getEntityManager().createQuery(query).getResultList();
         } catch (Exception e) {
             String a = e.getMessage();
@@ -219,6 +221,9 @@ public class ItemFacade implements IItem {
             return ResultMessage.UserNotExist;
         }
 
+        if(user.getUsername().equals("admin"))
+            return ResultMessage.ErrorAdmin;
+        
         List<UserItem> followingItens;
 
         try {

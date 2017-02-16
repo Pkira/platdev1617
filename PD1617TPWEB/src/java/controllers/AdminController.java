@@ -126,7 +126,8 @@ public class AdminController implements Serializable {
     public String changeUserInfo(long UserId){
         
         userToEdit = adminFacade.SeeUserProfile(UserId);
-        return "AdminOptions.xhtml";
+        //return "AdminOptions.xhtml";
+        return "AdminChangeUserInfo.xhtml";
     }
     
     public String changeCategoryInfo(long CategoryId){
@@ -137,7 +138,7 @@ public class AdminController implements Serializable {
         this.categoryname = category.getName();
         this.categorydescription = category.getDescription();
         
-        return "AdminCategories.xhtml";
+        return "AdminCategoryDetails.xhtml";
     }
     
     public void updateUserProfile(){

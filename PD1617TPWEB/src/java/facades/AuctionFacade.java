@@ -181,7 +181,7 @@ public class AuctionFacade implements IAuction {
 
         if (allreadyExists.isEmpty()) {
 
-            UserItem userItem = new UserItem(); 
+            UserItem userItem = new UserItem();
             userItem.setId((long) -1);
             userItem.setIsbuying(false);
             userItem.setIsfollowing(false);
@@ -198,7 +198,7 @@ public class AuctionFacade implements IAuction {
             return ResultMessage.AuctionCreated;
         }
 
-        UserItem userItem  = allreadyExists.get(0);
+        UserItem userItem = allreadyExists.get(0);
         userItem.setIsselling(true);
         dAO.getEntityManager().persist(userItem);
         return ResultMessage.AuctionCreated;
@@ -215,10 +215,11 @@ public class AuctionFacade implements IAuction {
         } catch (Exception ex) {
             return ResultMessage.AuctionNotExist;
         }
-        
-        if(UserId == auction.getItemid().getOwnerid().getId())
+
+        if (UserId == auction.getItemid().getOwnerid().getId()) {
             return ResultMessage.ItemOwner;
-        
+        }
+
         if (auction.getAuctionstate() == 0) {
             return ResultMessage.AuctionAlreadyFinish;
         }
@@ -235,6 +236,9 @@ public class AuctionFacade implements IAuction {
         } catch (Exception e) {
             return ResultMessage.UserNotExist;
         }
+        
+        if(user.getUsername().equals("admin"))
+            return ResultMessage.ErrorAdmin;
 
         //Fazer verificação se o valor licitado é superior ao atual
         if (auction.getLastbid() < value && value <= user.getBalance()) {
@@ -268,9 +272,10 @@ public class AuctionFacade implements IAuction {
         } catch (Exception ex) {
             return ResultMessage.AuctionNotExist;
         }
-        
-        if(UserId == auction.getItemid().getOwnerid().getId())
+
+        if (UserId == auction.getItemid().getOwnerid().getId()) {
             return ResultMessage.ItemOwner;
+        }
 
         if (auction.getAuctionstate() == 0) {
             return ResultMessage.AuctionAlreadyFinish;
@@ -288,6 +293,10 @@ public class AuctionFacade implements IAuction {
         } catch (Exception e) {
             return ResultMessage.UserNotExist;
         }
+        
+        if(user.getUsername().equals("admin"))
+            return ResultMessage.ErrorAdmin;
+        
         Item item = auction.getItemid();
 
         User seller = new User();
@@ -343,8 +352,6 @@ public class AuctionFacade implements IAuction {
         UpdateUseritemBuy(item);
 
         User user = new User();
- 
-        
 
         if (auction.getLastuserid() != null && auction.getLastuserid() != auction.getSellerid()) {
 
@@ -365,15 +372,13 @@ public class AuctionFacade implements IAuction {
             seller.setBalance(seller.getBalance() + item.getBuynowprice());
             dAO.getEntityManager().persist(seller);
             Newsletter.addNewsletterItem("The Auction with the item: " + item.getId() + " - " + item.getName() + " have been finished");
-        }
-        else{
+        } else {
             auction.setItemstate(0);//não foi vendido
             WarningItemChanges(item, "The item " + item.getId() + " - " + item.getName() + " doesn't have been selled.");
         }
 
         auction.setAuctionstate(0);
         dAO.getEntityManager().persist(auction);
-        
 
     }
 
@@ -430,7 +435,7 @@ public class AuctionFacade implements IAuction {
         try {
             userItem = dAO.getEntityManager().createNamedQuery("UserItem.findByIsbuyingAndItemId").setParameter("itemid", item).getResultList();
         } catch (Exception e) {
-            
+
         }
 
         for (UserItem i : userItem) {
@@ -449,9 +454,12 @@ public class AuctionFacade implements IAuction {
             return;
         }
 
-        seller.setIsselling(false);
-
-        dAO.getEntityManager().persist(seller);
+        if (!seller.getIsbuying() && !seller.getIsfollowing()) {
+            dAO.getEntityManager().remove(seller);
+        } else {
+            seller.setIsselling(false);
+            dAO.getEntityManager().persist(seller);
+        }
 
     }
 

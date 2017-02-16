@@ -1,10 +1,8 @@
-
 package utils;
-
 
 public enum ResultMessage {
     AskAccountReactivationSucess("The request to reactivate the accout has been send"),
-    AskAccountReactivationInsucess("The request to reactivate the accout has been send"),
+    AskAccountReactivationInsucess("The indicated account is not suspended"),
     AskAccountSuspencionSucess("The request to suspend account have been send to the administrator"),
     AskAccountSuspencionInsucess("It was impossible to send he request of account suspencion, please try again later"),
     LoginSucess("Logged with sucess"),
@@ -23,7 +21,7 @@ public enum ResultMessage {
     SendMessageSuccess("Your message was sent with success"),
     SendMessageUnsuccess("Something wrong happen to your message!"),
     SendMessageNoUser("The user you pretend send the message does not exist"),
-    CreateItemSuccess("The was created with success"),
+    CreateItemSuccess("The Item was created with success"),
     CreateItemUnsuccess("The item creation have fail"),
     AuctionCreated("Auction created with success"),
     AuctionNotFound("The specified auction cannot be found"),
@@ -42,6 +40,7 @@ public enum ResultMessage {
     AccountReactivationFail("This accout is not suspend"),
     AccountReactivationNoUser("This account doesn't exist"),
     FollowItemSucess("Item added to the follow list with sucess!"),
+    ErrorAdmin("The admin can´t do this operation!"),
     FollowItemAlreadyFollow("You already follow this Item"),
     ItemNotExist("The indicated item does not exist"),
     UserNotExist("The indicated user does not exist"),
@@ -65,11 +64,14 @@ public enum ResultMessage {
     CancelItemSucess("You have removed the item"),
     CancelItemInsucess("You can't remove the item, please contact the administrator."),
     ItemOwner("You are the item owner");
-    
-    
-    private String Message;
-    
-    ResultMessage(String Message) {this.Message = Message;}
-    public String Message() {return this.Message;}
-}
 
+    private String Message;
+
+    ResultMessage(String Message) {
+        this.Message = Message;
+    }
+
+    public String Message() {
+        return this.Message;
+    }
+}

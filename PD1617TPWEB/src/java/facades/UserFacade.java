@@ -317,6 +317,8 @@ public class UserFacade implements IUser {
         } catch (Exception e) {
             return ResultMessage.AskAccountSuspencionInsucess;
         }
+        
+        
 
         Notification notification = new Notification();
         notification.setId((long) -1);

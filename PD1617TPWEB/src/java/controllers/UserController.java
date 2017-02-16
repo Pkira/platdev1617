@@ -47,6 +47,7 @@ public class UserController implements Serializable {
     private boolean isLogged;
     private boolean isAdmin;
     private double balance;
+    private double updatebalance;
     private int totaluseritems;
     private int totaluseritemsprice;
     private List<Item> useritems;
@@ -90,7 +91,8 @@ public class UserController implements Serializable {
         this.balance = user.getBalance();
         this.useritems = itemFacade.UserItems(userid);
         this.isAdmin = false;
-
+        this.updatebalance = 0;
+            
         if (this.username.equals("admin")) {
             this.isAdmin = true;
         }
@@ -150,8 +152,7 @@ public class UserController implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
             return;
         } else {
-            userFacade.LoadBalance(balance);
-
+            userFacade.LoadBalance(updatebalance);
             this.balance = userFacade.SeeProfile().getBalance();
 
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
@@ -182,7 +183,7 @@ public class UserController implements Serializable {
         ItemName = "";
         Category = "teste";
         owner = "c";
-        minPrice = 2;
+        minPrice = 1;
         maxPrice = 1;
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -435,6 +436,14 @@ public class UserController implements Serializable {
 
     public void setVisitorusername(String visitorusername) {
         this.visitorusername = visitorusername;
+    }
+
+    public double getUpdatebalance() {
+        return updatebalance;
+    }
+
+    public void setUpdatebalance(double updatebalance) {
+        this.updatebalance = updatebalance;
     }
 
     

@@ -88,6 +88,15 @@
                                             </label>
                                         </div>	
                                         <div>
+                                            <label>
+                                                <h:outputLabel value="Address:" for="address" />
+                                                <h:inputSecret id="address"
+                                                               value="#{userController.address}"
+                                                               required="true"
+                                                               requiredMessage="Missing Address" />
+                                            </label>
+                                        </div>	
+                                        <div>
                                             
                                             <h:commandButton action="#{userController.createNew}" value="Create Account" id="register-submit"/>
                                         </div>
