@@ -124,6 +124,20 @@ public class ItemFacade implements IItem {
         return items;
 
     }
+    
+    @Override
+    public List<Item> SearchItemByName(String Name){
+        
+        List<Item> items = null;
+        try {
+            items = (List<Item>) dAO.getEntityManager().createNamedQuery("Item.findLIKEByName").setParameter("name", "%" + Name  + "%").getResultList();
+        } catch (Exception e) {
+            return new ArrayList<Item>();
+        }
+
+        return items;
+        
+    }
 
     @Override
     public List<Item> UserItems(long UserId) {

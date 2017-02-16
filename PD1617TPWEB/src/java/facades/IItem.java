@@ -22,4 +22,5 @@ public interface IItem {
     Item GetItemById(long ItemId);
     List<Category> GetAllCategories();
     ResultMessage CancelItem(long ItemId, long UserId);
+    List<Item> SearchItemByName(String Name);
 }

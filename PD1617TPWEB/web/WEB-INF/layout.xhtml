@@ -177,12 +177,23 @@
                                 <div class="clearfix"> </div>
                             </div>
                             <h:panelGroup rendered="#{userController.isLogged}">
+                                
                                 <div class="search">
                                     <h:form>
-                                        <input type="text" value="" placeholder="search..." />
-                                        <input type="submit" value="" />
+
+                                        <h:inputText id="itemname"
+                                                     value="#{itemController.name}"
+                                                    required="true"
+                                                    requiredMessage="Choose a keyword first"
+                                                    />
+                                        
+                                        <h:commandLink action="#{itemController.searchItemByName}" value="">
+                                            <input type="submit" value="" />
+                                        </h:commandLink>
+                                        
                                     </h:form>
                                 </div>
+                                
                             </h:panelGroup>
                             <div class="clearfix"> </div>
                         </div>
