@@ -40,6 +40,8 @@ public class ItemController {
     private long ownerid;
     private long auctionduration;
     
+    private List<Item> resultSearch;
+    
     public ItemController() {
        
     }
@@ -240,5 +242,24 @@ public class ItemController {
         this.categoryname = categoryname;
     }
 
-    
+    public List<Item> getResultSearch() {
+        return resultSearch;
+    }
+
+    public void setResultSearch(List<Item> resultSearch) {
+        this.resultSearch = resultSearch;
+    }
+
+    public String searchItemByName() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        resultSearch = new ArrayList();
+        try {
+            resultSearch = itemFacade.SearchItemByName(this.name);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Internal error searching Item, please try again later.", null));
+        }
+        
+        return "ItemSearch.xhtml";
+    }
 }

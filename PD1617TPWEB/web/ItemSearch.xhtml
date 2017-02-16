@@ -3,35 +3,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
     <body>
-        
+
         <ui:composition template="/WEB-INF/layout.xhtml">
-            
+
             <ui:define name="content">
                 
                 <div class="container">
                     <div class="women_main">
                         
                         <div class="col-md-3 s-d">
-                            <h:form>
-
-                                <h:commandLink styleClass="continue" action="#{itemController.AddNewItem(userController.userid)}">
-                                    <f:param name="id" value="#{userController.userid}" />
-                                    Add new Item
-                                </h:commandLink>
-                            </h:form>
                             <div class="price-details">
-                                <h3>Items Details</h3>
+                                <h3>Filters:</h3>
                                 <span>Items</span>
-                                <span class="total1">#{userController.totaluseritems}</span>
+                                <span class="total1">...</span>
                                 <div class="clearfix"></div>				 
                             </div>	
                             <ul class="total_price">
-                                <li class="last_price"> <h4>TOTAL</h4></li>	
-                                <li class="last_price"><span>#{userController.totaluseritemsprice} €</span></li>
+                                <li class="last_price"> <h4>...</h4></li>	
+                                <li class="last_price"><span>...</span></li>
                                 <div class="clearfix"> </div>
                             </ul>
                             
@@ -41,7 +34,7 @@
                         
                         <div class="col-md-9 w_content">
                             <div class="women">
-                                <a href="#"><h4><span>My Items</span> </h4></a>
+                                <a href="#"><h4><span>Results</span> </h4></a>
                                 <div class="clearfix"></div>	
                             </div>
                             
@@ -49,7 +42,7 @@
                                 
                                 <c:set var="count" value="0" scope="view" />
                                 
-                                <c:forEach var="item" items="#{userController.useritems}">
+                                <c:forEach var="item" items="#{itemController.resultSearch}">
                                     
                                     <c:set var="count" value="${count + 1}" scope="view"/>
                                     
@@ -75,15 +68,6 @@
                                                             <div class="grid_1 simpleCart_shelfItem">
                                                                 
                                                                 <div class="item_add"><span class="item_price"><h6>#{item.startprice} €</h6></span></div>
-                                                                <div class="item_add">
-                                                                    <span class="item_price">
-
-                                                                        <h:commandLink action="#{itemController.AddItemToAuction(item.id)}" value="Start new Auction">
-                                                                            <f:param name="ItemId" value="#{item.id}" />
-                                                                        </h:commandLink>
-
-                                                                    </span>
-                                                                </div>
                                                                 
                                                             </div>
                                                         </div>
@@ -107,13 +91,6 @@
                                                     <div class="grid_1 simpleCart_shelfItem">
                                                         
                                                         <div class="item_add"><span class="item_price"><h6>#{item.startprice} €</h6></span></div>
-                                                        <div class="item_add">
-                                                            <span class="item_price">
-                                                                <h:commandLink action="#{itemController.AddItemToAuction(item.id)}" value="Start new Auction">
-                                                                    <f:param name="ItemId" value="#{item.id}" />
-                                                                </h:commandLink>
-                                                            </span>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -131,8 +108,8 @@
                 </div>
                 
             </ui:define>
-            
+
         </ui:composition>
-        
+
     </body>
 </html>
