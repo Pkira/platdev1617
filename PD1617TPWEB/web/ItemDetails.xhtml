@@ -68,11 +68,15 @@
                                                 <span class="price-new">#{itemController.buynow} €</span> 
                                             </div>
 
-                                            <div class="btn_form">
-                                                <h:commandLink action="#{userController.FollowItem(itemController.id)}" value="Add to favorites">
-                                                    <f:param name="ItemId" value="#{itemController.id}" />
-                                                </h:commandLink>
-                                            </div>
+                                            <h:panelGroup rendered="#{!userController.isAdmin}">
+                                            
+                                                <div class="btn_form">
+                                                    <h:commandLink action="#{userController.FollowItem(itemController.id)}" value="Add to favorites">
+                                                        <f:param name="ItemId" value="#{itemController.id}" />
+                                                    </h:commandLink>
+                                                </div>
+                                                
+                                             </h:panelGroup>                                              
                                             
                                             <h:inputHidden id="ItemId" value="#{itemController.id}" />
                                             

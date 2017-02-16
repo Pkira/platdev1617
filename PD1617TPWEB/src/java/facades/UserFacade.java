@@ -47,15 +47,15 @@ public class UserFacade implements IUser {
             return ResultMessage.RegisterInvalid;
         }
 
-        long tryUser = 0;
+        List<User> tryUser = new ArrayList<User>();
 
         try {
-            tryUser = (long) dAO.getEntityManager().createNamedQuery("User.GetIdByUsername").setParameter("username", username).getFirstResult();
+            tryUser = (List<User>) dAO.getEntityManager().createNamedQuery("User.GetIdByUsername").setParameter("username", username).getResultList();
         } catch (Exception e) {
-
+            return ResultMessage.RegisterInvalid;
         }
 
-        if (tryUser > 0) {
+        if (!tryUser.isEmpty()) {
             return ResultMessage.RegisterAllreadyExist;
         }
 
@@ -69,7 +69,11 @@ public class UserFacade implements IUser {
         this.user.setAccountSuspension(false);
         this.user.setCreationdate(new Date());
 
-        dAO.getEntityManager().persist(this.user);
+        try {
+            dAO.getEntityManager().persist(this.user);
+        } catch (Exception e) {
+            return ResultMessage.RegisterInvalid;
+        }
 
         return ResultMessage.RegisterSucess;
     }

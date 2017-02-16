@@ -66,9 +66,28 @@ public class UserController implements Serializable {
         return userFacade.getAll();
     }
 
-    public void createNew() {
+    public String createNew() {
 
-        userFacade.RegisterUser(username, password, address);
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        ResultMessage result = null;
+        try {
+            result = userFacade.RegisterUser(username, password, address);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ResultMessage.RegisterInvalid.Message(), null));
+            return "index.xhtml";
+        }
+        
+        if(result != ResultMessage.RegisterSucess)
+        {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+        }
+        else
+        {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
+        }
+        
+        return "index.xhtml";
     }
 
     public void login() {
@@ -130,11 +149,20 @@ public class UserController implements Serializable {
     }
 
     public String logoff() {
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+         
         boolean result = userFacade.LogOff();
 
         if (result) {
             setIsLogged(false);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "User successfully logged off", null));
         }
+        else
+        {
+             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error when trying to user log off user", null));
+        }
+       
 
         return "index.xhtml";
     }

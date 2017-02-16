@@ -62,7 +62,12 @@
                         <h2>
                             <h:panelGroup rendered="#{userController.isLogged}">
                                 
-                                <h:link outcome="UserProfile" value="#{userController.username}" styleClass="white"/>
+                                <h:panelGroup rendered="#{!userController.isAdmin}">
+                                    <h:link outcome="UserProfile" value="#{userController.username}" styleClass="white"/>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{userController.isAdmin}">
+                                    #{userController.username}
+                                </h:panelGroup>
 
                             </h:panelGroup>
                         </h2>

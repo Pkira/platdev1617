@@ -19,22 +19,22 @@
 
                         <div class="specia-top">
                             <ul class="grid_2">
-                                
+
                                 <h:form>
-                                    
+
                                     <c:forEach var="item" items="#{itemController.lastItensSell}">
 
                                         <li>
                                             <h:commandLink action="#{itemController.ShowDetails(item.id)}">
                                                 <img src="#{item.image}" class="img-responsive" alt="" />
                                             </h:commandLink>
-                                            
+
                                             <div class="special-info grid_1 simpleCart_shelfItem">
-                                                
+
                                                 <h:commandLink action="#{itemController.ShowDetails(item.id)}">
                                                     <h5>#{item.name}</h5>
                                                 </h:commandLink>
-                                                
+
                                                 <div class="item_add"><span class="item_price"><h6>Starting on #{item.startprice} €</h6></span></div>
                                                 <div class="item_add">
                                                     <span class="item_price">
@@ -44,9 +44,9 @@
                                         </li>
 
                                     </c:forEach>
-                                    
+
                                 </h:form>
-                               
+
                                 <div class="clearfix"> </div>
                             </ul>
                         </div>                       
@@ -57,6 +57,8 @@
 
         </ui:composition>
 
+        <br />
+        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
         <br />
         <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
     </h:body>
