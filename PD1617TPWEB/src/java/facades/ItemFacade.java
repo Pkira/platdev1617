@@ -68,38 +68,20 @@ public class ItemFacade implements IItem {
         boolean and = false;
 
         if (!Category.isEmpty()) {
-            query = query + " INNER JOIN i.categoryid c ON c.name ";
+            query = query + " INNER JOIN i.categoryid c ON c.name like '" + Category + "'";
         }
 
-        if (!owner.isEmpty()) {  
-            
-            query = query + " INNER JOIN i.ownerid o ON o.username like '" + owner + "'";
-        }
-        
-        if (!Category.isEmpty()) {
-            if (!and) {
-                query = query + " WHERE c.name like '" + Category + "'";
-                and = true;
-            } else {
-                query = query + " AND c.name like '" + Category + "'";
-            }
-        }
-        
         if (!owner.isEmpty()) {
-            if (!and) {
-                query = query + " WHERE o.username like '" + owner + "'";
-                and = true;
-            } else {
-                query = query + " AND o.username like '" + owner + "'";
-            }
+            query = query + " WHERE i.ownerid IN ( SELECT u FROM User u WHERE u.username like '" + owner + "')";
+            and = true;
         }
         
         if (!Name.isEmpty()) {
             if (!and) {
-                query = query + " WHERE i.name like '" + Name + "'";
+                query = query + " WHERE i.name like '%" + Name  + "%'";
                 and = true;
             } else {
-                query = query + " AND i.name like '" + Name + "'";
+                query = query + " AND i.name like '%" + Name  + "%'";
             }
         }
 

@@ -35,6 +35,8 @@ public class ItemController {
     private String description;
     private double price;
     private double buynow;
+    private double minPrice;
+    private double maxPrice;
     private String image;
     private String owner;
     private long ownerid;
@@ -242,6 +244,22 @@ public class ItemController {
         this.categoryname = categoryname;
     }
 
+    public double getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(double minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public double getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(double maxPrice) {
+        this.maxPrice = maxPrice;
+    }
+
     public List<Item> getResultSearch() {
         return resultSearch;
     }
@@ -260,6 +278,19 @@ public class ItemController {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Internal error searching Item, please try again later.", null));
         }
         
+        return "ItemSearch.xhtml";
+    }
+    
+    public String SearchItem(double min) {
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        List<Item> itens = new ArrayList();
+        try {
+            itens = itemFacade.SearchItem(this.name, this.categoryname, this.owner, this.minPrice, this.maxPrice);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Internal error searching Item, please try again later.", null));
+        }
+
         return "ItemSearch.xhtml";
     }
 }
