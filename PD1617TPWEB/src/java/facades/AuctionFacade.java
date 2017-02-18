@@ -236,9 +236,10 @@ public class AuctionFacade implements IAuction {
         } catch (Exception e) {
             return ResultMessage.UserNotExist;
         }
-        
-        if(user.getUsername().equals("admin"))
+
+        if (user.getUsername().equals("admin")) {
             return ResultMessage.ErrorAdmin;
+        }
 
         //Fazer verificação se o valor licitado é superior ao atual
         if (auction.getLastbid() < value && value <= user.getBalance()) {
@@ -293,10 +294,11 @@ public class AuctionFacade implements IAuction {
         } catch (Exception e) {
             return ResultMessage.UserNotExist;
         }
-        
-        if(user.getUsername().equals("admin"))
+
+        if (user.getUsername().equals("admin")) {
             return ResultMessage.ErrorAdmin;
-        
+        }
+
         Item item = auction.getItemid();
 
         User seller = new User();
@@ -420,7 +422,11 @@ public class AuctionFacade implements IAuction {
                     Message msg = new Message((long) -1, "Alterations in item: " + item.getId() + " - " + item.getName(), text, new Date(), 0);
                     msg.setFromid(user);
                     msg.setToid(i.getUserid());
-                    dAO.getEntityManager().persist(msg);
+                    try {
+                        dAO.getEntityManager().persist(msg);
+                    } catch (Exception e) {
+                        return;
+                    }
                 }
             }
         }
@@ -435,7 +441,7 @@ public class AuctionFacade implements IAuction {
         try {
             userItem = dAO.getEntityManager().createNamedQuery("UserItem.findByIsbuyingAndItemId").setParameter("itemid", item).getResultList();
         } catch (Exception e) {
-
+            return;
         }
 
         for (UserItem i : userItem) {

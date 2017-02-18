@@ -81,7 +81,7 @@ public class Item implements Serializable {
     @NotNull
     @Column(name = "auctionduration")
     private long auctionduration;
-    @Size(max = 100)
+    @Size(max = 200)
     @Column(name = "image")
     private String image;
     @JoinColumn(name = "categoryid", referencedColumnName = "id")

@@ -281,7 +281,7 @@ public class ItemController {
         return "ItemSearch.xhtml";
     }
     
-    public String SearchItem(double min) {
+    public String searchItem() {
         
         FacesContext context = FacesContext.getCurrentInstance();
         List<Item> itens = new ArrayList();

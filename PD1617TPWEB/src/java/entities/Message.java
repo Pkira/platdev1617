@@ -50,12 +50,12 @@ public class Message implements Serializable {
     private Long id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "subject")
     private String subject;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 200)
     @Column(name = "message")
     private String message;
     @Basic(optional = false)
