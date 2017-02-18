@@ -306,7 +306,7 @@ public class ItemController {
         return "ItemSearch.xhtml";
     }
     
-    public String searchItem() {
+    public void searchItem() {
         
         FacesContext context = FacesContext.getCurrentInstance();
 
@@ -315,6 +315,7 @@ public class ItemController {
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Internal error searching Item, please try again later.", null));
         }
+        
     }
     
     
