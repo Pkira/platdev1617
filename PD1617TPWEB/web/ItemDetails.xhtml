@@ -52,6 +52,7 @@
 
                                             <h3>#{itemController.name}</h3>                                       
 
+                                            <h:inputHidden id="id" value="#{itemController.id}" />
                                             <span class="code">Product Id: #{itemController.id}</span>
                                             
                                             <p><span class="code">Category: #{itemController.categoryname}</span></p>
@@ -74,26 +75,20 @@
                                                     <h:commandLink action="#{userController.FollowItem(itemController.id)}" value="Add to favorites">
                                                         <f:param name="ItemId" value="#{itemController.id}" />
                                                     </h:commandLink>
-                                                </div>
-                                                
-                                             </h:panelGroup>                                              
-                                            
-                                            <h:inputHidden id="ItemId" value="#{itemController.id}" />
-                                            
-                                            
-                                            <c:choose>
-                                                <c:when test="#{userController.userid eq itemController.ownerid}">
                                                     
-                                                    <div class="btn_form">
-                                                        <h:commandLink action="#{itemController.CancelItem(userController.userid, itemController.id)}" value="Cancel Item">
-                                                            <f:param name="UserId" value="#{userController.userid}" />
-                                                            <f:param name="ItemId" value="#{itemController.id}" />
-                                                        </h:commandLink>
-                                                    </div>
-                                                    
-                                                </c:when>
-                                            </c:choose>
+                                                </div>      
 
+                                             </h:panelGroup>                                                                                        
+                                            
+                                   
+                                            <div class="btn_form">
+                                                <h:commandLink action="#{userController.CancelItem(itemController.id)}" value="Cancel Item">
+                                                    <f:param name="ItemId" value="#{itemController.id}" />
+                                                </h:commandLink>
+                                            </div>
+                                                
+                                             
+                                            
                                         </div>
 
 

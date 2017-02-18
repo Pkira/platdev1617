@@ -11,102 +11,154 @@
         <ui:composition template="/WEB-INF/layout.xhtml">
 
             <ui:define name="content">
-                
+               
                 <div class="container">
+                    
                     <div class="women_main">
-                        
+
                         <div class="col-md-3 s-d">
+                                                    
+                            <h:form>
+                                
                             <div class="price-details">
+                                
+                                
                                 <h3>Filters:</h3>
-                                <span>Items</span>
-                                <span class="total1">...</span>
+                                <span>Name</span>
+                                <span class="total1">
+                                    
+                                        <label>
+                                            <h:inputText id="name" value="#{itemController.searchname}"/>                                        
+                                        </label>
+                                </span>
+                                <span>Category</span>
+                                <span class="total1">
+                                        <label>
+                                            <h:selectOneMenu value="#{itemController.categoryid}">
+                                                <f:selectItems value="#{itemController.categories}" var="cat" itemValue="#{cat.id}" itemLabel="#{cat.name}"/>
+                                            </h:selectOneMenu>
+                                        </label>
+                                </span>
+                                <span>Owner</span>
+                                <span class="total1">
+                                        <label>
+                                            <h:inputText id="Owner" value="#{itemController.owner}"/>
+                                        </label>
+                                </span>
+                                <span>Minimum Price</span>
+                                <span class="total1">
+                                        <label>
+                                            <h:inputText id="minPrice"
+                                                         value="#{itemController.minPrice}" 
+                                                         converterMessage="Please enter digits only."
+                                                         validatorMessage="The price should be higher than 0">
+                                            </h:inputText>
+                                        </label>
+                                </span>
+                                <span>Maximum Price</span>
+                                <span class="total1">
+                                        <label>
+                                            <h:inputText id="maxPrice"
+                                                         value="#{itemController.maxPrice}" 
+                                                         converterMessage="Please enter digits only.">
+                                            </h:inputText>
+                                        </label>
+                                </span>
                                 <div class="clearfix"></div>				 
                             </div>	
                             <ul class="total_price">
-                                <li class="last_price"> <h4>...</h4></li>	
+                                <li class="last_price"> <h4>Total</h4></li>	
                                 <li class="last_price"><span>...</span></li>
                                 <div class="clearfix"> </div>
                             </ul>
-                            
-                            
+
+
                             <div class="clearfix"></div>
+
+                            
+                            <h:commandLink styleClass="continue" action="#{itemController.searchItem}">
+                                Search
+                            </h:commandLink>
+                            
+                            </h:form>
+                            
                         </div>
-                        
+
                         <div class="col-md-9 w_content">
                             <div class="women">
                                 <a href="#"><h4><span>Results</span> </h4></a>
                                 <div class="clearfix"></div>	
                             </div>
-                            
+
                             <h:form>
 
                                 <c:set var="count" value="0" scope="view" />
-                                
+
                                 <c:forEach var="item" items="#{itemController.resultSearch}">
-                                    
+
                                     <c:set var="count" value="${count + 1}" scope="view"/>
-                                    
+
                                     <c:choose>
-                                        
+
                                         <c:when test="#{count % 4 eq 0}">
-                                            
-                                           
+
+
                                             <div class="grids_of_4">
-                                                    
-                                                    <div class="grid1_of_4" style="height:400px;margin-top: 50px">
-                                                        <div class="content_box">
-                                                            
-                                                            
-                                                            <h:commandLink action="#{itemController.ShowDetails(item.id)}">
-                                                                <f:param name="Id" value="#{item.id}" />
-                                                                <img src="#{item.image}" class="img-responsive" alt=""/>
-                                                                <h4>#{item.name}</h4>
-                                                            </h:commandLink>
-                                                            
-                                                            
-                                                            
-                                                            <div class="grid_1 simpleCart_shelfItem">
-                                                                
-                                                                <div class="item_add"><span class="item_price"><h6>#{item.startprice} €</h6></span></div>
-                                                                
-                                                            </div>
+
+                                                <div class="grid1_of_4" style="height:400px;margin-top: 50px">
+                                                    <div class="content_box">
+
+
+                                                        <h:commandLink action="#{itemController.ShowDetails(item.id)}">
+                                                            <f:param name="Id" value="#{item.id}" />
+                                                            <img src="#{item.image}" class="img-responsive" alt=""/>
+                                                            <h4>#{item.name}</h4>
+                                                        </h:commandLink>
+
+
+
+                                                        <div class="grid_1 simpleCart_shelfItem">
+
+                                                            <div class="item_add"><span class="item_price"><h6>#{item.startprice} €</h6></span></div>
+
                                                         </div>
                                                     </div>
-                                                    
                                                 </div>
-                                            
+
+                                            </div>
+
                                         </c:when>
                                         <c:otherwise>
-                                            
+
                                             <div class="grid1_of_4" style="height:400px;margin-top: 50px">
                                                 <div class="content_box">
-                                                    
+
                                                     <h:commandLink action="#{itemController.ShowDetails(item.id)}">
                                                         <f:param name="Id" value="#{item.id}" />
                                                         <img src="#{item.image}" class="img-responsive" alt=""/>
                                                         <h4>#{item.name}</h4>
                                                     </h:commandLink>
-                                                    
-                                                    
+
+
                                                     <div class="grid_1 simpleCart_shelfItem">
-                                                        
+
                                                         <div class="item_add"><span class="item_price"><h6>#{item.startprice} €</h6></span></div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            
+
                                         </c:otherwise>
                                     </c:choose>
-                                    
+
                                 </c:forEach>
                                 
                                  
-                                 
                             </h:form>                       
-                            
+
                         </div>
-                        <div class="clearfix"></div>
                         
+                        <div class="clearfix"></div>
+
                     </div>
                 </div>
                 

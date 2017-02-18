@@ -20,7 +20,7 @@ public interface IAuction {
     Auction GetAuctionById(long AuctionId);
     List<Auction> GetAll();
     ResultMessage CreateAuction(long ItemId);
-    ResultMessage BidItem(long UserId, long value, long AuctionId);
+    ResultMessage BidItem(long UserId, double value, long AuctionId);
     ResultMessage BuyNowItem(long UserId, long AuctionId);
     List<Auction> GetUserBuyingAuctions(long UserId);
 }

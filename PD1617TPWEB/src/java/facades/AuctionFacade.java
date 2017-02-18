@@ -206,7 +206,7 @@ public class AuctionFacade implements IAuction {
     }
 
     @Override
-    public ResultMessage BidItem(long UserId, long value, long AuctionId) {
+    public ResultMessage BidItem(long UserId, double value, long AuctionId) {
 
         Auction auction = new Auction();
 
@@ -240,6 +240,11 @@ public class AuctionFacade implements IAuction {
         if(user.getUsername().equals("admin"))
             return ResultMessage.ErrorAdmin;
 
+        if(value < auction.getLastbid())
+        {
+            return ResultMessage.BidInsuccess2;
+        }
+            
         //Fazer verificação se o valor licitado é superior ao atual
         if (auction.getLastbid() < value && value <= user.getBalance()) {
 

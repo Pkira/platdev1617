@@ -474,5 +474,22 @@ public class UserController implements Serializable {
         this.updatebalance = updatebalance;
     }
 
-    
+    public String CancelItem(long ItemId){
+        
+        FacesContext context = FacesContext.getCurrentInstance();        
+        ResultMessage result = null;
+        
+        try {
+            result = itemFacade.CancelItem(ItemId, userid);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+        }
+        
+        if(result == ResultMessage.CancelItemSucess)
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
+        else
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+        
+        return "index.xhtml";
+    }
 }

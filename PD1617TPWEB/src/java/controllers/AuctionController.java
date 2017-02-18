@@ -21,7 +21,7 @@ public class AuctionController {
     private IAuction auctionFacade;
     
     private long auctionid;
-    private long bidvalue;
+    private double bidvalue;
     private long sellerid;
     private long itemid;
     
@@ -118,11 +118,11 @@ public class AuctionController {
         this.auctionid = auctionid;
     }
 
-    public long getBidvalue() {
+    public double getBidvalue() {
         return bidvalue;
     }
 
-    public void setBidvalue(long bidvalue) {
+    public void setBidvalue(double bidvalue) {
         this.bidvalue = bidvalue;
     }
 

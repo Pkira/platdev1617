@@ -4,6 +4,7 @@ import entities.Category;
 import entities.Item;
 import facades.IAuction;
 import facades.IItem;
+import facades.IUser;
 import facades.IVisitor;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import utils.ResultMessage;
 
 
@@ -28,8 +30,12 @@ public class ItemController {
     @EJB
     private IVisitor visitorFacade;
     
+    @Inject
+    UserController userController ;
+    
     private long id;
     private String name;
+    private String searchname;
     private long categoryid;
     private String categoryname;
     private String description;
@@ -41,12 +47,29 @@ public class ItemController {
     private String owner;
     private long ownerid;
     private long auctionduration;
+    private boolean showcancelitem;
     
     private List<Item> resultSearch;
     
     public ItemController() {
        
+        this.id = 0;
+        this.name = "";
+        this.searchname ="";
+        this.categoryid = 0;
+        this.categoryname = "";
+        this.description = "";
+        this.price = 0;
+        this.buynow = 0;
+        this.minPrice = 0;
+        this.maxPrice = 0;
+        this.image = "";
+        this.owner = "";
+        this.ownerid = 0;
+        this.auctionduration = 0;
+        this.showcancelitem = false;
     }
+    
     
     public String ShowDetails(long Id) {
         
@@ -63,6 +86,9 @@ public class ItemController {
         this.ownerid = item.getOwnerid().getId();
         this.categoryname = item.getCategoryid().getName();
         
+        if(userController.getUserid() == this.ownerid || userController.getUsername().equals("admin"))
+            this.showcancelitem = true;
+            
         return "ItemDetails.xhtml";
     }
     
@@ -88,25 +114,6 @@ public class ItemController {
         
         return "UserItems.xhtml";
         
-    }
-    
-    public String CancelItem(long UserId, long ItemId){
-        
-        FacesContext context = FacesContext.getCurrentInstance();        
-        ResultMessage result = null;
-        
-        try {
-            result = itemFacade.CancelItem(ItemId, UserId);
-        } catch (Exception e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
-        }
-        
-        if(result == ResultMessage.CancelItemSucess)
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
-        else
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
-        
-        return "index.xhtml";
     }
     
     public String AddItemToAuction(long ItemId){
@@ -268,6 +275,24 @@ public class ItemController {
         this.resultSearch = resultSearch;
     }
 
+    public String getSearchname() {
+        return searchname;
+    }
+
+    public void setSearchname(String searchname) {
+        this.searchname = searchname;
+    }
+
+    public boolean getShowcancelitem() {
+        return showcancelitem;
+    }
+
+    public void setShowcancelitem(boolean showcancelitem) {
+        this.showcancelitem = showcancelitem;
+    }
+    
+    
+
     public String searchItemByName() {
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -281,16 +306,16 @@ public class ItemController {
         return "ItemSearch.xhtml";
     }
     
-    public String SearchItem(double min) {
+    public void searchItem() {
         
         FacesContext context = FacesContext.getCurrentInstance();
-        List<Item> itens = new ArrayList();
+
         try {
-            itens = itemFacade.SearchItem(this.name, this.categoryname, this.owner, this.minPrice, this.maxPrice);
+            resultSearch = itemFacade.SearchItem(this.searchname, this.categoryname, this.owner, this.minPrice, this.maxPrice);
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Internal error searching Item, please try again later.", null));
         }
-
-        return "ItemSearch.xhtml";
     }
+    
+    
 }
