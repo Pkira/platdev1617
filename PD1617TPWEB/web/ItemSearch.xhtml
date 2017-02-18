@@ -11,6 +11,8 @@
         <ui:composition template="/WEB-INF/layout.xhtml">
 
             <ui:define name="content">
+                
+                <h:form>
                
                 <div class="container">
                     
@@ -18,7 +20,7 @@
 
                         <div class="col-md-3 s-d">
                                                     
-                            <h:form>
+                            
                                 
                             <div class="price-details">
                                 
@@ -80,7 +82,7 @@
                                 Search
                             </h:commandLink>
                             
-                            </h:form>
+                            
                             
                         </div>
 
@@ -90,7 +92,7 @@
                                 <div class="clearfix"></div>	
                             </div>
 
-                            <h:form>
+                            
 
                                 <c:set var="count" value="0" scope="view" />
 
@@ -153,7 +155,7 @@
                                 </c:forEach>
                                 
                                  
-                            </h:form>                       
+                                                 
 
                         </div>
                         
@@ -161,6 +163,8 @@
 
                     </div>
                 </div>
+                    
+                    </h:form>
 
             </ui:define>
 

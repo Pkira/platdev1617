@@ -30,9 +30,6 @@ public class ItemController {
     @EJB
     private IVisitor visitorFacade;
     
-    @Inject
-    UserController userController ;
-    
     private long id;
     private String name;
     private String searchname;
@@ -47,7 +44,6 @@ public class ItemController {
     private String owner;
     private long ownerid;
     private long auctionduration;
-    private boolean showcancelitem;
     
     private List<Item> resultSearch;
     
@@ -67,7 +63,7 @@ public class ItemController {
         this.owner = "";
         this.ownerid = 0;
         this.auctionduration = 0;
-        this.showcancelitem = false;
+
     }
     
     
@@ -85,9 +81,6 @@ public class ItemController {
         this.owner = item.getOwnerid().getUsername();
         this.ownerid = item.getOwnerid().getId();
         this.categoryname = item.getCategoryid().getName();
-        
-        if(userController.getUserid() == this.ownerid || userController.getUsername().equals("admin"))
-            this.showcancelitem = true;
             
         return "ItemDetails.xhtml";
     }
@@ -282,16 +275,6 @@ public class ItemController {
     public void setSearchname(String searchname) {
         this.searchname = searchname;
     }
-
-    public boolean getShowcancelitem() {
-        return showcancelitem;
-    }
-
-    public void setShowcancelitem(boolean showcancelitem) {
-        this.showcancelitem = showcancelitem;
-    }
-    
-    
 
     public String searchItemByName() {
 
