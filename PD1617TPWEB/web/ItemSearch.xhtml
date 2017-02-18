@@ -39,7 +39,7 @@
                             </div>
                             
                             <h:form>
-                                
+
                                 <c:set var="count" value="0" scope="view" />
                                 
                                 <c:forEach var="item" items="#{itemController.resultSearch}">
@@ -58,7 +58,7 @@
                                                             
                                                             
                                                             <h:commandLink action="#{itemController.ShowDetails(item.id)}">
-                                                                <f:param name="id" value="#{item.id}" />
+                                                                <f:param name="Id" value="#{item.id}" />
                                                                 <img src="#{item.image}" class="img-responsive" alt=""/>
                                                                 <h4>#{item.name}</h4>
                                                             </h:commandLink>
@@ -82,7 +82,7 @@
                                                 <div class="content_box">
                                                     
                                                     <h:commandLink action="#{itemController.ShowDetails(item.id)}">
-                                                        <f:param name="id" value="#{item.id}" />
+                                                        <f:param name="Id" value="#{item.id}" />
                                                         <img src="#{item.image}" class="img-responsive" alt=""/>
                                                         <h4>#{item.name}</h4>
                                                     </h:commandLink>
@@ -99,6 +99,9 @@
                                     </c:choose>
                                     
                                 </c:forEach>
+                                
+                                 
+                                 
                             </h:form>                       
                             
                         </div>
