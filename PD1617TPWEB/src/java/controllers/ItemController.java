@@ -306,7 +306,7 @@ public class ItemController {
         return "ItemSearch.xhtml";
     }
     
-    public void searchItem() {
+    public String searchItem() {
         
         FacesContext context = FacesContext.getCurrentInstance();
 
