@@ -6,11 +6,14 @@ import facades.IAuction;
 import facades.IItem;
 import facades.IUser;
 import facades.IVisitor;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -18,8 +21,8 @@ import utils.ResultMessage;
 
 
 @Named(value = "itemController")
-@RequestScoped
-public class ItemController {
+@SessionScoped
+public class ItemController  implements Serializable {
 
     @EJB
     private IItem itemFacade;
@@ -31,19 +34,23 @@ public class ItemController {
     private IVisitor visitorFacade;
     
     private long id;
-    private String name;
-    private String searchname;
+    private String name;  
     private long categoryid;
     private String categoryname;
     private String description;
     private double price;
     private double buynow;
-    private double minPrice;
-    private double maxPrice;
     private String image;
     private String owner;
     private long ownerid;
     private long auctionduration;
+    
+    private String searchname;
+    private String searchname2;
+    private long searchcategoryid;
+    private String searchowner;
+    private double minPrice;
+    private double maxPrice;
     
     private List<Item> resultSearch;
     
@@ -88,6 +95,20 @@ public class ItemController {
     public String AddNewItem(long UserId) {
         
         this.ownerid = UserId;
+        this.id = 0;
+        this.name = "";
+        this.searchname ="";
+        this.categoryid = 0;
+        this.categoryname = "";
+        this.description = "";
+        this.price = 0;
+        this.buynow = 0;
+        this.minPrice = 0;
+        this.maxPrice = 0;
+        this.image = "";
+        this.owner = "";
+        this.auctionduration = 0;
+        
         
         return "ItemAddNew.xhtml";
     }
@@ -105,7 +126,7 @@ public class ItemController {
         }
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
         
-        return "UserItems.xhtml";
+        return "index.xhtml";
         
     }
     
@@ -149,8 +170,8 @@ public class ItemController {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error getting last selled items", null));
         }
         
-        if(items.isEmpty())
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "There are no items sell in the past days", null));
+        //if(items.isEmpty())
+            //context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "There are no items sell in the past days", null));
         
         return items;
         
@@ -276,12 +297,46 @@ public class ItemController {
         this.searchname = searchname;
     }
 
+    public IVisitor getVisitorFacade() {
+        return visitorFacade;
+    }
+
+    public void setVisitorFacade(IVisitor visitorFacade) {
+        this.visitorFacade = visitorFacade;
+    }
+
+    public String getSearchname2() {
+        return searchname2;
+    }
+
+    public void setSearchname2(String searchname2) {
+        this.searchname2 = searchname2;
+    }
+
+    public long getSearchcategoryid() {
+        return searchcategoryid;
+    }
+
+    public void setSearchcategoryid(long searchcategoryid) {
+        this.searchcategoryid = searchcategoryid;
+    }
+
+    public String getSearchowner() {
+        return searchowner;
+    }
+
+    public void setSearchowner(String searchowner) {
+        this.searchowner = searchowner;
+    }
+    
+    
+
     public String searchItemByName() {
 
         FacesContext context = FacesContext.getCurrentInstance();
         resultSearch = new ArrayList();
         try {
-            resultSearch = itemFacade.SearchItemByName(this.name);
+            resultSearch = itemFacade.SearchItemByName(this.searchname);
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Internal error searching Item, please try again later.", null));
         }
@@ -294,7 +349,7 @@ public class ItemController {
         FacesContext context = FacesContext.getCurrentInstance();
 
         try {
-            resultSearch = itemFacade.SearchItem(this.searchname, this.categoryname, this.owner, this.minPrice, this.maxPrice);
+            resultSearch = itemFacade.SearchItem(this.searchname, this.searchcategoryid, this.searchowner, this.minPrice, this.maxPrice);
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Internal error searching Item, please try again later.", null));
         }

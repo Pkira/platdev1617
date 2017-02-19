@@ -90,7 +90,7 @@ public class UserController implements Serializable {
         return "index.xhtml";
     }
 
-    public void login() {
+    public String login() {
 
         FacesContext context = FacesContext.getCurrentInstance();
 
@@ -100,7 +100,6 @@ public class UserController implements Serializable {
             setIsLogged(true);
         } else {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
-            return;
         }
 
         User user = userFacade.SeeProfile();
@@ -115,6 +114,8 @@ public class UserController implements Serializable {
         if (this.username.equals("admin")) {
             this.isAdmin = true;
         }
+        
+        return "index.xhtml";
         
     }
 
@@ -204,25 +205,6 @@ public class UserController implements Serializable {
         }
 
         return "UserItemsFollowing.xhtml";
-    }
-
-    public String SearchItem(String ItemName, String Category, String owner, double minPrice, double maxPrice) {
-        
-        ItemName = "";
-        Category = "teste";
-        owner = "c";
-        minPrice = 1;
-        maxPrice = 1;
-
-        FacesContext context = FacesContext.getCurrentInstance();
-        List<Item> itens = new ArrayList();
-        try {
-            itens = itemFacade.SearchItem(ItemName, Category, owner, minPrice, maxPrice);
-        } catch (Exception e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Internal error searching Item, please try again later.", null));
-        }
-
-        return "UserItems.xhtml";
     }
     
     public String askAccountSuspencion(){

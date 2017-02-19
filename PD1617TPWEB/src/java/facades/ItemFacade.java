@@ -60,15 +60,15 @@ public class ItemFacade implements IItem {
     }
 
     @Override
-    public List<Item> SearchItem(String Name, String Category, String owner, double minPrice, double maxPrice) {
+    public List<Item> SearchItem(String Name, long CategoryId, String owner, double minPrice, double maxPrice) {
 
         List<Item> items = new ArrayList();
         List<User> user = new ArrayList();
         String query = "SELECT i FROM Item i";
         boolean and = false;
 
-        if (!Category.isEmpty()) {
-            query = query + " INNER JOIN i.categoryid c ON c.name like '" + Category + "'";
+        if (CategoryId != 0) {
+            query = query + " INNER JOIN i.categoryid c ON c.id = " + CategoryId;
         }
 
         if (!owner.isEmpty()) {
