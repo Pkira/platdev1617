@@ -41,7 +41,7 @@ INSERT INTO t_item (name,categoryid,description,startprice,buynowprice,auctiondu
 INSERT INTO t_item (name,categoryid,description,startprice,buynowprice,auctionduration,image,ownerid) VALUES ('Dog Training Adjustable Ultrasonic Sound Whistle', 
 (select c.id from t_category c where c.name LIKE 'Pet supplies'),
 'Adjustable pitch, simply tighten or loosen the screw to work out your dogs frequency',0.85,1.54,10,'Http://gloimg.gearbest.com/gb/2014/201412/source-img/1419211468365-P-2282173.jpg',
-(select u.id from t_user u where u.username LIKE 'Joao'));
+(select u.id from t_user u where u.username LIKE 'Carlos Silva'));
 
 --insert into t_auction
 
@@ -61,7 +61,10 @@ INSERT INTO t_auction (itemid,auctionstate,itemstate,startdate,enddate,lastbid,l
 1,0,current_timestamp,(SELECT current_timestamp + interval '3 hour'),22,
 (select u.id from t_user u where u.username LIKE 'Carlos Silva'),
 (select u.id from t_user u where u.username LIKE 'Joao'));
-
+INSERT INTO t_auction (itemid,auctionstate,itemstate,startdate,enddate,lastbid,lastuserid,sellerid) VALUES ((select i.id from t_item i where i.name LIKE 'Xiaomi Air 13 Laptop  -  WINDOWS 10'),
+1,0,(SELECT current_date - integer '7'),(SELECT current_date - integer '7' + interval '15 hour'),750,
+(select u.id from t_user u where u.username LIKE 'Pedro Salgado'),
+(select u.id from t_user u where u.username LIKE 'Joao'));
 
 --insert into t_auctionlog
 
@@ -77,6 +80,9 @@ INSERT INTO t_auctionlog (auctionid,description,creationdate) VALUES (
 INSERT INTO t_auctionlog (auctionid,description,creationdate) VALUES (
 (select a.id from t_auction a INNER JOIN t_item i ON i.id = a.itemid where i.name LIKE 'TIGERNU T - B3143 - Business Laptop Backpack'),
 'The user Carlos Silva made a bid of 22.00',current_timestamp);
+INSERT INTO t_auctionlog (auctionid,description,creationdate) VALUES (
+(select a.id from t_auction a INNER JOIN t_item i ON i.id = a.itemid where i.name LIKE 'Xiaomi Air 13 Laptop  -  WINDOWS 10'),
+'The user Pedro Salgado made a bid of 750.00',(SELECT current_date - integer '7' + interval '14 hour'));
 
 --insert into t_newsletter
 
@@ -87,6 +93,7 @@ INSERT INTO t_newsletter (message,creationdate) VALUES ('The auction for the ite
 INSERT INTO t_newsletter (message,creationdate) VALUES ('The auction for the item Dog Training Adjustable Ultrasonic Sound Whistle have started',current_timestamp);
 INSERT INTO t_newsletter (message,creationdate) VALUES ('The auction for the item ASUS ZenFone 2 ( ZE551ML ) 4G Phablet  -  RED have started',current_timestamp);
 INSERT INTO t_newsletter (message,creationdate) VALUES ('The auction for the item TIGERNU T - B3143 - Business Laptop Backpack have started',current_timestamp);
+INSERT INTO t_newsletter (message,creationdate) VALUES ('The auction for the item Xiaomi Air 13 Laptop  -  WINDOWS 10 have started',(SELECT current_timestamp - integer '7'));
 
 --insert into t_notification
 
@@ -135,6 +142,10 @@ INSERT INTO t_useritem (userid,itemid,isselling,isbuying,isfollowing) VALUES (
 (select u.id from t_user u where u.username LIKE 'Carlos Silva'),
 (select i.id from t_item i where i.name LIKE 'ASUS ZenFone 2 ( ZE551ML ) 4G Phablet  -  RED'),
 false,false,true);
+INSERT INTO t_useritem (userid,itemid,isselling,isbuying,isfollowing) VALUES (
+(select u.id from t_user u where u.username LIKE 'Joao'),
+(select i.id from t_item i where i.name LIKE 'Dog Training Adjustable Ultrasonic Sound Whistle'),
+false,false,true);
 
 --insert into t_message
 
@@ -148,4 +159,14 @@ INSERT INTO t_message (fromid,toid,subject,message,creationdate) VALUES (
 (select u.id from t_user u where u.username LIKE 'admin'),
 (select u.id from t_user u where u.username LIKE 'Carlos Silva'),
 'Alert about ASUS ZenFone 2 ( ZE551ML ) 4G Phablet',
-'A user have made a bind to the item ASUS ZenFone 2 ( ZE551ML ) 4G Phablet - RED have started' ,current_timestamp);
+'A user have made a bind to the item ASUS ZenFone 2 ( ZE551ML ) 4G Phablet - RED' ,current_timestamp);
+INSERT INTO t_message (fromid,toid,subject,message,creationdate) VALUES (
+(select u.id from t_user u where u.username LIKE 'admin'),
+(select u.id from t_user u where u.username LIKE 'Joao'),
+'Dog Training Adjustable Ultrasonic Sound Whistle',
+'The auction for the item Dog Training Adjustable Ultrasonic Sound Whistle have started' , current_date - integer '7');
+INSERT INTO t_message (fromid,toid,subject,message,creationdate) VALUES (
+(select u.id from t_user u where u.username LIKE 'admin'),
+(select u.id from t_user u where u.username LIKE 'Joao'),
+'Dog Training Adjustable Ultrasonic Sound Whistle',
+'A user have made a bind to the item Dog Training Adjustable Ultrasonic Sound Whistle' ,current_date - integer '7' + interval '14 hour');
