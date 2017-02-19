@@ -93,7 +93,7 @@ public class AuctionFacade implements IAuction {
 
             Auction auction = null;
             try {
-                auction = (Auction) dAO.getEntityManager().createNamedQuery("Auction.findByItem").setParameter("itemid", item).getSingleResult();
+                auction = (Auction) dAO.getEntityManager().createNamedQuery("Auction.findByItemAndAuctionState").setParameter("itemid", item).setParameter("auctionstate", 1).getSingleResult();
             } catch (Exception e) {
                 return new ArrayList<Auction>();
             }
