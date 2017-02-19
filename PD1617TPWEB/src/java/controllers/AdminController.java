@@ -80,6 +80,8 @@ public class AdminController implements Serializable {
         
         if(ActivateAccount != ResultMessage.AccountActivated)
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ActivateAccount.Message(), null));
+        else
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, ActivateAccount.Message(), null));
     }
     
     public void reactivateUser(long UserId){
@@ -90,6 +92,8 @@ public class AdminController implements Serializable {
         
         if(ReActivateAccount != ResultMessage.AccountReActivated)
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ReActivateAccount.Message(), null));
+        else
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, ReActivateAccount.Message(), null));
     }
     
     public List<Notification> getNotifications()
@@ -192,6 +196,8 @@ public class AdminController implements Serializable {
             
             if(result != ResultMessage.CategoryAdded)
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+            else
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, result.Message(), null));
             
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ResultMessage.CategoryErrorAdd.Message(), null));

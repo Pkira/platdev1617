@@ -309,6 +309,9 @@ public class AuctionFacade implements IAuction {
         User seller = new User();
 
         seller = item.getOwnerid();
+        
+        if(item.getBuynowprice() < auction.getLastbid())
+            return ResultMessage.BuyNowInsuccess2;
 
         // Fazer verificação se o valor licitado é superior ao atual
         if (item.getBuynowprice() <= user.getBalance()) {

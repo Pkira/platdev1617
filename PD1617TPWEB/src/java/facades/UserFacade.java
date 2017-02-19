@@ -171,11 +171,19 @@ public class UserFacade implements IUser {
         boolean isLogged = AServer.CheckUserState(Username);
 
         if (!isLogged) {
+            
+            List<User> tryUser = null;
+            
             try {
-                this.user = (User) dAO.getEntityManager().createNamedQuery("User.Login").setParameter("username", Username).setParameter("password", Password).getSingleResult();
+                tryUser = dAO.getEntityManager().createNamedQuery("User.Login").setParameter("username", Username).setParameter("password", Password).getResultList();
             } catch (Exception e) {
                 return ResultMessage.LoginUserNotFound;
             }
+            
+            if(tryUser.isEmpty())
+                return ResultMessage.LoginUserNotFound;
+            else
+                this.user = tryUser.get(0);
 
             if (!this.user.getAccountActivation()) {
                 return ResultMessage.AccountNotActivated;

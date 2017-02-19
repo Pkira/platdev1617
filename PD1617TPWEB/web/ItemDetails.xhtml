@@ -81,13 +81,15 @@
                                              </h:panelGroup>                                                                                        
                                             
                                    
-                                            <div class="btn_form">
-                                                <h:commandLink action="#{userController.CancelItem(itemController.id)}" value="Cancel Item">
-                                                    <f:param name="ItemId" value="#{itemController.id}" />
-                                                </h:commandLink>
-                                            </div>
+                                            <h:panelGroup rendered="#{userController.isAdmin or (itemController.ownerid eq userController.userid)}">
                                                 
-                                             
+                                                <div class="btn_form">
+                                                    <h:commandLink action="#{userController.CancelItem(itemController.id)}" value="Cancel Item">
+                                                        <f:param name="ItemId" value="#{itemController.id}" />
+                                                    </h:commandLink>
+                                                </div>
+                                                
+                                             </h:panelGroup>
                                             
                                         </div>
 

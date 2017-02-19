@@ -94,12 +94,20 @@ public class UserController implements Serializable {
 
         FacesContext context = FacesContext.getCurrentInstance();
 
-        ResultMessage result = userFacade.Login(username, password);
+        ResultMessage result = null;
+        
+        try {
+            result = userFacade.Login(username, password);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+            return "index.xhtml";
+        }
 
         if (result.equals(ResultMessage.LoginSucess)) {
             setIsLogged(true);
         } else {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result.Message(), null));
+            return "index.xhtml";
         }
 
         User user = userFacade.SeeProfile();
