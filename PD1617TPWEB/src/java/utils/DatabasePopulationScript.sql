@@ -62,7 +62,7 @@ INSERT INTO t_auction (itemid,auctionstate,itemstate,startdate,enddate,lastbid,l
 (select u.id from t_user u where u.username LIKE 'Carlos Silva'),
 (select u.id from t_user u where u.username LIKE 'Joao'));
 INSERT INTO t_auction (itemid,auctionstate,itemstate,startdate,enddate,lastbid,lastuserid,sellerid) VALUES ((select i.id from t_item i where i.name LIKE 'Xiaomi Air 13 Laptop  -  WINDOWS 10'),
-1,0,(SELECT current_date - integer '7'),(SELECT current_date - integer '7' + interval '15 hour'),750,
+0,2,(SELECT current_date - integer '7'),(SELECT current_date - integer '7' + interval '15 hour'),750,
 (select u.id from t_user u where u.username LIKE 'Pedro Salgado'),
 (select u.id from t_user u where u.username LIKE 'Joao'));
 
